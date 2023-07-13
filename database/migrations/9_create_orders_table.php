@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('order_date');
-            $table->string('status')->default('pending');
-            $table->decimal('total', 8, 2);
-            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->decimal('total_price', 8, 2);
+            $table->integer('total_quantity');
+            $table->string('status')->default('pending');
+            $table->timestamps();
         });
     }
 

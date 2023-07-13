@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_product', function (Blueprint $table) {
+        Schema::create('order_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

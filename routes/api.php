@@ -74,10 +74,12 @@ Route::prefix('category')->group(function () {
 });
 Route::prefix('orders')->group(function () {
     Route::controller(ApiOrderController::class)->group(function () {
-        Route::post('create', 'create');
-        // Создать заказ
         // получить все свои заказы
+        Route::get('/', 'index');
         // получить конкретный заказ
+        Route::get('/{id}', 'show');
+        // Создать заказ
+        Route::post('create', 'store');
     });
 });
 Route::prefix('products')->group(function () {
@@ -101,8 +103,13 @@ Route::prefix('reviews')->group(function () {
         Route::patch('update/{id}', 'update');
         // Удалить отзыв
         Route::delete('delete/{id}', 'destroy');
+
         // TODO
         // Добавить полезен/нет
+        // Таблицу ReviewVote
+        // Создать связь в Review
+        // Route::post('dislike/{id}', 'dislike');
+        // Route::post('like/{id}', 'like');
 
         // Получить вообще все отзывы
         Route::get('/', 'index');
