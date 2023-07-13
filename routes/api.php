@@ -50,7 +50,7 @@ Route::prefix('cart')->group(function () {
         Route::get('/', 'index');
 
         // Добавить товар в корзину 
-        Route::post('store', 'store');
+        Route::post('create', 'store');
         // Увеличить кол-во товара на 1
         Route::patch('increase/{id}', 'increase');
         // Уменьшить кол-во товара на 1
@@ -61,15 +61,15 @@ Route::prefix('cart')->group(function () {
         Route::delete('delete/{id}', 'destroy');
     });
 });
-Route::prefix('categories')->group(function () {
+Route::prefix('category')->group(function () {
     Route::controller(ApiCategoryController::class)->group(function () {
-        Route::post('create', 'create');
-        // Добавить категорию 
-        // Изменить категорию
-        // Удалить категорию
+        Route::get('/', 'getAll');
+        Route::get('/byid/{id}', 'getProductsByCategoryId');
+        Route::get('{slug}', 'getProductsBySlug');
 
-        // Получить все товары по id категории
-        // Получить все товары по слаг-у 
+        Route::post('create', 'store');
+        Route::put('update/{id}', 'update');
+        Route::delete('delete/{id}', 'destroy');
     });
 });
 Route::prefix('orders')->group(function () {
