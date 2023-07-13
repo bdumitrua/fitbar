@@ -32,8 +32,8 @@ class ApiAuthController extends Controller
         return response()->json([
             'user' => $user,
             'authorization' => [
-                'token' => $token,
                 'type' => 'bearer',
+                'token' => $token,
             ]
         ]);
     }
@@ -65,8 +65,8 @@ class ApiAuthController extends Controller
         return response()->json([
             'user' => Auth::user(),
             'authorisation' => [
-                'token' => Auth::refresh(),
                 'type' => 'bearer',
+                'token' => Auth::refresh(),
             ]
         ]);
     }
