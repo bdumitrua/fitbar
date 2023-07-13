@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\CartRequest;
 use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class ApiCartController extends Controller
 
     // TODO
     // Проверку на наличие такой корзины
-    public function store(ProductRequest $request)
+    public function store(CartRequest $request)
     {
         $user = User::find(Auth::id());
         $cart = $user->cart()->where('product_id', $request->product_id)->first();
@@ -92,7 +92,7 @@ class ApiCartController extends Controller
         return response()->json(['message' => 'Product quantity decreased successfully'], 200);
     }
 
-    public function update(ProductRequest $request)
+    public function update(CartRequest $request)
     {
         $request->validate([
             'quantity' => 'required|integer|min:1',

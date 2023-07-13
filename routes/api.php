@@ -32,23 +32,31 @@ Route::controller(ApiAuthController::class)->group(function () {
 
 Route::prefix('users')->group(function () {
     Route::controller(ApiUserController::class)->group(function () {
+        // Получить все данные залогиненного пользователя (для разработки)
         Route::get('getme', 'getme');
+        // Изменить данные профиля
         Route::put('update', 'update');
+
+        // TODO
         // Добавить избранные товары (favorites)
     });
 });
 
 Route::prefix('address')->group(function () {
     Route::controller(ApiAddressController::class)->group(function () {
+        // Создание адресса в списке адрессов пользоваля
         Route::post('create', 'create');
+        // Изменение адресса
         Route::post('update/{id}', 'update');
+        // Удаление адресса
         Route::post('delete/{id}', 'delete');
     });
 });
+
 Route::prefix('cart')->group(function () {
     Route::controller(ApiCartController::class)->group(function () {
+        // Получить все товары в корзине
         Route::get('/', 'index');
-
         // Добавить товар в корзину 
         Route::post('create', 'store');
         // Увеличить кол-во товара на 1
@@ -61,14 +69,21 @@ Route::prefix('cart')->group(function () {
         Route::delete('delete/{id}', 'destroy');
     });
 });
+
 Route::prefix('category')->group(function () {
     Route::controller(ApiCategoryController::class)->group(function () {
-        Route::get('/', 'getAll');
+        // Получение всех категорий
+        Route::get('/', 'index');
+        // Получение всех товаров id категории
         Route::get('/byid/{id}', 'getProductsByCategoryId');
+        // Получение всех товаров по slug-у категории
         Route::get('{slug}', 'getProductsBySlug');
 
+        // Создание категории
         Route::post('create', 'store');
+        // Изменение категории
         Route::put('update/{id}', 'update');
+        // Удаление категории
         Route::delete('delete/{id}', 'destroy');
     });
 });
@@ -84,15 +99,19 @@ Route::prefix('orders')->group(function () {
 });
 Route::prefix('products')->group(function () {
     Route::controller(ApiProductController::class)->group(function () {
-        Route::post('create', 'create');
         // Создать продукт
+        Route::post('create', 'store');
         // Изменить продукт по id 
+        Route::patch('update/{id}', 'update');
         // Удалить продукт 
+        Route::delete('delete/{id}', 'destroy');
 
         // Получить все продукты
+        Route::get('/getall', 'index');
         // Получить продукт (по id)
-        // Получить похожие продукты
-        // Получить продукт по слаг-у?
+        Route::get('/{id}', 'show');
+        // Получить похожие продукты (продукты той-же категории с небольшим отличием по цене (+-30%))
+        Route::get('/similar/{id}', 'similar');
     });
 });
 Route::prefix('reviews')->group(function () {
@@ -124,6 +143,7 @@ Route::prefix('reviews')->group(function () {
 Route::prefix('roles')->group(function () {
     Route::controller(ApiRoleController::class)->group(function () {
         Route::post('create', 'create');
+        // TODO
         // Выдать кому-то роль (по id)
         // Убрать чью-то роль (т.е. сделать обычным пользователем)
         // Изменить чью-то роль (пр: с 3 на 4 или наоборот)

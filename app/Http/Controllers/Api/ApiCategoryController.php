@@ -15,7 +15,7 @@ class ApiCategoryController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function getAll()
+    public function index()
     {
         return Category::all();
     }

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ApiOrderController extends Controller
@@ -91,7 +93,7 @@ class ApiOrderController extends Controller
         }
 
         // Очищаем корзину
-        // User::find(Auth::id())->cart->clear();
+        Cart::where('user_id', Auth::id())->delete();
 
         return response()->json([
             'status' => 'success',
