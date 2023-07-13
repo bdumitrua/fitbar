@@ -95,15 +95,23 @@ Route::prefix('products')->group(function () {
 });
 Route::prefix('reviews')->group(function () {
     Route::controller(ApiReviewController::class)->group(function () {
-        Route::post('create', 'create');
         // Оставить отзыв
+        Route::post('create', 'store');
         // Отредактировать отзыв
+        Route::patch('update/{id}', 'update');
         // Удалить отзыв
+        Route::delete('delete/{id}', 'destroy');
+        // TODO
+        // Добавить полезен/нет
 
         // Получить вообще все отзывы
+        Route::get('/', 'index');
         // Получить все отзывы товара (по id)
+        Route::get('/product/{id}', 'getProductReviews');
         // Получить среднюю оценку товара (по id)
+        Route::get('/productavg/{id}', 'getAverageRating');
         // Получить отзывы товаров (по категории)
+        Route::get('/category/{id}', 'getCategoryReviews');
     });
 });
 Route::prefix('roles')->group(function () {

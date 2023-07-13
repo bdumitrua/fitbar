@@ -9,6 +9,16 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'image',
+        'name',
+        'price',
+        'rating',
+        'short_description',
+        'long_description',
+        'category_id'
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -22,5 +32,20 @@ class Product extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getRatingAttribute()
+    {
+        $reviews = $this->reviews;
+        if ($reviews->count() == 0) {
+            return 0;
+        }
+        $totalRating = $reviews->sum('rating');
+        return $totalRating / $reviews->count();
     }
 }
