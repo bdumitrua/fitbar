@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiAddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
@@ -20,4 +21,12 @@ Route::controller(ApiAuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+});
+
+Route::prefix('address')->group(function () {
+    Route::controller(ApiAddressController::class)->group(function () {
+        Route::post('create', 'create');
+        Route::post('update/{id}', 'update');
+        Route::post('delete/{id}', 'delete');
+    });
 });

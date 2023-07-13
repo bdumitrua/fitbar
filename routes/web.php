@@ -12,17 +12,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::middleware(['guest'])->group(function () {
-    // Route::post('/register', [RegisterController::class, 'store']);
-    // Route::post('/login', [LoginController::class, 'store']);
-});
-
-
-Route::middleware(['auth'])->group(function () {
-    // Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
-});
