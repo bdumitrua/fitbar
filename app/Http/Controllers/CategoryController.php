@@ -6,8 +6,4 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
 }
