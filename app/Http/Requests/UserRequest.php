@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class LoginRequest extends AuthRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,18 +21,23 @@ class LoginRequest extends AuthRequest
      */
     public function rules(): array
     {
-        return array_merge(parent::rules(), [
+        return [
             'email' => 'required|string|email|max:255',
-        ]);
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'photo' => 'nullable|image|max:2048',
+        ];
     }
 
+    // TODO 
+    // Дописать
     public function messages()
     {
-        return array_merge(parent::messages(), [
+        return [
             'email.required' => 'Почта является обязательным полем.',
             // 'email.string'   => 'Почта должен быть строкой.',
             'email.email'    => 'Введена некорректная почта.',
             'email.max'    => 'Длина почты может быть не более 255 символов.',
-        ]);
+        ];
     }
 }

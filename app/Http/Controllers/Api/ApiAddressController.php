@@ -16,14 +16,12 @@ class ApiAddressController extends Controller
     }
 
     // Создание нового адреса
-    // TODO
-    // Обработать ошибки
     public function create(AddressRequest $request)
     {
-        $address = new Address();
-        $address->address = $request->input('address');
-        $address->user_id = Auth::id();
-        $address->save();
+        $address = Address::create([
+            'address' => $request->address,
+            'user_id' => Auth::id(),
+        ]);
 
         return response()->json([
             'status' => 'success',
@@ -32,8 +30,6 @@ class ApiAddressController extends Controller
     }
 
     // Обновление существующего адреса
-    // TODO
-    // Обработать валидациюIn
     public function update(AddressRequest $request, $id)
     {
         $address = Address::where('user_id', Auth::id())
@@ -47,8 +43,9 @@ class ApiAddressController extends Controller
             ], 404);
         }
 
-        $address->address = $request->input('address');
-        $address->save();
+        $address->update([
+            'address' => $request->address
+        ]);
 
         return response()->json([
             'status' => 'success',

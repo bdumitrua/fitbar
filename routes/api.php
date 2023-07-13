@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiAddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
+use App\Http\Controllers\Api\ApiUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,13 @@ Route::controller(ApiAuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+});
+
+Route::prefix('users')->group(function () {
+    Route::controller(ApiUserController::class)->group(function () {
+        Route::get('getme', 'getme');
+        Route::put('update', 'update');
+    });
 });
 
 Route::prefix('address')->group(function () {

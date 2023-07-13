@@ -6,7 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\RegistrationRequest;
+use App\Models\RoleUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -38,12 +39,18 @@ class ApiAuthController extends Controller
         ]);
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegistrationRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        RoleUser::create([
+            'user_id' => $user->id,
+            // role: USER
+            'role_id' => 1
         ]);
 
         return response()->json([
