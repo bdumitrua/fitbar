@@ -23,18 +23,12 @@ class ApiUserFavoriteController extends Controller
     }
 
     // Добавление товара в избранное
-    public function store($product_id)
+    public function store(Product $product)
     {
         $user = User::find(Auth::id());
 
-        if (!Product::find($product_id)) {
-            return response()->json([
-                'message' => 'Product not found'
-            ], 400);
-        }
-
         // Проверка наличия товара в избранных
-        if ($user->favorites()->where('product_id', $product_id)->exists()) {
+        if ($user->favorites()->where('product_id', $product->id)->exists()) {
             return response()->json([
                 'message' => 'Product already in favorites'
             ], 400);
@@ -43,7 +37,7 @@ class ApiUserFavoriteController extends Controller
         // Создание новой записи в избранных
         $favorite = UserFavorite::create([
             'user_id' => $user->id,
-            'product_id' => $product_id
+            'product_id' => $product->id
         ]);
 
         return response()->json([
@@ -53,12 +47,12 @@ class ApiUserFavoriteController extends Controller
     }
 
     // Удаление товара из избранного
-    public function destroy($product_id)
+    public function destroy(Product $product)
     {
         $user = User::find(Auth::id());
 
         // Проверка наличия товара в избранных
-        $favorite = $user->favorites()->where('product_id', $product_id)->first();
+        $favorite = $user->favorites()->where('product_id', $product->id)->first();
         if (!$favorite) {
             return response()->json([
                 'message' => 'Product not in favorites'

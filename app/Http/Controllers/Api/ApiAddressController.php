@@ -25,19 +25,8 @@ class ApiAddressController extends Controller
     }
 
     // Обновление существующего адреса
-    public function update(AddressRequest $request, $id)
+    public function update(AddressRequest $request, Address $address)
     {
-        $address = Address::where('user_id', Auth::id())
-            ->where('id', $id)
-            ->first();
-
-        if (!$address) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Address not found'
-            ], 404);
-        }
-
         $address->update([
             'address' => $request->address
         ]);
@@ -49,19 +38,8 @@ class ApiAddressController extends Controller
     }
 
     // Удаление адреса
-    public function delete($id)
+    public function delete(Address $address)
     {
-        $address = Address::where('user_id', Auth::id())
-            ->where('id', $id)
-            ->first();
-
-        if (!$address) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Address not found'
-            ], 404);
-        }
-
         $address->delete();
 
         return response()->json([

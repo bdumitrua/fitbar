@@ -24,12 +24,10 @@ class ApiOrderController extends Controller
     }
 
     // Получение информации о конкретном заказе
-    public function show($id)
+    public function show(Order $order)
     {
-        $order = Order::find($id);
-
         // Проверяем, принадлежит ли заказ текущему пользователю
-        if ($order && Auth::id() !== $order->user_id) {
+        if (Auth::id() !== $order->user_id) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Access denied'

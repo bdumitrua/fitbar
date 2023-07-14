@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\ReviewVote;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class ApiReviewVoteController extends Controller
         ]);
     }
 
-    public function like($id)
+    public function like(Review $review)
     {
         // Получаем текущего пользователя
         $user = User::find(Auth::id());
@@ -29,7 +30,7 @@ class ApiReviewVoteController extends Controller
         ReviewVote::updateOrCreate(
             [
                 'user_id' => $user->id,
-                'review_id' => $id
+                'review_id' => $review->id
             ],
             ['vote' => 1]
         );
@@ -39,7 +40,7 @@ class ApiReviewVoteController extends Controller
         ], 200);
     }
 
-    public function dislike($id)
+    public function dislike(Review $review)
     {
         // Получаем текущего пользователя
         $user = User::find(Auth::id());
@@ -48,7 +49,7 @@ class ApiReviewVoteController extends Controller
         ReviewVote::updateOrCreate(
             [
                 'user_id' => $user->id,
-                'review_id' => $id
+                'review_id' => $review->id
             ],
             ['vote' => 0]
         );
@@ -58,12 +59,12 @@ class ApiReviewVoteController extends Controller
         ], 200);
     }
 
-    public function destroy($id)
+    public function destroy(Review $review)
     {
         // Получаем текущего пользователя
         $user = User::find(Auth::id());
 
-        $user->reviewVotes()->where('review_id', $id)->delete();
+        $user->reviewVotes()->where('review_id', $review->id)->delete();
 
         return response()->json($user->reviewVotes);
     }

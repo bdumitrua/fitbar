@@ -21,10 +21,8 @@ class ApiProductController extends Controller
     /**
      * Получить продукт (по id)
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        $product = Product::find($id);
-
         if (!$product) {
             return response()->json([
                 'message' => 'Product not found'
@@ -37,10 +35,8 @@ class ApiProductController extends Controller
     /**
      * Получить похожие продукты (продукты той-же категории с небольшим отличием по цене (+-30%))
      */
-    public function similar($id)
+    public function similar(Product $product)
     {
-        $product = Product::find($id);
-
         if (!$product) {
             return response()->json([
                 'message' => 'Product not found'
@@ -80,10 +76,8 @@ class ApiProductController extends Controller
     /**
      * Изменить продукт по id
      */
-    public function update(ProductRequest $request, $id)
+    public function update(ProductRequest $request, Product $product)
     {
-        $product = Product::find($id);
-
         $path = '';
         if ($request->hasFile('image')) {
             $path = FileHelper::saveImageFromUrl($request->image, 'products');
@@ -112,10 +106,8 @@ class ApiProductController extends Controller
     /**
      * Удалить продукт
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $product = Product::find($id);
-
         if (!$product) {
             return response()->json([
                 'message' => 'Product not found'

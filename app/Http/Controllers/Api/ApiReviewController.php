@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,41 +18,45 @@ class ApiReviewController extends Controller
         return response()->json($reviews);
     }
 
-    public function getProductReviews($id)
+    public function getProductReviews(Product $product)
     {
-        $reviews = Review::where('product_id', $id)->get();
+        $reviews = Review::where('product_id', $product->id)->get();
         return response()->json([
-            'product_id' => $id,
+            'product_id' => $product->id,
             'reviews' => $reviews
         ]);
     }
 
-    public function getAverageRating($id)
+    public function getAverageRating(Product $product)
     {
-        $averageRating = Review::where('product_id', $id)->avg('rating');
+        $averageRating = Review::where('product_id', $product->id)->avg('rating');
         return response()->json([
-            'product_id' => $id,
+            'product_id' => $product->id,
             'average_rating' => round($averageRating, 1)
         ]);
     }
 
-    public function getCategoryReviews($id)
+    public function getCategoryReviews(Category $category)
     {
-        $productIds = Category::find($id)->products()->pluck('id');
+        $productIds = $category->products()->pluck('id');
+
         $averageRating = Review::whereIn('product_id', $productIds)->avg('rating');
         $reviews = Review::whereIn('product_id', $productIds)->get();
+
         return response()->json([
-            'category_name' => Category::find($id)->name,
+            'category_name' => $category->name,
             'category_rating' => $averageRating,
             'reviews' => $reviews
         ]);
     }
 
-    public function store(ReviewRequest $request)
+    // TODO
+    // Проверить, не оставлял ли пользователь уже отзыв на этот товар (можно исправить связь в таблице тогда уж)
+    public function store(ReviewRequest $request, Product $product)
     {
         $review = Review::create([
             'user_id' => Auth::id(),
-            'product_id' => $request->product_id,
+            'product_id' => $product->id,
             'rating' => $request->rating,
             'recommendation' => $request->recommendation,
             'pros' => $request->pros,
@@ -66,17 +71,10 @@ class ApiReviewController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    // TODO 
+    // Проверить тот же пользователь удаляет или нет
+    public function update(Request $request, Review $review)
     {
-        $review = Review::where('id', $id)->where('user_id', Auth::id())->first();
-
-        if (!$review) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Review not found',
-            ], 404);
-        }
-
         $review->update([
             'rating' => $request->rating,
             'recommendation' => $request->recommendation,
@@ -92,17 +90,10 @@ class ApiReviewController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    // TODO
+    // Проверить мой ли отзыв
+    public function destroy(Review $review)
     {
-        $review = Review::where('id', $id)->where('user_id', Auth::id())->first();
-
-        if (!$review) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Review not found',
-            ], 404);
-        }
-
         $review->delete();
 
         return response()->json([

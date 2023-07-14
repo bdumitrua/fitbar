@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class ApiUserController extends Controller
 {
-    public function getme()
+    public function me()
     {
         return User::find(Auth::id())->load('roles', 'orders', 'reviews', 'addresses', 'cart');
     }

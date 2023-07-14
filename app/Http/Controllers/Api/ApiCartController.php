@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartRequest;
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,10 +22,10 @@ class ApiCartController extends Controller
         ], 200);
     }
 
-    public function store($id)
+    public function store(Product $product)
     {
         $user = User::find(Auth::id());
-        $cart = $user->cart()->where('product_id', $id)->first();
+        $cart = $user->cart()->where('product_id', $product->id)->first();
         if ($cart) {
             throw ValidationException::withMessages([
                 'message' => "This product is already in cart"
@@ -33,16 +34,16 @@ class ApiCartController extends Controller
 
         Cart::create([
             'user_id' => Auth::id(),
-            'product_id' => $id
+            'product_id' => $product->id
         ]);
 
         return response()->json(['message' => 'Product added to cart successfully'], 200);
     }
 
-    public function increase($id)
+    public function increase(Product $product)
     {
         $user = User::find(Auth::id());
-        $cart = $user->cart()->where('product_id', $id)->first();
+        $cart = $user->cart()->where('product_id', $product->id)->first();
 
         if (!$cart) {
             throw ValidationException::withMessages([
@@ -62,10 +63,10 @@ class ApiCartController extends Controller
 
         return response()->json(['message' => 'Product quantity increased successfully'], 200);
     }
-    public function decrease($id)
+    public function decrease(Product $product)
     {
         $user = User::find(Auth::id());
-        $cart = $user->cart()->where('product_id', $id)->first();
+        $cart = $user->cart()->where('product_id', $product->id)->first();
 
         if (!$cart) {
             throw ValidationException::withMessages([
@@ -85,27 +86,31 @@ class ApiCartController extends Controller
         return response()->json(['message' => 'Product quantity decreased successfully'], 200);
     }
 
-    public function update(CartRequest $request)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
             'quantity' => 'required|integer|min:1',
         ]);
 
         $user = User::find(Auth::id());
-        $cart = $user->cart()->where('product_id', $request->product_id)->first();
+        $cart = $user->cart()->where('product_id', $product->id)->first();
 
         if (!$cart) {
             return response()->json(['message' => 'Cart item not found'], 404);
         }
 
-        $cart->update($request->only(['quantity']));
+        $cart->update([
+            'quantity' => $request->quantity,
+            'product_id' => $product->id
+        ]);
+
         return response()->json(['message' => 'Cart updated successfully'], 200);
     }
 
-    public function destroy($id)
+    public function destroy(Product $product)
     {
         $user = User::find(Auth::id());
-        $cart = $user->cart()->where('product_id', $id)->first();
+        $cart = $user->cart()->where('product_id', $product->id)->first();
 
         if (!$cart) {
             return response()->json(['message' => 'Cart item not found'], 404);

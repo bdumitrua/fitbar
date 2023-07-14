@@ -24,7 +24,6 @@ class ReviewRequest extends FormRequest
         // TODO
         // Добавить сообщения
         return [
-            'product_id' => 'required',
             'rating' => 'required|integer|min:1|max:5',
             'recommendation' => 'required|in:Не рекомендую,Рекомендую',
             'pros' => 'nullable|string',

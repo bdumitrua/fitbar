@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -46,6 +47,10 @@ class ApiCategoryController extends Controller
     // Создание категории
     public function store(CategoryRequest $request)
     {
+        if (Category::where('name', $request->name)->count() > 0) {
+            return response()->json(['Category with this name already exists'], 402);
+        }
+
         $category = Category::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name)
@@ -54,14 +59,9 @@ class ApiCategoryController extends Controller
         return response()->json(['category created: ' => $category], 201);
     }
 
-    public function update(CategoryRequest $request, $id)
+    // Изменение категории
+    public function update(CategoryRequest $request, Category $category)
     {
-        $category = Category::find($id);
-
-        if (!$category) {
-            return response()->json(['message' => 'Category not found'], 404);
-        }
-
         $category->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name)
@@ -71,16 +71,12 @@ class ApiCategoryController extends Controller
     }
 
     // Удаление категории
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $category = Category::find($id);
-
-        if (!$category) {
-            return response()->json(['message' => 'Category not found'], 404);
-        }
-
         $category->delete();
 
-        return response()->json(null, 204);
+        return response()->json([
+            'Category ' . $category->name . ' was deleted'
+        ], 204);
     }
 }
