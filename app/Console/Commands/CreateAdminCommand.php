@@ -32,6 +32,7 @@ class CreateAdminCommand extends Command
 
         if ($masterPassword != '12341234') {
             $this->error('Master password is incorrect.');
+            return;
         }
 
         $user = User::create([

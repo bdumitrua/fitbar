@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ApiProductController;
 use App\Http\Controllers\Api\ApiReviewController;
 use App\Http\Controllers\Api\ApiUserRoleController;
 use App\Http\Controllers\Api\ApiUserController;
+use App\Http\Controllers\Api\ApiUserFavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,9 +40,6 @@ Route::prefix('users')->group(function () {
         Route::get('getme', 'getme');
         // Изменить данные профиля
         Route::put('update', 'update');
-
-        // TODO
-        // Добавить избранные товары (favorites)
     });
 });
 
@@ -61,7 +59,7 @@ Route::prefix('cart')->group(function () {
         // Получить все товары в корзине
         Route::get('/', 'index');
         // Добавить товар в корзину 
-        Route::post('create', 'store');
+        Route::post('create/{id}', 'store');
         // Увеличить кол-во товара на 1
         Route::patch('increase/{id}', 'increase');
         // Уменьшить кол-во товара на 1
@@ -70,6 +68,17 @@ Route::prefix('cart')->group(function () {
         Route::patch('update', 'update');
         // Удалить из корзины
         Route::delete('delete/{id}', 'destroy');
+    });
+});
+
+Route::prefix('favorites')->group(function () {
+    Route::controller(ApiUserFavoriteController::class)->group(function () {
+        // Получить все товары в корзине
+        Route::get('/', 'index');
+        // Добавить товар в корзину 
+        Route::post('store/{id}', 'store');
+        // Удалить из корзины
+        Route::delete('remove/{id}', 'destroy');
     });
 });
 

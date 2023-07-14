@@ -26,12 +26,10 @@ class ApiCartController extends Controller
         ], 200);
     }
 
-    // TODO
-    // Проверку на наличие такой корзины
-    public function store(CartRequest $request)
+    public function store($id)
     {
         $user = User::find(Auth::id());
-        $cart = $user->cart()->where('product_id', $request->product_id)->first();
+        $cart = $user->cart()->where('product_id', $id)->first();
         if ($cart) {
             throw ValidationException::withMessages([
                 'message' => "This product is already in cart"
@@ -40,7 +38,7 @@ class ApiCartController extends Controller
 
         Cart::create([
             'user_id' => Auth::id(),
-            'product_id' => $request->product_id
+            'product_id' => $id
         ]);
 
         return response()->json(['message' => 'Product added to cart successfully'], 200);

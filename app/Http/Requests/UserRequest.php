@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
     }
 
     // TODO 
-    // Дописать
+    // Дописать сообщения
     public function messages()
     {
         return [
