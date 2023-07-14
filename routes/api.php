@@ -25,16 +25,16 @@ use App\Http\Controllers\Api\ApiUserFavoriteController;
 */
 
 Route::prefix('auth')->controller(ApiAuthController::class)->group(function () {
-    // Залогиниться
-    Route::post('login', 'login');
     // Зарегистрироваться
     Route::post('register', 'register');
+    // Залогиниться
+    Route::post('login', 'login');
+    // Получить новый токен (по уже истёкшему)
+    Route::post('refresh', 'refresh');
 
     Route::middleware(['auth:api'])->group(function () {
         // Выйти
         Route::post('logout', 'logout');
-        // Получить новый токен
-        Route::post('refresh', 'refresh');
     });
 });
 
