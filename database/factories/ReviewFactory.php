@@ -18,23 +18,6 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'user_id' => function () {
-                return User::all()->random(); // случайный пользователь
-            },
-
-            'product_id' => function () {
-                return Product::all()->random(); // случайный продукт
-            },
-
-            'created_at' => fake()->dateTime(), // случайная дата создания
-            'rating' => fake()->numberBetween(1, 5), // случайный рейтинг
-            'recommendation' => fake()->randomElement(['Рекомендую', 'Не рекомендую']), // случайное общее мнение
-            'pros' => fake()->sentence(), // случайные достоинства
-            'cons' => fake()->sentence(), // случайные недостатки
-            'comment' => fake()->paragraph(), // случайный комментарий
-            'helpful_yes' => 0,
-            'helpful_no' => 0,
-        ];
+        return [];
     }
 }
