@@ -21,10 +21,17 @@ class CartRequest extends FormRequest
      */
     public function rules(): array
     {
-        // TODO
-        // Написать сообщения
         return [
             'product_id' => 'required|integer|exists:products,id'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'product_id.required' => 'Поле идентификатора продукта является обязательным.',
+            'product_id.integer'  => 'Идентификатор продукта должен быть целым числом.',
+            'product_id.exists'   => 'Продукт с таким идентификатором не существует.',
         ];
     }
 }

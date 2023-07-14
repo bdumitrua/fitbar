@@ -61,6 +61,12 @@ class ApiProductController extends Controller
     {
         $path = FileHelper::saveImageFromUrl($request->image, 'products');
 
+        if (Product::where('name', $request->name)->exists()) {
+            return response()->json([
+                'message' => 'Product with this name already exists'
+            ], 403);
+        }
+
         $product = Product::create([
             'image' => $path,
             'name' => $request->name,

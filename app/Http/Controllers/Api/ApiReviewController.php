@@ -7,6 +7,7 @@ use App\Http\Requests\ReviewRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,10 +51,20 @@ class ApiReviewController extends Controller
         ]);
     }
 
-    // TODO
-    // Проверить, не оставлял ли пользователь уже отзыв на этот товар (можно исправить связь в таблице тогда уж)
+    public function me()
+    {
+        $user = User::find(Auth::id());
+        return response()->json($user->reviews, 200);
+    }
+
     public function store(ReviewRequest $request, Product $product)
     {
+        if ($product->reviews()->where('user_id', Auth::id())->count() >= 1) {
+            return response()->json([
+                'message' => 'You already reviewed about this product'
+            ], 403);
+        }
+
         $review = Review::create([
             'user_id' => Auth::id(),
             'product_id' => $product->id,
@@ -71,11 +82,10 @@ class ApiReviewController extends Controller
         ]);
     }
 
-    // TODO 
-    // Проверить тот же пользователь удаляет или нет
     public function update(Request $request, Review $review)
     {
-        $review->update([
+        $user = User::find(Auth::id());
+        $review = $user->reviews()->where('id', $review->id)->update([
             'rating' => $request->rating,
             'recommendation' => $request->recommendation,
             'pros' => $request->pros,
@@ -83,22 +93,32 @@ class ApiReviewController extends Controller
             'comment' => $request->comment
         ]);
 
+        if (!$review) {
+            return response()->json([
+                'message' => 'access denied'
+            ], 403);
+        }
+
         return response()->json([
             'status' => 'success',
-            'message' => 'Review successfully updated',
-            'review' => $review,
-        ]);
+            'message' => 'Review successfully updated'
+        ], 200);
     }
 
-    // TODO
-    // Проверить мой ли отзыв
     public function destroy(Review $review)
     {
-        $review->delete();
+        $user = User::find(Auth::id());
+        $review = $user->reviews()->where('id', $review->id)->delete();
+
+        if (!$review) {
+            return response()->json([
+                'message' => 'access denied'
+            ], 403);
+        }
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Review successfully deleted',
-        ]);
+            'message' => 'Review successfully deleted'
+        ], 200);
     }
 }

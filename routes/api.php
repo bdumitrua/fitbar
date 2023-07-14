@@ -50,14 +50,13 @@ Route::prefix('users')->controller(ApiUserController::class)->group(function () 
 
 Route::prefix('address')->controller(ApiAddressController::class)->group(function () {
     Route::middleware(['auth:api'])->group(function () {
-        // TODO
         // Получение своих адрессов
-
-        // Создание адресса в списке адрессов пользоваля
+        Route::get('/', 'index');
+        // Создание нового адресса пользователя
         Route::post('create', 'create');
-        // Изменение адресса
+        // Изменение своего адресса
         Route::put('update/{address}', 'update');
-        // Удаление адресса
+        // Удаление своего адресса
         Route::delete('delete/{address}', 'delete');
     });
 });
@@ -81,11 +80,11 @@ Route::prefix('cart')->controller(ApiCartController::class)->group(function () {
 
 Route::prefix('favorites')->controller(ApiUserFavoriteController::class)->group(function () {
     Route::middleware(['auth:api'])->group(function () {
-        // Получить все товары в корзине
+        // Получить все избранные товары
         Route::get('/', 'index');
-        // Добавить товар в корзину 
+        // Добавить товар в избранные 
         Route::post('store/{product}', 'store');
-        // Удалить из корзины
+        // Удалить из избранных
         Route::delete('remove/{product}', 'destroy');
     });
 });
@@ -148,6 +147,8 @@ Route::prefix('reviews')->controller(ApiReviewController::class)->group(function
     Route::get('/category/{category}', 'getCategoryReviews');
 
     Route::middleware(['auth:api'])->group(function () {
+        // Получить свои отзывы
+        Route::get('/me', 'me');
         // Оставить отзыв
         Route::post('create/{product}', 'store');
         // Отредактировать отзыв

@@ -21,14 +21,34 @@ class ReviewRequest extends FormRequest
      */
     public function rules(): array
     {
-        // TODO
-        // Добавить сообщения
         return [
             'rating' => 'required|integer|min:1|max:5',
             'recommendation' => 'required|in:Не рекомендую,Рекомендую',
-            'pros' => 'nullable|string',
-            'cons' => 'nullable|string',
-            'comment' => 'nullable|string',
+            'pros' => 'nullable|string|max:250:',
+            'cons' => 'nullable|string|max:250',
+            'comment' => 'nullable|string|max:1000',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'rating.required' => 'Рейтинг является обязательным полем.',
+            'rating.integer'  => 'Рейтинг должен быть целым числом.',
+            'rating.min'      => 'Минимальное значение рейтинга - 1.',
+            'rating.max'      => 'Максимальное значение рейтинга - 5.',
+
+            'recommendation.required' => 'Поле рекомендации является обязательным.',
+            'recommendation.in'       => 'Рекомендация должна быть либо "Не рекомендую", либо "Рекомендую".',
+
+            'pros.string'   => 'Поле "плюсы" должно быть строкой.',
+            'pros.max'      => 'Максимальная длина поля "плюсы" - 250 символов.',
+
+            'cons.string'   => 'Поле "минусы" должно быть строкой.',
+            'cons.max'      => 'Максимальная длина поля "минусы" - 250 символов.',
+
+            'comment.string'   => 'Комментарий должен быть строкой.',
+            'comment.max'      => 'Максимальная длина комментария - 1000 символов.',
         ];
     }
 }

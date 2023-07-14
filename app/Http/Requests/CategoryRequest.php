@@ -21,10 +21,17 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        // TODO
-        // Добавить сообщения
         return [
             'name' => 'required|string|max:255'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Название категории является обязательным полем.',
+            'name.string'   => 'Название категории должно быть строкой.',
+            'name.max'      => 'Длина названия категории не должна превышать 255 символов.',
         ];
     }
 }

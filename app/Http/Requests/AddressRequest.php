@@ -22,7 +22,7 @@ class AddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'address' => 'required|string|max:255'
+            'address' => 'required|string|max:255|unique:addresses'
         ];
     }
 
