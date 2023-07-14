@@ -13,11 +13,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserSeeder::class,
-            ProductSeeder::class,
-            CategorySeeder::class,
-            ReviewSeeder::class,
+            // Генерация самих ролей в 'roles'
             RoleSeeder::class,
+            // Юзеры в сидере получают роли
+            UserSeeder::class,
+
+            CategorySeeder::class,
+            // Продукты получают категории
+            ProductSeeder::class,
+            // Отзывы оставляются на продукты от имени пользователей
+            ReviewSeeder::class,
         ]);
     }
 }

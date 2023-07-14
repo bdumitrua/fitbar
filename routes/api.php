@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\ApiAddressController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Api\ApiCartController;
@@ -9,7 +8,7 @@ use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiOrderController;
 use App\Http\Controllers\Api\ApiProductController;
 use App\Http\Controllers\Api\ApiReviewController;
-use App\Http\Controllers\Api\ApiRoleController;
+use App\Http\Controllers\Api\ApiUserRoleController;
 use App\Http\Controllers\Api\ApiUserController;
 
 /*
@@ -24,9 +23,13 @@ use App\Http\Controllers\Api\ApiUserController;
 */
 
 Route::controller(ApiAuthController::class)->group(function () {
+    // Залогиниться
     Route::post('login', 'login');
+    // Зарегистрироваться
     Route::post('register', 'register');
+    // Выйти
     Route::post('logout', 'logout');
+    // Получить новый токен
     Route::post('refresh', 'refresh');
 });
 
@@ -140,12 +143,38 @@ Route::prefix('reviews')->group(function () {
         Route::get('/category/{id}', 'getCategoryReviews');
     });
 });
+
+// Вообще планировалось создание только 3 ролей, но пусть будет так)
+// 1 - USER
+// 2 - SELLER
+// 3 - MANAGER
+// 4 - ADMIN
+// 5 - HEAD_ADMIN
+
 Route::prefix('roles')->group(function () {
-    Route::controller(ApiRoleController::class)->group(function () {
-        Route::post('create', 'create');
-        // TODO
-        // Выдать кому-то роль (по id)
-        // Убрать чью-то роль (т.е. сделать обычным пользователем)
-        // Изменить чью-то роль (пр: с 3 на 4 или наоборот)
+    Route::controller(ApiUserRoleController::class)->group(function () {
+        // Маршруты, доступные только для мэнэджера 
+        // Просмотр ролей и создание/удаление права на торговлю свои товаром 
+        Route::middleware(['auth:api', 'role:3'])->group(function () {
+            Route::get('get/{user_id}', 'index');
+            Route::post('make/seller/{user_id}', 'makeSaller');
+            Route::post('remove/seller/{user_id}', 'removeSeller');
+        });
+
+        // Дополнительные команды, доступные только админам
+        Route::middleware(['auth:api', 'role:4'])->group(function () {
+            Route::post('make/manager/{user_id}', 'makeManager');
+            Route::post('remove/manager/{user_id}', 'removeManager');
+
+            // Полная очистка всех ролей, делает пользователя обычным USER
+            // Работает только на пользователей с ROLE < совершающего очистку
+            // Т.е. админ не может очистить админа или гл. админа
+            Route::put('clear/{user_id}', 'destroy');
+        });
+
+        Route::middleware(['auth:api', 'role:5'])->group(function () {
+            Route::post('make/admin/{user_id}', 'makeAdmin');
+            Route::post('remove/admin/{user_id}', 'removeAdmin');
+        });
     });
 });

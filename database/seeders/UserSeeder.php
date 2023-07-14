@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RoleUser;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 
@@ -14,7 +15,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Let's create 50 users
-        User::factory()->count(50)->create();
+        // Создаем пользователей
+        User::factory()->count(50)->create()->each(function ($user) {
+
+            // Создаем роль для каждого пользователя
+            RoleUser::create([
+                'user_id' => $user->id,
+                'role_id' => 1
+            ]);
+        });
     }
 }
