@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ApiReviewController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     public function index()
     {
         $reviews = Review::all();

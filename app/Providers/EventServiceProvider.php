@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Review;
+use App\Models\ReviewVote;
+use App\Observers\ReviewObserver;
+use App\Observers\ReviewVoteObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,7 +29,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Review::observe(ReviewObserver::class);
+        ReviewVote::observe(ReviewVoteObserver::class);
     }
 
     /**

@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ApiUserFavoriteController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
-
     // Получение всех товаров из избранных
     public function index()
     {

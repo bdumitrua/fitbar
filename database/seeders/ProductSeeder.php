@@ -31,6 +31,6 @@ class ProductSeeder extends Seeder
             Category::create(['name' => $categoryName, 'slug' => Str::slug($categoryName)]);
         }
 
-        Product::factory(50)->create(); // создать 50 случайных товаров
+        Product::factory(30)->create(); // создать 30 случайных товаров
     }
 }

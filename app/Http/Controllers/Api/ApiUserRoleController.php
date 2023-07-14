@@ -15,6 +15,7 @@ class ApiUserRoleController extends Controller
         $user = User::find($user_id);
         return response()->json($user->roles()->get());
     }
+
     public function makeSaller($user_id)
     {
         try {

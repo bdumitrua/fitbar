@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ApiOrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     // Получение всех заказов текущего пользователя
     public function index()
     {

@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Hash;
 
 class ApiAuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
-
     public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');

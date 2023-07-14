@@ -9,11 +9,6 @@ use App\Models\Product;
 
 class ApiProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['index', 'show', 'similar']]);
-    }
-
     /**
      * Получить все продукты
      */

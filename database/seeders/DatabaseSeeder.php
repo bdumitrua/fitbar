@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
+
             // Зависит от ролей
             UserSeeder::class,
 
@@ -25,7 +26,10 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
 
             // Зависит от пользователей и продуктов
-            UserFavoriteSeeder::class
+            UserFavoriteSeeder::class,
+
+            // Зависит от пользователей и отзывов
+            ReviewVoteSeeder::class
         ]);
     }
 }

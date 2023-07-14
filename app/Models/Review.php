@@ -30,4 +30,8 @@ class Review extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    public function votes()
+    {
+        return $this->hasMany(ReviewVote::class);
+    }
 }

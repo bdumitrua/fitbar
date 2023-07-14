@@ -33,8 +33,8 @@ class ReviewFactory extends Factory
             'pros' => fake()->sentence(), // случайные достоинства
             'cons' => fake()->sentence(), // случайные недостатки
             'comment' => fake()->paragraph(), // случайный комментарий
-            'helpful_yes' => fake()->numberBetween(0, 100), // случайное количество положительных оценок
-            'helpful_no' => fake()->numberBetween(0, 100), // случайное количество отрицательных оценок
+            'helpful_yes' => 0,
+            'helpful_no' => 0,
         ];
     }
 }

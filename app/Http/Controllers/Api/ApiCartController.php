@@ -12,11 +12,6 @@ use Illuminate\Validation\ValidationException;
 
 class ApiCartController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     public function index()
     {
         $user = User::find(Auth::id());

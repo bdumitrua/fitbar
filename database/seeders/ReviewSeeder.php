@@ -13,6 +13,6 @@ class ReviewSeeder extends Seeder
      */
     public function run(): void
     {
-        Review::factory(500)->create(); // создать 500 случайных отзывов на случайные товары
+        Review::factory(200)->create(); // создать 500 случайных отзывов на случайные товары
     }
 }
