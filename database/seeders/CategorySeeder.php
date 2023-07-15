@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -12,6 +13,19 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // список категорий
+        $categories = [
+            'Протеин',
+            'Витамины',
+            'Жиры',
+            'Аминокислоты',
+            'Креатин',
+            'Энергетики',
+        ];
+
+        // создание категорий
+        foreach ($categories as $categoryName) {
+            Category::create(['name' => $categoryName, 'slug' => Str::slug($categoryName)]);
+        }
     }
 }

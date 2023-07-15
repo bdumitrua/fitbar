@@ -82,7 +82,7 @@ class ApiReviewController extends Controller
         ]);
     }
 
-    public function update(Request $request, Review $review)
+    public function update(ReviewRequest $request, Review $review)
     {
         $user = User::find(Auth::id());
         $review = $user->reviews()->where('id', $review->id)->update([
