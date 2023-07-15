@@ -200,5 +200,9 @@ Route::prefix('roles')->controller(ApiUserRoleController::class)->group(function
     Route::middleware(['auth:api', 'role:5'])->group(function () {
         Route::post('make/admin/{user}', 'makeAdmin');
         Route::post('remove/admin/{user}', 'removeAdmin');
+
+
+        // TODO 
+        // Здесь обязательно будет куча энд-поинтов для админки.
     });
 });
