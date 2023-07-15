@@ -97,7 +97,8 @@ Route::prefix('category')->controller(ApiCategoryController::class)->group(funct
     // Получение всех товаров id категории
     Route::get('/id/{id}', 'getProductsByCategoryId');
 
-    Route::middleware(['auth:api', 'role:4'])->group(function () {
+    $ADMIN = 4;
+    Route::middleware(['auth:api', 'role:' . $ADMIN])->group(function () {
         // Создание категории
         Route::post('create', 'store');
         // Изменение категории
@@ -126,7 +127,8 @@ Route::prefix('products')->controller(ApiProductController::class)->group(functi
     // Получить похожие продукты (продукты той-же категории с небольшим отличием по цене (+-30%))
     Route::get('/similar/{product}', 'similar');
 
-    Route::middleware(['auth:api', 'role:3'])->group(function () {
+    $MANAGER = 3;
+    Route::middleware(['auth:api', 'role:' . $MANAGER])->group(function () {
         // Создать продукт
         Route::post('create', 'store');
         // Изменить продукт по id 
@@ -178,17 +180,25 @@ Route::prefix('reviews/votes')->controller(ApiReviewVoteController::class)->grou
 // 4 - ADMIN
 // 5 - HEAD_ADMIN
 
+
+
 Route::prefix('roles')->controller(ApiUserRoleController::class)->group(function () {
+    $USER = 1;
+    $SELLER = 2;
+    $MANAGER = 3;
+    $ADMIN = 4;
+    $HEAD_ADMIN = 5;
+
     // Маршруты, доступные только для мэнэджера 
     // Просмотр ролей и создание/удаление права на торговлю свои товаром 
-    Route::middleware(['auth:api', 'role:3'])->group(function () {
+    Route::middleware(['auth:api', 'role:' . $MANAGER])->group(function () {
         Route::get('get/{user}', 'index');
         Route::post('make/seller/{user}', 'makeSaller');
         Route::post('remove/seller/{user}', 'removeSeller');
     });
 
     // Дополнительные команды, доступные только админам
-    Route::middleware(['auth:api', 'role:4'])->group(function () {
+    Route::middleware(['auth:api', 'role:' . $ADMIN])->group(function () {
         Route::post('make/manager/{user}', 'makeManager');
         Route::post('remove/manager/{user}', 'removeManager');
 
@@ -197,7 +207,7 @@ Route::prefix('roles')->controller(ApiUserRoleController::class)->group(function
         Route::put('clear/{user}', 'destroy');
     });
 
-    Route::middleware(['auth:api', 'role:5'])->group(function () {
+    Route::middleware(['auth:api', 'role:' . $HEAD_ADMIN])->group(function () {
         Route::post('make/admin/{user}', 'makeAdmin');
         Route::post('remove/admin/{user}', 'removeAdmin');
 
