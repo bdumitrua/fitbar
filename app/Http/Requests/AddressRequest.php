@@ -32,6 +32,7 @@ class AddressRequest extends FormRequest
             'address.required' => 'Адрес является обязательным полем.',
             'address.string'   => 'Адрес должен быть строкой.',
             'address.max'      => 'Длина адреса не должна превышать 255 символов.',
+            'address.unique'   => 'Данный адрес был добавлен ранее',
         ];
     }
 }
