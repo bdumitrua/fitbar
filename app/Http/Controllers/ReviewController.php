@@ -97,7 +97,7 @@ class ReviewController extends Controller
 
         if (!$reviewUpdateStatus) {
             return [
-                'message' => 'access denied',
+                'error' => 'access denied',
                 'code' => 403
             ];
         }
@@ -115,7 +115,7 @@ class ReviewController extends Controller
 
         if (!$reviewDeleteStatus) {
             return [
-                'message' => 'access denied',
+                'error' => 'access denied',
                 'code' => 403
             ];
         }

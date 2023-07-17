@@ -41,7 +41,7 @@ class UserController extends Controller
 
         // возвращаем обновленного пользователя
         return [
-            'error' => $user,
+            'message' => $user,
             'code' => 200
         ];
     }
