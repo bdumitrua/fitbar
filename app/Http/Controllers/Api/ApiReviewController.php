@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ReviewController;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Category;
 use App\Models\Product;
@@ -11,7 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ApiReviewController extends Controller
+class ApiReviewController extends ReviewController
 {
     public function index()
     {
