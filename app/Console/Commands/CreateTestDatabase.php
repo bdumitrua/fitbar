@@ -19,32 +19,25 @@ class CreateTestDatabase extends Command
      *
      * @var string
      */
-    protected $description = 'Create database for tests from .env.testing';
+    protected $description = 'Create test database from .env + _test';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        // Load .env.testing configuration
-        $dotenv = \Dotenv\Dotenv::createImmutable(base_path(), '.env.testing');
-        $dotenv->load();
-
-        $databaseName = env('DB_DATABASE');
+        $databaseName = config('database.connections.mysql.database') . '_test';
         $charset = config('database.connections.mysql.charset', 'utf8mb4');
         $collation = config('database.connections.mysql.collation', 'utf8mb4_unicode_ci');
 
-        config([
-            'database.connections.mysql.database' => null,
-        ]);
+        config(["database.connections.mysql.database" => null]);
 
-        DB::statement("DROP DATABASE IF EXISTS $databaseName");
-        DB::statement("CREATE DATABASE $databaseName CHARACTER SET $charset COLLATE $collation");
+        $query = "CREATE DATABASE IF NOT EXISTS $databaseName CHARACTER SET $charset COLLATE $collation;";
 
-        config([
-            'database.connections.mysql.database' => $databaseName,
-        ]);
+        DB::statement($query);
 
-        $this->info("Database {$databaseName} created successfully");
+        config(["database.connections.mysql.database" => $databaseName]);
+
+        $this->info("Database " . $databaseName . " was created successful!");
     }
 }
