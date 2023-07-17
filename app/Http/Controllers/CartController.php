@@ -51,7 +51,7 @@ class CartController extends Controller
         if (!$cart) {
             return [
                 'error' => "There is no product with this id in the cart",
-                'code' => 405
+                'code' => 404
             ];
         }
 
@@ -78,7 +78,7 @@ class CartController extends Controller
         if (!$cart) {
             return [
                 'error' => "There is no product with this id in the cart",
-                'code' => 405
+                'code' => 404
             ];
         }
 
