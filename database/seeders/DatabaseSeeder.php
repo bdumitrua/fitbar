@@ -29,7 +29,10 @@ class DatabaseSeeder extends Seeder
             UserFavoriteSeeder::class,
 
             // Зависит от пользователей и отзывов
-            ReviewVoteSeeder::class
+            ReviewVoteSeeder::class,
+
+            // Зависит от USER
+            OrderSeeder::class,
         ]);
     }
 }
