@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\FileHelper;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProductController;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 
-class ApiProductController extends Controller
+class ApiProductController extends ProductController
 {
     /**
      * Получить все продукты
      */
     public function index()
     {
-        $products = Product::all();
-        return response()->json($products, 200);
+        $response = parent::index();
+
+        return parent::MainResponseToJSON($response);
     }
 
     /**
@@ -23,13 +24,9 @@ class ApiProductController extends Controller
      */
     public function show(Product $product)
     {
-        if (!$product) {
-            return response()->json([
-                'message' => 'Product not found'
-            ], 404);
-        }
+        $response = parent::show($product);
 
-        return response()->json($product, 200);
+        return parent::MainResponseToJSON($response);
     }
 
     /**
@@ -37,21 +34,9 @@ class ApiProductController extends Controller
      */
     public function similar(Product $product)
     {
-        if (!$product) {
-            return response()->json([
-                'message' => 'Product not found'
-            ], 404);
-        }
+        $response = parent::similar($product);
 
-        $lowerBound = $product->price * 0.7;
-        $upperBound = $product->price * 1.3;
-
-        $similarProducts = Product::where('category_id', $product->category_id)
-            ->whereBetween('price', [$lowerBound, $upperBound])
-            ->where('id', '!=', $product->id)
-            ->get();
-
-        return response()->json($similarProducts, 200);
+        return parent::MainResponseToJSON($response);
     }
 
     /**
@@ -59,24 +44,9 @@ class ApiProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $path = FileHelper::saveImageFromUrl($request->image, 'products');
+        $response = parent::store($request);
 
-        if (Product::where('name', $request->name)->exists()) {
-            return response()->json([
-                'message' => 'Product with this name already exists'
-            ], 403);
-        }
-
-        $product = Product::create([
-            'image' => $path,
-            'name' => $request->name,
-            'price' => $request->price,
-            'short_description' => $request->short_description,
-            'long_description' => $request->long_description,
-            'category_id' => $request->category_id,
-        ]);
-
-        return response()->json($product, 200);
+        return parent::MainResponseToJSON($response);
     }
 
     /**
@@ -84,29 +54,9 @@ class ApiProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        $path = '';
-        if ($request->hasFile('image')) {
-            $path = FileHelper::saveImageFromUrl($request->image, 'products');
-        } else {
-            $path = $product->image;
-        }
+        $response = parent::update($request, $product);
 
-        if (!$product) {
-            return response()->json([
-                'message' => 'Product not found'
-            ], 404);
-        }
-
-        $product->update([
-            'image' => $path,
-            'name' => $request->name,
-            'price' => $request->price,
-            'short_description' => $request->short_description,
-            'long_description' => $request->long_description,
-            'category_id' => $request->category_id
-        ]);
-
-        return response()->json($product, 200);
+        return parent::MainResponseToJSON($response);
     }
 
     /**
@@ -114,16 +64,8 @@ class ApiProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if (!$product) {
-            return response()->json([
-                'message' => 'Product not found'
-            ], 404);
-        }
+        $response = parent::destroy($product);
 
-        $product->delete();
-
-        return response()->json([
-            'message' => 'Product deleted'
-        ], 200);
+        return parent::MainResponseToJSON($response);
     }
 }
