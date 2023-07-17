@@ -50,13 +50,13 @@ Route::prefix('users')->controller(ApiUserController::class)->group(function () 
 
 Route::prefix('address')->controller(ApiAddressController::class)->group(function () {
     Route::middleware(['auth:api'])->group(function () {
-        // Получение своих адрессов
+        // Получение своих адресов
         Route::get('/', 'index');
-        // Создание нового адресса пользователя
+        // Создание нового адреса пользователя
         Route::post('create', 'create');
-        // Изменение своего адресса
+        // Изменение своего адреса
         Route::put('update/{address}', 'update');
-        // Удаление своего адресса
+        // Удаление своего адреса
         Route::delete('delete/{address}', 'delete');
     });
 });
