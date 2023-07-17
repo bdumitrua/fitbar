@@ -44,7 +44,7 @@ class OrderController extends Controller
         $cart = Auth::user()->cart;
 
         // Проверяем, есть ли что-то в корзине
-        if (empty($cart)) {
+        if (count($cart) == 0) {
             return [
                 'error' => 'Cart is empty',
                 'code' => 405
