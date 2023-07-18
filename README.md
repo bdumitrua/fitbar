@@ -58,7 +58,7 @@ php artisan jwt:secret    # создать jwt secret ключ в .env для р
 php artisan serve    # запустить приложение на http://127.0.0.1:8000
 ```
 
-Для создания админна введите 
+Для создания админа введите 
 
 ```bash
 php artisan create:admin # master password: 12341234
@@ -81,4 +81,8 @@ php artisan test
 
 ## Импорт в Postman или Insomnia
 
-Проект предоставляет готовые файлы для удобного импорта и проверки запросов в Postman или Insomnia. Вы можете скачать эти файлы [здесь (Postman)](https://github.com/bdumitrua/fitbar/blob/main/Fitbar.postman_collection.json) и [здесь (Insomnia)](https://github.com/bdumitrua/fitbar/blob/main/fitbarInsomnia).
+Проект предоставляет готовые файлы для удобного импорта и проверки запросов в Postman или Insomnia. <br>
+Вы можете скачать эти файлы [здесь (Postman)](https://github.com/bdumitrua/fitbar/blob/main/Fitbar.postman_collection.json) и [здесь (Insomnia)](https://github.com/bdumitrua/fitbar/blob/main/fitbarInsomnia).
+<br>
+<br>
+<br>
