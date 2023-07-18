@@ -13,7 +13,7 @@ class Controller extends BaseController
     protected function MainResponseToJSON($response)
     {
         if (isset($response['error'])) {
-            return response()->json(['error' => $response['error']], $response['code']);
+            return response()->json(['errors' => $response['error']], $response['code']);
         }
 
         return response()->json(['message' => $response['message']], $response['code']);
