@@ -13,52 +13,32 @@ class ApiAddressController extends AddressController
 {
     public function index()
     {
-        $addresses = parent::index();
-        return response()->json($addresses);
+        $response = parent::index();
+
+        return parent::MainResponseToJSON($response);
     }
 
     // Создание нового адреса
     public function create(AddressRequest $request)
     {
-        $address = parent::create($request);
+        $response = parent::create($request);
 
-        return response()->json([
-            'status' => 'success',
-            'address' => $address
-        ]);
+        return parent::MainResponseToJSON($response);
     }
 
     // Обновление существующего адреса
     public function update(AddressRequest $request, Address $address)
     {
-        $addressUpdateStatus = parent::update($request, $address);
+        $response = parent::update($request, $address);
 
-        if (!$addressUpdateStatus) {
-            return response()->json([
-                'message' => 'access denied'
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Address updated'
-        ], 200);
+        return parent::MainResponseToJSON($response);
     }
 
     // Удаление адреса
     public function delete(Address $address)
     {
-        $addressDeleteStatus = parent::delete($address);
+        $response = parent::delete($address);
 
-        if (!$addressDeleteStatus) {
-            return response()->json([
-                'message' => 'access denied'
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Address deleted'
-        ]);
+        return parent::MainResponseToJSON($response);
     }
 }

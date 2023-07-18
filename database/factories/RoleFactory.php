@@ -9,15 +9,25 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RoleFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected static $orderIndex = 0;
+
+    protected static $roleNames = [
+        'USER',
+        'SELLER',
+        'MANAGER',
+        'ADMIN',
+        'HEAD_ADMIN'
+    ];
+
     public function definition(): array
     {
+        if (self::$orderIndex >= count(self::$roleNames)) {
+            self::$orderIndex = 0;
+        }
+
         return [
-            'name' => $this->faker->randomElement(['USER', 'SELLER', 'MANAGER', 'ADMIN', 'HEAD_ADMIN']),
+            'name' => self::$roleNames[self::$orderIndex++],
+            'id' => self::$orderIndex
         ];
     }
 }

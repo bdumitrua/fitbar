@@ -23,8 +23,8 @@ class ReviewRequest extends FormRequest
     {
         return [
             'rating' => 'required|integer|min:1|max:5',
-            'recommendation' => 'required|in:Не рекомендую,Рекомендую',
-            'pros' => 'nullable|string|max:250:',
+            'recommendation' => 'required|string|in:Не рекомендую,Рекомендую',
+            'pros' => 'nullable|string|max:250',
             'cons' => 'nullable|string|max:250',
             'comment' => 'nullable|string|max:1000',
         ];

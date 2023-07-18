@@ -33,7 +33,9 @@ class ApiAddressControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                '*' => ['id', 'address', 'user_id']
+                'message' => [
+                    '*' => ['id', 'address', 'user_id']
+                ]
             ]);
     }
 
@@ -48,8 +50,7 @@ class ApiAddressControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'status' => 'success',
-                'address' => $addressData
+                'message' => 'Address created successfully'
             ]);
     }
 
@@ -64,7 +65,6 @@ class ApiAddressControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'status' => 'success',
                 'message' => 'Address updated'
             ]);
     }
@@ -76,7 +76,6 @@ class ApiAddressControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'status' => 'success',
                 'message' => 'Address deleted'
             ]);
     }

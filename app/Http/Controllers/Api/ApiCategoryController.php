@@ -2,79 +2,56 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\CategoryController;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Support\Str;
 
-class ApiCategoryController extends Controller
+class ApiCategoryController extends CategoryController
 {
     public function index()
     {
-        return Category::all();
+        $response = parent::index();
+
+        return parent::MainResponseToJSON($response);
     }
 
     // Получение всех товаров по category_id
     public function getProductsByCategoryId($id)
     {
-        $category = Category::find($id);
+        $response = parent::getProductsByCategoryId($id);
 
-        if (!$category) {
-            return response()->json(['message' => 'Category not found'], 404);
-        }
-
-        $products = $category->products;
-
-        return response()->json(['products' => $products], 200);
+        return parent::MainResponseToJSON($response);
     }
 
     // Получение всех товаров по slug
     public function getProductsBySlug($slug)
     {
-        $category = Category::where('slug', $slug)->first();
+        $response = parent::getProductsBySlug($slug);
 
-        if (!$category) {
-            return response()->json(['message' => 'Category not found'], 404);
-        }
-
-        $products = $category->products;
-
-        return response()->json(['products' => $products], 200);
+        return parent::MainResponseToJSON($response);
     }
 
     // Создание категории
     public function store(CategoryRequest $request)
     {
-        if (Category::where('name', $request->name)->count() > 0) {
-            return response()->json(['Category with this name already exists'], 402);
-        }
+        $response = parent::store($request);
 
-        $category = Category::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name)
-        ]);
-
-        return response()->json(['category created: ' => $category], 201);
+        return parent::MainResponseToJSON($response);
     }
 
     // Изменение категории
     public function update(CategoryRequest $request, Category $category)
     {
-        $category->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name)
-        ]);
+        $response = parent::update($request, $category);
 
-        return response()->json(['category updated: ' => $category], 200);
+        return parent::MainResponseToJSON($response);
     }
 
     // Удаление категории
     public function destroy(Category $category)
     {
-        $category->delete();
+        $response = parent::destroy($category);
 
-        return response()->json([
-            'Category ' . $category->name . ' was deleted'
-        ], 204);
+        return parent::MainResponseToJSON($response);
     }
 }

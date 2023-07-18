@@ -73,7 +73,7 @@ Route::prefix('cart')->controller(ApiCartController::class)->group(function () {
         // Установить кол-во товара = quantity
         Route::patch('update/{product}', 'update')->name('cart.update');
         // Удалить из корзины
-        Route::delete('delete/{product}', 'destroy')->name('cart.delete');
+        Route::delete('delete/{product}', 'destroy')->name('cart.destroy');
     });
 });
 
