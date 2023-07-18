@@ -20,10 +20,10 @@ class ProductFactory extends Factory
         return [
             'image' => fake()->imageUrl(), // случайное изображение
             'name' => fake()->words(3, true), // случайное название товара
-            'price' => fake()->randomFloat(2, 1, 100), // случайная цена
+            'price' => fake()->randomFloat(2, 1, 1000), // случайная цена
             'rating' => fake()->randomFloat(1, 0, 5), // случайный рейтинг
-            'short_description' => fake()->sentence(), // краткое описание
-            'long_description' => fake()->paragraph(), // длинное описание
+            'short_description' => fake()->words(15, true), // краткое описание
+            'long_description' => fake()->words(150, true), // длинное описание
             'category_id' => function () {
                 return Category::all()->random(); // случайная категория
             }

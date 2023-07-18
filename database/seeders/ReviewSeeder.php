@@ -32,7 +32,7 @@ class ReviewSeeder extends Seeder
                     'product_id' => $product->id,
                     'created_at' => fake()->dateTime(),
                     'rating' => fake()->numberBetween(1, 5),
-                    'recommendation' => fake()->randomElement(['Рекомендую', 'Не рекомендую']),
+                    'recommendation' => fake()->randomElement(['Не рекомендую', 'Рекомендую']),
                     'pros' => fake()->sentence(),
                     'cons' => fake()->sentence(),
                     'comment' => fake()->paragraph(),

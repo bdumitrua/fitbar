@@ -18,6 +18,14 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'user_id' => User::all()->random(),
+            'product_id' => Product::all()->random(),
+            'rating' => fake()->numberBetween(1, 5),
+            'recommendation' => fake()->randomElement(['Не рекомендую', 'Рекомендую']),
+            'pros' => fake()->word(10, true),
+            'cons' => fake()->word(10, true),
+            'comment' => fake()->word(60, true),
+        ];
     }
 }
