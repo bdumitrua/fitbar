@@ -9,7 +9,7 @@ const Header = () => {
                 <img src="../../images/logo.png" alt="" className="header__logo" />
                 <span className="header__site-name">fitbar</span>
             </div>
-            <input type="search" className="header__search" />
+            <input type="search" className="header__search" placeholder='Поиск...'/>
             <div className="header__right-side">
                 <a href="" className="header__account-button">
                     <img src="../../images/account.png" alt="" className="header__account-button-image" />
