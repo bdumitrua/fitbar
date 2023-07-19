@@ -1,0 +1,15 @@
+@mixin text-regular($text-size) {
+    font-size: 4*$text-size;
+    font-weight: 400;
+}
+
+@mixin text-bold($text-size) {
+    font-size: 4*$text-size;
+    font-weight: 700;
+}
+
+@mixin flex-center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,44 @@
+@use '../../styles/mixins' as m;
+@use '../../styles/variables.scss' as v;
+
+.header {
+    @include m.flex-center();
+    flex-direction: column
+}
+.header__container {
+    @include m.flex-center();
+}
+.header__left-side {
+    @include m.flex-center();
+}
+.header__logo {
+}
+.header__site-name {
+    @include m.text-bold(6);
+    text-transform: uppercase;
+    color: v.$green;
+}
+.header__search {
+}
+.header__right-side {
+    @include m.flex-center();
+}
+.header__account-button {
+}
+.header__account-button-image {
+}
+.header__account-button-text {
+
+}
+.header__cart-button {
+}
+.header__cart-button-image {
+}
+
+.header__cart-button-text {
+
+}
+.header__navbar {
+}
+.header__navbar-element {
+}

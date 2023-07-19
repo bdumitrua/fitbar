@@ -1,24 +1,10 @@
+@use './variables.scss' as v;
 @import url(./reset.css);
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-$black: #161616;
-$green: #E1FF6B;
-$white: #fff;
-$grey: #BDBDBD;
-
-
-@mixin text-regular($text-size) {
-    font-family: "Inter", sans-serif;
-    font-size: 4*$text-size;
-    font-weight: 400;
-}
-
-@mixin text-bold($text-size) {
-    font-family: "Inter", sans-serif;
-    font-size: 4*$text-size;
-    font-weight: 700;
+body {
+    background-color: v.$black;
 }
 
 .text-grey {
-    color: $grey;
+    color: v.$grey;
 }
