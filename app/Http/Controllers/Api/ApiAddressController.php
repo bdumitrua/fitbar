@@ -3,17 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
 use App\Models\Address;
 use App\Models\User;
+use App\Services\AddressService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ApiAddressController extends AddressController
+class ApiAddressController extends Controller
 {
+    private $addressService;
+
+    public function __construct(AddressService $addressService)
+    {
+        $this->addressService = $addressService;
+    }
+
+
     public function index()
     {
-        $response = parent::index();
+        $response = $this->addressService->index();
 
         return parent::MainResponseToJSON($response);
     }
@@ -21,7 +31,7 @@ class ApiAddressController extends AddressController
     // Создание нового адреса
     public function create(AddressRequest $request)
     {
-        $response = parent::create($request);
+        $response = $this->addressService->create($request);
 
         return parent::MainResponseToJSON($response);
     }
@@ -29,16 +39,36 @@ class ApiAddressController extends AddressController
     // Обновление существующего адреса
     public function update(AddressRequest $request, Address $address)
     {
-        $response = parent::update($request, $address);
+        $response = $this->addressService->update($request, $address);
 
-        return parent::MainResponseToJSON($response);
+        if (!$response) {
+            return parent::MainResponseToJSON([
+                'error' => 'access denied',
+                'code' => 401
+            ]);
+        }
+
+        return parent::MainResponseToJSON([
+            'message' => "Address updated",
+            'code' => 200
+        ]);
     }
 
     // Удаление адреса
     public function delete(Address $address)
     {
-        $response = parent::delete($address);
+        $response = $this->addressService->delete($address);
 
-        return parent::MainResponseToJSON($response);
+        if (!$response) {
+            return parent::MainResponseToJSON([
+                'error' => 'access denied',
+                'code' => 401
+            ]);
+        }
+
+        return parent::MainResponseToJSON([
+            'message' => "Address deleted",
+            'code' => 200
+        ]);
     }
 }
