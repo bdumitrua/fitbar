@@ -6,6 +6,8 @@ use App\Http\Requests\AddressRequest;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AddressService
 {
@@ -33,7 +35,9 @@ class AddressService
             'address' => $request->address
         ]);
 
-        return $addressUpdateStatus;
+        if (!$addressUpdateStatus) {
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Address not found');
+        }
     }
 
     // Удаление адреса
@@ -42,6 +46,8 @@ class AddressService
         $user = User::find(Auth::id());
         $addressDeleteStatus = $user->addresses()->where('id', $address->id)->delete();
 
-        return $addressDeleteStatus;
+        if (!$addressDeleteStatus) {
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Address not found');
+        }
     }
 }

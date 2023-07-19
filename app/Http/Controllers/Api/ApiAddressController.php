@@ -20,55 +20,34 @@ class ApiAddressController extends Controller
         $this->addressService = $addressService;
     }
 
-
     public function index()
     {
-        $response = $this->addressService->index();
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () {
+            return $this->addressService->index();
+        });
     }
 
     // Создание нового адреса
     public function create(AddressRequest $request)
     {
-        $response = $this->addressService->create($request);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($request) {
+            return $this->addressService->create($request);
+        });
     }
 
     // Обновление существующего адреса
     public function update(AddressRequest $request, Address $address)
     {
-        $response = $this->addressService->update($request, $address);
-
-        if (!$response) {
-            return parent::MainResponseToJSON([
-                'error' => 'access denied',
-                'code' => 401
-            ]);
-        }
-
-        return parent::MainResponseToJSON([
-            'message' => "Address updated",
-            'code' => 200
-        ]);
+        return $this->handleServiceCall(function () use ($request, $address) {
+            return $this->addressService->update($request, $address);
+        });
     }
 
     // Удаление адреса
     public function delete(Address $address)
     {
-        $response = $this->addressService->delete($address);
-
-        if (!$response) {
-            return parent::MainResponseToJSON([
-                'error' => 'access denied',
-                'code' => 401
-            ]);
-        }
-
-        return parent::MainResponseToJSON([
-            'message' => "Address deleted",
-            'code' => 200
-        ]);
+        return $this->handleServiceCall(function () use ($address) {
+            return $this->addressService->delete($address);
+        });
     }
 }
