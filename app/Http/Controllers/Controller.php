@@ -16,6 +16,14 @@ class Controller extends BaseController
             return response()->json(['errors' => $response['error']], $response['code']);
         }
 
-        return response()->json(['message' => $response['message']], $response['code']);
+        if (isset($response['message'])) {
+            return response()->json(['message' => $response['message']], $response['code']);
+        }
+
+        if ($response) {
+            return response()->json(['data' => $response], 200);
+        }
+
+        return response()->json(['message' => 'success']);
     }
 }
