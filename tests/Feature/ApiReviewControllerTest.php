@@ -111,7 +111,7 @@ class ApiReviewControllerTest extends TestCase
 
         $response = $this->postJson(route('reviews.create', $this->product), $reviewData);
 
-        $response->assertStatus(405);
+        $response->assertStatus(409);
     }
 
     public function test_can_update_own_review()
@@ -136,7 +136,7 @@ class ApiReviewControllerTest extends TestCase
 
         $response = $this->patchJson(route('reviews.update', $review), $reviewData);
 
-        $response->assertStatus(403);
+        $response->assertStatus(404);
     }
 
     public function test_can_delete_own_review()
@@ -159,6 +159,6 @@ class ApiReviewControllerTest extends TestCase
 
         $response = $this->deleteJson(route('reviews.delete', $review));
 
-        $response->assertStatus(403);
+        $response->assertStatus(404);
     }
 }

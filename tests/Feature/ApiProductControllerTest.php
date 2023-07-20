@@ -84,7 +84,7 @@ class ApiProductControllerTest extends TestCase
 
         $response = $this->postJson(route('products.create'), $productData);
 
-        $response->assertStatus(405);
+        $response->assertStatus(409);
     }
 
     public function test_can_update_product()

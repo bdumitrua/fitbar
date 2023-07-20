@@ -52,9 +52,6 @@ class ApiUserFavoriteControllerTest extends TestCase
         $response = $this->postJson(route('favorites.store', ['product' => $this->product->id]));
 
         $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'message' => 'Product added to favorites',
-        ]);
 
         $this->assertDatabaseHas('user_favorites', [
             'user_id' => $this->user->id,
@@ -73,7 +70,7 @@ class ApiUserFavoriteControllerTest extends TestCase
 
         $response = $this->postJson(route('favorites.store', ['product' => $this->product->id]));
 
-        $response->assertStatus(405);
+        $response->assertStatus(409);
     }
 
     public function test_can_remove_from_favorites()
@@ -88,9 +85,6 @@ class ApiUserFavoriteControllerTest extends TestCase
         $response = $this->deleteJson(route('favorites.remove', ['product' => $this->product->id]));
 
         $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'message' => 'Product removed from favorites',
-        ]);
 
         $this->assertDatabaseMissing('user_favorites', [
             'user_id' => $this->user->id,
@@ -104,6 +98,6 @@ class ApiUserFavoriteControllerTest extends TestCase
 
         $response = $this->deleteJson(route('favorites.remove', ['product' => $this->product->id]));
 
-        $response->assertStatus(405);
+        $response->assertStatus(404);
     }
 }

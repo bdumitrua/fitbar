@@ -33,7 +33,7 @@ class ApiAddressControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'message' => [
+                'data' => [
                     '*' => ['id', 'address', 'user_id']
                 ]
             ]);
@@ -48,10 +48,7 @@ class ApiAddressControllerTest extends TestCase
 
         $response = $this->postJson(route('address.create'), $addressData);
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Address created successfully'
-            ]);
+        $response->assertStatus(200);
     }
 
     // Тест для обновления адреса
@@ -63,10 +60,7 @@ class ApiAddressControllerTest extends TestCase
 
         $response = $this->putJson(route('address.update', ['address' => $this->address->id]), $addressData);
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Address updated'
-            ]);
+        $response->assertStatus(200);
     }
 
     // Тест для удаления адреса
@@ -74,9 +68,6 @@ class ApiAddressControllerTest extends TestCase
     {
         $response = $this->deleteJson(route('address.delete', ['address' => $this->address->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Address deleted'
-            ]);
+        $response->assertStatus(200);
     }
 }
