@@ -5,9 +5,11 @@
   color: white;
 }
 
-body {
+a {
+  color: white;
+}
+
+.container {
   max-width: 1300px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
 }

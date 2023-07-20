@@ -1,0 +1,41 @@
+@use '../../styles/mixins' as m;
+@use '../../styles/variables.scss' as v;
+@use 'sass:math';
+
+.footer-bar {
+    width: 100%;
+    height: 48px;
+
+    @include m.flex-center();
+
+    @include m.text-bold(6px);
+
+    background-color: v.$green;
+
+    color: v.$black;
+    text-transform: uppercase;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 40px 0 10px 0;
+}
+
+.footer__category {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.footer__category-title {
+    margin-bottom: 30px;
+
+    @include m.text-bold(4px);
+}
+.footer__category-element {
+    margin-bottom: 30px;
+
+    @include m.text-regular(4px)
+}

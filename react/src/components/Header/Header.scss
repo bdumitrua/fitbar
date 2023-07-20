@@ -12,41 +12,84 @@
     @include m.flex-between();
 }
 .header__left-side {
-    width: math.div(170, 1300) * 100%;
+    width: math.div(160, 1300) * 100%;
     @include m.flex-between();
 }
 .header__logo {
 }
 .header__site-name {
-    @include m.text-bold(6);
+    @include m.text-bold(6px);
     text-transform: uppercase;
     color: v.$green;
 }
+
+.header__search-container {
+    width: math.div(400, 1300)*100%;
+
+    position: relative;
+}
+
 .header__search {
+    width: 100%;
+    height: 36px;
+
+    padding-left: 6px;
+
     border: 1px v.$grey solid;
 }
+
+.header__search-button {
+    padding: 7px 8px 8px 8px;
+    
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.header__search-image {
+
+}
+
+.header__search::placeholder {
+    color: v.$grey;
+}
+
+
 .header__right-side {
     width: math.div(230, 1300) * 100%;
 
     @include m.flex-between();
 }
-.header__account-button {
-}
-.header__account-button-image {
-}
-.header__account-button-text {
+.header__button {
 
 }
-.header__cart-button {
-}
-.header__cart-button-image {
-}
 
-.header__cart-button-text {
+.header__button-text {
 
 }
+
+.header__button-image {
+    margin-right: 10px;
+}
+
 .header__navbar {
     width: 100%;
+    height: 48px;
+
+    margin-bottom: 80px;
+
+    @include m.flex-between();
+
+    background-color: v.$green;
+
+    color: v.$black;
 }
+
+.header__navbar-container {
+    @include m.flex-between();
+}
+
 .header__navbar-element {
+
+    color: v.$black;
 }
