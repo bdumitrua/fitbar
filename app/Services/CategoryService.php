@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class CategoryController extends Controller
+class CategoryService
 {
     public function index()
     {
-        return [
-            'message' => Category::all(),
-            'code' => 200
-        ];
+        return Category::all();
     }
 
     // Получение всех товаров по category_id
@@ -23,16 +21,10 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         if (!$category) {
-            return [
-                'error' => 'Category not found',
-                'code' => 404
-            ];
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Category not found');
         }
 
-        return [
-            'message' => $category->products,
-            'code' => 200
-        ];
+        return $category->products;
     }
 
     // Получение всех товаров по slug
@@ -41,37 +33,23 @@ class CategoryController extends Controller
         $category = Category::where('slug', $slug)->first();
 
         if (!$category) {
-            return [
-                'error' => 'Category not found',
-                'code' => 404
-            ];
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Category not found');
         }
 
-        return [
-            'message' => $category->products,
-            'code' => 200
-        ];
+        return $category->products;
     }
 
     // Создание категории
     public function store(CategoryRequest $request)
     {
         if (Category::where('name', $request->name)->count() > 0) {
-            return [
-                'error' => 'Category with this name already exists',
-                'code' => 405
-            ];
+            throw new HttpException(Response::HTTP_CONFLICT, 'Category with this name already exists');
         }
 
-        $category = Category::create([
+        Category::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name)
         ]);
-
-        return [
-            'message' => 'Category ' . $category->name . ' created',
-            'code' => 200
-        ];
     }
 
     // Изменение категории
@@ -81,21 +59,11 @@ class CategoryController extends Controller
             'name' => $request->name,
             'slug' => Str::slug($request->name)
         ]);
-
-        return [
-            'message' => 'Category ' . $category->name . ' updated',
-            'code' => 200
-        ];
     }
 
     // Удаление категории
     public function destroy(Category $category)
     {
         $category->delete();
-
-        return [
-            'message' => 'Category ' . $category->name . ' was deleted',
-            'code' => 200
-        ];
     }
 }

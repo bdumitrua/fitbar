@@ -1,29 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class UserController extends Controller
+class UserService
 {
     public function me()
     {
-        return [
-            'message' => User::find(Auth::id())->load('roles', 'orders', 'reviews', 'addresses', 'cart'),
-            'code' => 200
-        ];
+        return User::find(Auth::id())->load('roles', 'orders', 'reviews', 'addresses', 'cart');
     }
 
     public function update(UserRequest $request)
     {
         $user = User::find(Auth::id());
         if (User::where('email', $request->email)->count() > 0 && $user->email != $request->email) {
-            return [
-                'error' => 'Данная почта уже занята другим пользователем.',
-                'code' => 421
-            ];
+            throw new HttpException(Response::HTTP_CONFLICT, 'This email is taken');
         }
 
         $path = '';
@@ -38,11 +34,5 @@ class UserController extends Controller
             'phone' => $request->phone,
             'photo' => $path,
         ]);
-
-        // возвращаем обновленного пользователя
-        return [
-            'message' => $user,
-            'code' => 200
-        ];
     }
 }

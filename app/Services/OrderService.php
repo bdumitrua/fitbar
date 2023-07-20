@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class OrderController extends Controller
+class OrderService
 {
     // Получение всех заказов текущего пользователя
     public function index()
     {
-        return [
-            'message' => Auth::user()->orders,
-            'code' => 200
-        ];
+        return Auth::user()->orders;
     }
 
     // Получение информации о конкретном заказе
@@ -25,16 +23,10 @@ class OrderController extends Controller
     {
         // Проверяем, принадлежит ли заказ текущему пользователю
         if (Auth::id() !== $order->user_id) {
-            return [
-                'error' => 'Access denied',
-                'code' => 403
-            ];
+            throw new HttpException(Response::HTTP_FORBIDDEN, 'Access denied');
         }
 
-        return [
-            'message' => $order,
-            'code' => 200
-        ];
+        return $order;
     }
 
     // Создание нового заказа
@@ -45,21 +37,16 @@ class OrderController extends Controller
 
         // Проверяем, есть ли что-то в корзине
         if (count($cart) == 0) {
-            return [
-                'error' => 'Cart is empty',
-                'code' => 405
-            ];
+            throw new HttpException(Response::HTTP_CONFLICT, 'Cart is empty');
         }
 
         // Формируем массив продуктов и считаем общую стоимость заказа
         $total = 0;
         foreach ($cart as $item) {
             $product = Product::find($item['product_id']);
+
             if (!$product) {
-                return [
-                    'error' => 'Product ' . $item['product_id'] . ' not found',
-                    'code' => 404
-                ];
+                throw new HttpException(Response::HTTP_NOT_FOUND, 'Product ' . $item['product_id'] . ' not found');
             }
 
             $total += $product->price * $item['quantity'];
@@ -86,9 +73,6 @@ class OrderController extends Controller
         // Очищаем корзину
         Cart::where('user_id', Auth::id())->delete();
 
-        return [
-            'message' => $order,
-            'code' => 200
-        ];
+        return $order;
     }
 }

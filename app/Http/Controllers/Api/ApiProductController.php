@@ -3,30 +3,33 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\FileHelper;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Services\ProductService;
 
-class ApiProductController extends ProductController
+class ApiProductController extends Controller
 {
-    /**
-     * Получить все продукты
-     */
-    public function index()
-    {
-        $response = parent::index();
+    private $productService;
 
-        return parent::MainResponseToJSON($response);
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
     }
 
-    /**
-     * Получить продукт (по id)
-     */
+    public function index()
+    {
+        return $this->handleServiceCall(function () {
+            return $this->productService->index();
+        });
+    }
+
     public function show(Product $product)
     {
-        $response = parent::show($product);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($product) {
+            return $this->productService->show($product);
+        });
     }
 
     /**
@@ -34,38 +37,28 @@ class ApiProductController extends ProductController
      */
     public function similar(Product $product)
     {
-        $response = parent::similar($product);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($product) {
+            return $this->productService->similar($product);
+        });
     }
-
-    /**
-     * Создать продукт
-     */
     public function store(ProductRequest $request)
     {
-        $response = parent::store($request);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($request) {
+            return $this->productService->store($request);
+        });
     }
 
-    /**
-     * Изменить продукт по id
-     */
     public function update(ProductRequest $request, Product $product)
     {
-        $response = parent::update($request, $product);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($request, $product) {
+            return $this->productService->update($request, $product);
+        });
     }
 
-    /**
-     * Удалить продукт
-     */
     public function destroy(Product $product)
     {
-        $response = parent::destroy($product);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($product) {
+            return $this->productService->destroy($product);
+        });
     }
 }

@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use App\Models\Product;
 use App\Models\User;
 use App\Models\UserFavorite;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class UserFavoriteController extends Controller
+class UserFavoriteService
 {
     // Получение всех товаров из избранных
     public function index()
     {
         $user = User::find(Auth::id());
 
-        return [
-            'message' => $user->favorites,
-            'code' => 200
-        ];
+        return $user->favorites;
     }
 
     // Добавление товара в избранное
@@ -25,24 +24,14 @@ class UserFavoriteController extends Controller
     {
         $user = User::find(Auth::id());
 
-        // Проверка наличия товара в избранных
         if ($user->favorites()->where('product_id', $product->id)->exists()) {
-            return [
-                'error' => 'Product already in favorites',
-                'code' => 405
-            ];
+            throw new HttpException(Response::HTTP_CONFLICT, 'Product already in favorites');
         }
 
-        // Создание новой записи в избранных
         UserFavorite::create([
             'user_id' => $user->id,
             'product_id' => $product->id
         ]);
-
-        return [
-            'message' => 'Product added to favorites',
-            'code' => 200
-        ];
     }
 
     // Удаление товара из избранного
@@ -50,21 +39,11 @@ class UserFavoriteController extends Controller
     {
         $user = User::find(Auth::id());
 
-        // Проверка наличия товара в избранных
         $favorite = $user->favorites()->where('product_id', $product->id)->first();
         if (!$favorite) {
-            return [
-                'error' => 'Product not in favorites',
-                'code' => 405
-            ];
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Product not found in favorites');
         }
 
-        // Удаление записи из избранных
         $favorite->delete();
-
-        return [
-            'message' => 'Product removed from favorites',
-            'code' => 200
-        ];
     }
 }

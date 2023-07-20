@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use App\Helpers\FileHelper;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class ProductController extends Controller
+class ProductService
 {
     /**
      * Получить все продукты
      */
     public function index()
     {
-        return [
-            'message' => Product::all(),
-            'code' => 200
-        ];
+        return Product::all();
     }
 
     /**
@@ -25,10 +23,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return [
-            'message' => $product,
-            'code' => 200
-        ];
+        return $product;
     }
 
     /**
@@ -44,10 +39,7 @@ class ProductController extends Controller
             ->where('id', '!=', $product->id)
             ->get();
 
-        return [
-            'message' => $similarProducts,
-            'code' => 200
-        ];
+        return $similarProducts;
     }
 
     /**
@@ -58,13 +50,10 @@ class ProductController extends Controller
         $path = FileHelper::saveImageFromUrl($request->image, 'products');
 
         if (Product::where('name', $request->name)->exists()) {
-            return [
-                'error' => 'Product with this name already exists',
-                'code' => 405
-            ];
+            throw new HttpException(Response::HTTP_CONFLICT, 'Product with this name already exists');
         }
 
-        $product = Product::create([
+        Product::create([
             'image' => $path,
             'name' => $request->name,
             'price' => $request->price,
@@ -72,11 +61,6 @@ class ProductController extends Controller
             'long_description' => $request->long_description,
             'category_id' => $request->category_id,
         ]);
-
-        return [
-            'message' => $product,
-            'code' => 200
-        ];
     }
 
     /**
@@ -99,11 +83,6 @@ class ProductController extends Controller
             'long_description' => $request->long_description,
             'category_id' => $request->category_id
         ]);
-
-        return [
-            'message' => $product,
-            'code' => 200
-        ];
     }
 
     /**
@@ -112,10 +91,5 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-
-        return [
-            'message' => 'Product deleted',
-            'code' => 200
-        ];
     }
 }

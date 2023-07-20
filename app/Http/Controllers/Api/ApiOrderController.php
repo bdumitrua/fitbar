@@ -9,31 +9,38 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\OrderService;
 use Illuminate\Support\Facades\Auth;
 
-class ApiOrderController extends OrderController
+class ApiOrderController extends Controller
 {
+    private $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
     // Получение всех заказов текущего пользователя
     public function index()
     {
-        $response = parent::index();
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () {
+            return $this->orderService->index();
+        });
     }
 
     // Получение информации о конкретном заказе
     public function show(Order $order)
     {
-        $response = parent::show($order);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($order) {
+            return $this->orderService->show($order);
+        });
     }
 
     // Создание нового заказа
     public function store()
     {
-        $response = parent::store();
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () {
+            return $this->orderService->store();
+        });
     }
 }

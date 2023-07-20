@@ -3,70 +3,74 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ReviewController;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Services\ReviewService;
 
-class ApiReviewController extends ReviewController
+class ApiReviewController extends Controller
 {
+    private $reviewService;
+
+    public function __construct(ReviewService $reviewService)
+    {
+        $this->reviewService = $reviewService;
+    }
+
     public function index()
     {
-        $response = parent::index();
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () {
+            return $this->reviewService->index();
+        });
     }
 
     public function getProductReviews(Product $product)
     {
-        $response = parent::getProductReviews($product);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($product) {
+            return $this->reviewService->getProductReviews($product);
+        });
     }
 
     public function getAverageRating(Product $product)
     {
-        $response = parent::getAverageRating($product);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($product) {
+            return $this->reviewService->getAverageRating($product);
+        });
     }
 
     public function getCategoryReviews(Category $category)
     {
-        $response = parent::getCategoryReviews($category);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($category) {
+            return $this->reviewService->getCategoryReviews($category);
+        });
     }
 
     public function me()
     {
-        $response = parent::me();
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () {
+            return $this->reviewService->me();
+        });
     }
 
     public function store(ReviewRequest $request, Product $product)
     {
-        $response = parent::store($request, $product);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($request, $product) {
+            return $this->reviewService->store($request, $product);
+        });
     }
 
     public function update(ReviewRequest $request, Review $review)
     {
-        $response = parent::update($request, $review);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($request, $review) {
+            return $this->reviewService->update($request, $review);
+        });
     }
 
     public function destroy(Review $review)
     {
-        $response = parent::destroy($review);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($review) {
+            return $this->reviewService->destroy($review);
+        });
     }
 }

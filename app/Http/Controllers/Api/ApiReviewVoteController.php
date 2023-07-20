@@ -3,41 +3,43 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ReviewVoteController;
-use App\Models\Product;
 use App\Models\Review;
-use App\Models\ReviewVote;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Services\ReviewVoteService;
 
-class ApiReviewVoteController extends ReviewVoteController
+class ApiReviewVoteController extends Controller
 {
+    private $reviewVoteService;
+
+    public function __construct(ReviewVoteService $reviewVoteService)
+    {
+        $this->reviewVoteService = $reviewVoteService;
+    }
+
     public function index()
     {
-        $response = parent::index();
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () {
+            return $this->reviewVoteService->index();
+        });
     }
 
     public function like(Review $review)
     {
-        $response = parent::like($review);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($review) {
+            return $this->reviewVoteService->like($review);
+        });
     }
 
     public function dislike(Review $review)
     {
-        $response = parent::dislike($review);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($review) {
+            return $this->reviewVoteService->like($review);
+        });
     }
 
     public function destroy(Review $review)
     {
-        $response = parent::destroy($review);
-
-        return parent::MainResponseToJSON($response);
+        return $this->handleServiceCall(function () use ($review) {
+            return $this->reviewVoteService->like($review);
+        });
     }
 }
