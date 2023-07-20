@@ -22,6 +22,8 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        // TODO
+        // Добавить проверку вкуса, веса
         return [
             'image' => 'required|url',
             'name' => 'required|string|max:255',

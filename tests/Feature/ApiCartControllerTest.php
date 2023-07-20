@@ -36,9 +36,7 @@ class ApiCartControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
-                    '*' => ['id', 'user_id', 'product_id', 'quantity', 'created_at', 'updated_at']
-                ]
+                '*' => ['id', 'user_id', 'product_id', 'quantity', 'created_at', 'updated_at']
             ]);
     }
 

@@ -25,9 +25,12 @@ class OrderService
         $user = Auth::user();
 
         // Проверяем, принадлежит ли заказ текущему пользователю
-        if ($user !== $order->user && $user->maxRole < 3) {
-            throw new HttpException(Response::HTTP_FORBIDDEN, 'Access denied');
+        if ($user->maxRole >= 3) {
+            return $order;
         }
+
+        if ($user->id !== $order->user->id)
+            throw new HttpException(Response::HTTP_FORBIDDEN, 'Access denied');
 
         return $order;
     }

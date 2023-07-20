@@ -33,9 +33,7 @@ class ApiAddressControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
-                    '*' => ['id', 'address', 'user_id']
-                ]
+                '*' => ['id', 'address', 'user_id']
             ]);
     }
 

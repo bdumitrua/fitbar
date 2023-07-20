@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2); // Цена
             $table->text('short_description'); // Краткое описание
             $table->string('taste')->default('Обычный'); // Вкус продукта
-            $table->string('weight'); // Вес/объём упаковки
+            $table->string('weight')->default('100 г.'); // Вес/объём упаковки
             $table->longText('long_description'); // Длинное описание
             $table->unsignedBigInteger('category_id'); // Категория
             $table->integer('orders_count')->default(0); // Кол-во покупок

@@ -49,7 +49,7 @@ class Controller extends BaseController
         } catch (Throwable $exception) {
             return $this->responseToJSON([
                 'error' => $exception->getMessage(),
-                'code' => $exception->getCode()
+                'code' => Response::HTTP_BAD_GATEWAY
             ]);
         }
     }
