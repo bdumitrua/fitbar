@@ -81,9 +81,11 @@ class ProductService
             'image' => $path,
             'name' => $request->name,
             'price' => $request->price,
+            'taste' => $request->taste,
+            'weight' => $request->weight,
+            'category_id' => $request->category_id,
             'short_description' => $request->short_description,
             'long_description' => $request->long_description,
-            'category_id' => $request->category_id
         ]);
     }
 
