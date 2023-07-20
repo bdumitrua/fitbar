@@ -19,14 +19,6 @@ class ProductService
     }
 
     /**
-     * Получить все бестсейллеры
-     */
-    public function bestsallers()
-    {
-        return Product::orderByDesc('orders_count')->take(8)->get();
-    }
-
-    /**
      * Получить продукт (по id)
      */
     public function show(Product $product)

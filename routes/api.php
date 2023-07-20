@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Api\ApiCartController;
 use App\Http\Controllers\Api\ApiCategoryController;
+use App\Http\Controllers\Api\ApiHomeController;
 use App\Http\Controllers\Api\ApiOrderController;
 use App\Http\Controllers\Api\ApiProductController;
 use App\Http\Controllers\Api\ApiReviewController;
@@ -78,6 +79,13 @@ Route::prefix('cart')->controller(ApiCartController::class)->group(function () {
 });
 
 
+Route::prefix('home')->controller(ApiHomeController::class)->group(function () {
+    // Получить продукты с наибольшим кол-вом продаж
+    Route::get('/bestsallers', 'bestsallers')->name('home.bestsallers');
+    // Получить категории с наибольшим кол-вом продаж и их топ-4 товара
+    Route::get('/categories', 'categories')->name('home.categories');
+});
+
 Route::prefix('favorites')->controller(ApiUserFavoriteController::class)->group(function () {
     Route::middleware(['auth:api'])->group(function () {
         // Получить все избранные товары
@@ -124,8 +132,6 @@ Route::prefix('orders')->controller(ApiOrderController::class)->group(function (
 Route::prefix('products')->controller(ApiProductController::class)->group(function () {
     // Получить все продукты
     Route::get('/', 'index')->name('products.index');
-    // Получить продукты с наибольшим кол-вом продаж
-    Route::get('/bestsallers', 'bestsallers')->name('products.bestsallers');
     // Получить продукт (по id)
     Route::get('/show/{product}', 'show')->name('products.show');
     // Получить похожие продукты (продукты той-же категории с небольшим отличием по цене (+-30%))
