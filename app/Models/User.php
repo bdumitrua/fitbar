@@ -99,4 +99,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(RoleUser::class);
     }
+
+    public function getMaxRoleAttribute()
+    {
+        return $this->roles()->max('role_id');
+    }
 }

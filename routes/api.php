@@ -116,6 +116,8 @@ Route::prefix('orders')->controller(ApiOrderController::class)->group(function (
         Route::get('/id/{order}', 'show')->name('orders.show');
         // Создать заказ
         Route::post('create', 'store')->name('orders.create');
+        // Измененить статус заказа
+        Route::patch('/update/{order}', 'update');
     });
 });
 
