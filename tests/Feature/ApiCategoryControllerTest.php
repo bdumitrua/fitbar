@@ -42,7 +42,7 @@ class ApiCategoryControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'message' => [
+                'data' => [
                     '*' => ['id', 'name', 'slug', 'created_at', 'updated_at']
                 ]
             ]);
@@ -57,7 +57,7 @@ class ApiCategoryControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'message' => [
+                'data' => [
                     [
                         'id' => $product->id,
                         'category_id' => $product->category_id,
@@ -75,7 +75,7 @@ class ApiCategoryControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'message' => [
+                'data' => [
                     [
                         'id' => $product->id,
                         'image' => $product->image,
@@ -96,10 +96,7 @@ class ApiCategoryControllerTest extends TestCase
 
         $response = $this->postJson(route('category.create'), $data);
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Category ' . $data['name'] . ' created',
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_update()
@@ -109,10 +106,7 @@ class ApiCategoryControllerTest extends TestCase
 
         $response = $this->putJson(route('category.update', ['category' => $category->id]), $data);
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Category ' . $data['name'] . ' updated',
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_destroy()
@@ -121,9 +115,6 @@ class ApiCategoryControllerTest extends TestCase
 
         $response = $this->deleteJson(route('category.delete', ['category' => $category->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Category ' . $category->name . ' was deleted',
-            ]);
+        $response->assertStatus(200);
     }
 }

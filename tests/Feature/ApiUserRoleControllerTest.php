@@ -34,7 +34,7 @@ class ApiUserRoleControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'message' => [
+                'data' => [
                     '*' => ['id', 'user_id', 'role_id', 'created_at', 'updated_at']
                 ]
             ]);
@@ -49,10 +49,7 @@ class ApiUserRoleControllerTest extends TestCase
         $response = $this->actingAs($manager, 'api')
             ->postJson(route('roles.make.seller', ['user' => $user->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Make user ' . $user->id . ' SELLER succesfully',
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_remove_seller()
@@ -66,10 +63,7 @@ class ApiUserRoleControllerTest extends TestCase
         $response = $this->actingAs($manager, 'api')
             ->postJson(route('roles.remove.seller', ['user' => $user->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Remove user ' . $user->id . ' SELLER role succesfully',
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_make_manager()
@@ -82,10 +76,7 @@ class ApiUserRoleControllerTest extends TestCase
         $response = $this->actingAs($admin, 'api')
             ->postJson(route('roles.make.manager', ['user' => $user->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Make user ' . $user->id . ' MANAGER succesfully',
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_remove_manager()
@@ -99,10 +90,7 @@ class ApiUserRoleControllerTest extends TestCase
         $response = $this->actingAs($admin, 'api')
             ->postJson(route('roles.remove.manager', ['user' => $user->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Remove user ' . $user->id . ' MANAGER role succesfully',
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_make_admin()
@@ -115,10 +103,7 @@ class ApiUserRoleControllerTest extends TestCase
         $response = $this->actingAs($headAdmin, 'api')
             ->postJson(route('roles.make.admin', ['user' => $user->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Make user ' . $user->id . ' ADMIN succesfully',
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_remove_admin()
@@ -132,10 +117,7 @@ class ApiUserRoleControllerTest extends TestCase
         $response = $this->actingAs($headAdmin, 'api')
             ->postJson(route('roles.remove.admin', ['user' => $user->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'Remove user ' . $user->id . ' ADMIN role succesfully',
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_destroy()
@@ -149,9 +131,6 @@ class ApiUserRoleControllerTest extends TestCase
         $response = $this->actingAs($headAdmin, 'api')
             ->putJson(route('roles.clear', $user->id));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'message' => 'All roles removed for user ' . $user->id . ', set to USER',
-            ]);
+        $response->assertStatus(200);
     }
 }

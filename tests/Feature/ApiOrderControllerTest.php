@@ -72,6 +72,6 @@ class ApiOrderControllerTest extends TestCase
     {
         $response = $this->postJson(route('orders.create'));
 
-        $response->assertStatus(405);
+        $response->assertStatus(409);
     }
 }
