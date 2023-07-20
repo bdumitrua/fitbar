@@ -21,7 +21,7 @@ class ReviewFactory extends Factory
         return [
             'user_id' => User::all()->random(),
             'product_id' => Product::all()->random(),
-            'rating' => fake()->numberBetween(1, 5),
+            'rating' => fake()->numberBetween(2, 5),
             'recommendation' => fake()->randomElement(['Не рекомендую', 'Рекомендую']),
             'pros' => fake()->word(10, true),
             'cons' => fake()->word(10, true),
