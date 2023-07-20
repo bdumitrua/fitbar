@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->integer('orders_count')->default(0); // Кол-во покупок
             $table->timestamps();
         });
     }

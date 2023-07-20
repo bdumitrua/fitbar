@@ -49,6 +49,9 @@ class OrderService
                 throw new HttpException(Response::HTTP_NOT_FOUND, 'Product ' . $item['product_id'] . ' not found');
             }
 
+            $product->category->increment('orders_count');
+            $product->increment('orders_count');
+
             $total += $product->price * $item['quantity'];
         }
 

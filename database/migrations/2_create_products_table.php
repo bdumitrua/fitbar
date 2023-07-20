@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('short_description'); // Краткое описание
             $table->longText('long_description'); // Длинное описание
             $table->unsignedBigInteger('category_id'); // Категория
+            $table->integer('orders_count')->default(0); // Кол-во покупок
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
