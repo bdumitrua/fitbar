@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class Controller extends BaseController
 {
@@ -39,10 +41,10 @@ class Controller extends BaseController
                 'error' => $exception->getMessage(),
                 'code' => $exception->getStatusCode()
             ]);
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             return $this->responseToJSON([
                 'error' => $exception->getMessage(),
-                'code' => 400
+                'code' => $exception->getCode()
             ]);
         }
     }
