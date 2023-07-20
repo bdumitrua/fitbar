@@ -25,6 +25,13 @@ class ApiProductController extends Controller
         });
     }
 
+    public function bestsallers()
+    {
+        return $this->handleServiceCall(function () {
+            return $this->productService->bestsallers();
+        });
+    }
+
     public function show(Product $product)
     {
         return $this->handleServiceCall(function () use ($product) {

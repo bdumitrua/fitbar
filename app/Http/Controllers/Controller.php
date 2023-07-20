@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -16,19 +17,23 @@ class Controller extends BaseController
 
     protected function responseToJSON($response)
     {
-        if (isset($response['error'])) {
-            return response()->json(['errors' => $response['error']], $response['code']);
-        }
+        try {
+            if (isset($response['error'])) {
+                return response()->json(['errors' => $response['error']], $response['code']);
+            }
 
-        if (isset($response['message'])) {
-            return response()->json(['message' => $response['message']], $response['code']);
-        }
+            if (isset($response['message'])) {
+                return response()->json(['message' => $response['message']], $response['code']);
+            }
 
-        if ($response) {
-            return response()->json(['data' => $response], 200);
-        }
+            if ($response) {
+                return response()->json(['data' => $response], 200);
+            }
 
-        return response()->json(['message' => 'success']);
+            return response()->json(['message' => 'success'], 200);
+        } catch (Throwable $error) {
+            return response()->json(['errors' => $response['error']], 500);
+        }
     }
 
     protected function handleServiceCall(callable $serviceFunction)

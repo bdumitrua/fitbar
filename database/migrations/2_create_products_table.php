@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('image'); // Фото
             $table->string('name'); // Название товара
             $table->decimal('price', 8, 2); // Цена
-            $table->float('rating')->default(0); // Рейтинг
+            $table->decimal('rating', 8, 2)->default(0)->min(0)->max(5); // Рейтинг
             $table->text('short_description'); // Краткое описание
             $table->longText('long_description'); // Длинное описание
             $table->unsignedBigInteger('category_id'); // Категория
