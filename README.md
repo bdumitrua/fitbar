@@ -45,7 +45,11 @@ php artisan db:create     # создать mysql базу данных с наз
 ```
 
 ```bash
-php artisan migrate:fresh --seed   # создать таблицы в базе данных и заполнить их данными
+php artisan migrate:fresh   # создать таблицы в базе данных
+```
+
+```bash
+php artisan db:seed   # заполнить таблицы данными
 ```
 
 ```bash
@@ -58,10 +62,10 @@ php artisan jwt:secret    # создать jwt secret ключ в .env для р
 php artisan serve    # запустить приложение на http://127.0.0.1:8000
 ```
 
-Для создания админа введите 
+Для создания админа введите
 
 ```bash
-php artisan create:admin # master password: 12341234
+php artisan create:admin
 ```
 
 ## Тестирование
@@ -77,7 +81,6 @@ php artisan db:create-test     # создать отдельную mysql баз�
 ```bash
 php artisan test
 ```
-
 
 ## Импорт в Postman или Insomnia
 

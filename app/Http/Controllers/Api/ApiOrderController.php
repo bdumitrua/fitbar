@@ -3,14 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\OrderController;
-use App\Models\Cart;
+use App\Http\Requests\OrderStatusRequest;
 use App\Models\Order;
-use App\Models\OrderProduct;
-use App\Models\Product;
-use App\Models\User;
 use App\Services\OrderService;
-use Illuminate\Support\Facades\Auth;
 
 class ApiOrderController extends Controller
 {
@@ -41,6 +36,14 @@ class ApiOrderController extends Controller
     {
         return $this->handleServiceCall(function () {
             return $this->orderService->store();
+        });
+    }
+
+    // Изменение статуса заказа
+    public function update(OrderStatusRequest $request, Order $order)
+    {
+        return $this->handleServiceCall(function () use ($request, $order) {
+            return $this->orderService->update($request, $order);
         });
     }
 }

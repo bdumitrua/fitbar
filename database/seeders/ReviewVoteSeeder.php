@@ -22,7 +22,7 @@ class ReviewVoteSeeder extends Seeder
         // Проходим по каждому отзыву
         foreach ($reviews as $review) {
             // Выбираем случайное количество пользователей, которые проголосуют
-            $voters = $users->random(rand(0, $users->count() / 4));
+            $voters = $users->random(rand(0, $users->count() / 25));
 
             // Каждый выбранный пользователь голосует
             foreach ($voters as $voter) {

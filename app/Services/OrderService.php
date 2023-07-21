@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\OrderStatusRequest;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -21,10 +22,15 @@ class OrderService
     // Получение информации о конкретном заказе
     public function show(Order $order)
     {
+        $user = Auth::user();
+
         // Проверяем, принадлежит ли заказ текущему пользователю
-        if (Auth::id() !== $order->user_id) {
-            throw new HttpException(Response::HTTP_FORBIDDEN, 'Access denied');
+        if ($user->maxRole >= 3) {
+            return $order;
         }
+
+        if ($user->id !== $order->user->id)
+            throw new HttpException(Response::HTTP_FORBIDDEN, 'Access denied');
 
         return $order;
     }
@@ -48,6 +54,9 @@ class OrderService
             if (!$product) {
                 throw new HttpException(Response::HTTP_NOT_FOUND, 'Product ' . $item['product_id'] . ' not found');
             }
+
+            $product->category->increment('orders_count');
+            $product->increment('orders_count');
 
             $total += $product->price * $item['quantity'];
         }
@@ -74,5 +83,12 @@ class OrderService
         Cart::where('user_id', Auth::id())->delete();
 
         return $order;
+    }
+
+    public function update(OrderStatusRequest $request, Order $order)
+    {
+        $order->update([
+            'status' => $request->status
+        ]);
     }
 }

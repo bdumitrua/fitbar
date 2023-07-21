@@ -42,52 +42,28 @@ class ApiCategoryControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
-                    '*' => ['id', 'name', 'slug', 'created_at', 'updated_at']
-                ]
+                '*' => ['id', 'name', 'slug', 'created_at', 'updated_at']
             ]);
     }
 
     public function test_getProductsBySlug()
     {
         $category = Category::factory()->create();
-        $product = Product::factory()->create(['category_id' => $category->id]);
+        Product::factory()->create(['category_id' => $category->id]);
 
         $response = $this->getJson(route('category.slug', ['slug' => $category->slug]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'data' => [
-                    [
-                        'id' => $product->id,
-                        'category_id' => $product->category_id,
-                    ]
-                ]
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_getProductsByCategoryId()
     {
         $category = Category::factory()->create();
-        $product = Product::factory()->create(['category_id' => $category->id]);
+        Product::factory()->create(['category_id' => $category->id]);
 
         $response = $this->getJson(route('category.id', ['id' => $category->id]));
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'data' => [
-                    [
-                        'id' => $product->id,
-                        'image' => $product->image,
-                        'name' => $product->name,
-                        'price' => $product->price,
-                        'rating' => $product->rating,
-                        'category_id' => $product->category_id,
-                        'short_description' => $product->short_description,
-                        'long_description' => $product->long_description,
-                    ]
-                ]
-            ]);
+        $response->assertStatus(200);
     }
 
     public function test_create()

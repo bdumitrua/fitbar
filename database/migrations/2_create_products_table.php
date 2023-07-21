@@ -16,12 +16,16 @@ return new class extends Migration
             $table->string('image'); // Фото
             $table->string('name'); // Название товара
             $table->decimal('price', 8, 2); // Цена
-            $table->float('rating')->default(0); // Рейтинг
             $table->text('short_description'); // Краткое описание
+            $table->string('taste')->default('Обычный'); // Вкус продукта
+            $table->string('weight')->default('100 г.'); // Вес/объём упаковки
             $table->longText('long_description'); // Длинное описание
             $table->unsignedBigInteger('category_id'); // Категория
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->integer('orders_count')->default(0); // Кол-во покупок
+            $table->decimal('rating', 8, 2)->default(0)->min(0)->max(5); // Рейтинг
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

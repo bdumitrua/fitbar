@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -18,13 +19,13 @@ class CategoryService
     // Получение всех товаров по category_id
     public function getProductsByCategoryId($id)
     {
-        $category = Category::find($id);
-
-        if (!$category) {
+        if (!Category::find($id)) {
             throw new HttpException(Response::HTTP_NOT_FOUND, 'Category not found');
         }
 
-        return $category->products;
+        return Product::where('category_id', $id)
+            ->orderByDesc('orders_count')
+            ->paginate(15);
     }
 
     // Получение всех товаров по slug
@@ -36,7 +37,9 @@ class CategoryService
             throw new HttpException(Response::HTTP_NOT_FOUND, 'Category not found');
         }
 
-        return $category->products;
+        return Product::where('category_id', $category->id)
+            ->orderByDesc('orders_count')
+            ->paginate(15);
     }
 
     // Создание категории

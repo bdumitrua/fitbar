@@ -26,7 +26,7 @@ class Product extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class)->withPivot('quantity', 'price');
+        return $this->belongsToMany(Order::class, 'order_products');
     }
 
     public function carts()
@@ -39,13 +39,8 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function getRatingAttribute()
+    public function features()
     {
-        $reviews = $this->reviews;
-        if ($reviews->count() == 0) {
-            return 0;
-        }
-        $totalRating = $reviews->sum('rating');
-        return $totalRating / $reviews->count();
+        return $this->belongsToMany(Feature::class, 'feature_product');
     }
 }

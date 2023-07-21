@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Order;
 use App\Models\Review;
 use App\Models\ReviewVote;
+use App\Observers\OrderObserver;
 use App\Observers\ReviewObserver;
 use App\Observers\ReviewVoteObserver;
 use Illuminate\Auth\Events\Registered;
@@ -29,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Order::observe(OrderObserver::class);
         Review::observe(ReviewObserver::class);
         ReviewVote::observe(ReviewVoteObserver::class);
     }
