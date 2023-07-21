@@ -22,8 +22,8 @@ const Home = () => {
       <div className="home__info">
         <div className="home__info-images" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
           <img src={main} alt="1" className='home__info-image'/>
-          <img onError={(e) => (e.target.src = PlaceholderImage)} src={main2} alt="2" className='home__info-image'/>
-          <img onError={(e) => (e.target.src = PlaceholderImage)} src={main3} alt="3" className='home__info-image'/>
+          <img src={main2} alt="2" className='home__info-image'/>
+          <img src={main3} alt="3" className='home__info-image'/>
         </div>
         <button onClick={() => onPrevImage()} className='home__info-arrows left-arrow'>
           <img src={leftArrow} alt="" className="home__info-arrows-image" />
