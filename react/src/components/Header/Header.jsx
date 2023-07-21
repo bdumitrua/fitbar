@@ -14,8 +14,8 @@ const Header = () => {
                 <img src={logo} alt="" className="header__logo" />
                 <span className="header__site-name">fitbar</span>
             </a>
-            <div className="header__search-container">
-                <input type="search" className="header__search" placeholder='Поиск...'/>
+            <div className="header__search">
+                <input type="search" className="header__search-input" placeholder='Поиск...'/>
                 <button className='header__search-button'>
                     <img src={search} alt="" className='header__search-image'/>
                 </button>
@@ -23,11 +23,14 @@ const Header = () => {
             <div className="header__right-side">
                 <a href="" className="header__button">
                     <img src={account} alt="" className="header__button-image" />
-                    <a href="" className="header__account-button-text">Аккаунт</a>
+                    <a href="" className="header__button-text text-grey">Аккаунт</a>
                 </a>
                 <a href="" className="header__button">
-                    <img src={cart} alt="" className="header__button-image" />
-                    <a href="" className="header__cart-button-text">Корзина</a>
+                    <div className="header__button-images">
+                        <img src={cart} alt="" className="header__button-image" />
+                        <span className="header__button-counter">0</span>
+                    </div>
+                    <a href="" className="header__button-text text-grey">Корзина</a>
                 </a>    
             </div>
         </div>
