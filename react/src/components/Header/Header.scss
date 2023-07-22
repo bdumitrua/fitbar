@@ -97,6 +97,8 @@
 }
 
 .header__navbar-container {
+    width: 100%;
+
     @include m.flex-between();
 }
 
