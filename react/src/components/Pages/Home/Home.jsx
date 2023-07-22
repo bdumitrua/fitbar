@@ -4,6 +4,7 @@ import './Home.scss'
 import leftArrow from '../../../images/leftArrow.svg'
 import { default as main, default as main2, default as main3 } from '../../../images/main.png'
 import rightArrow from '../../../images/rightArrow.svg'
+import ProductsSection from './ProductsSection/ProductsSection'
 
 const Home = () => {
   
@@ -37,14 +38,7 @@ const Home = () => {
         <a href="" className="products-section__title">бестселлеры</a>
         
       </section>
-      <section className="products-section">
-        <a href="" className="products-section__title">Батончики</a>
-
-      </section>
-      <section className="products-section">
-        <a href="" className="products-section__title">Протеин</a>
-
-      </section>
+      <ProductsSection />
     </div>
   )
 }
