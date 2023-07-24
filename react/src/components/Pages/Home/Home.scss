@@ -45,11 +45,3 @@
 .right-arrow {
     right: 10px;
 }
-
-
-.products-section {
-}
-.products-section__title {
-    @include m.text-bold(9px);
-    text-transform: uppercase;
-}

@@ -1,46 +1,81 @@
-import { React, useState } from 'react'
-import './Home.scss'
+import axios from "axios";
+import { React, useEffect, useState } from "react";
+import "./Home.scss";
 
-import leftArrow from '../../../images/leftArrow.svg'
-import { default as main, default as main2, default as main3 } from '../../../images/main.png'
-import rightArrow from '../../../images/rightArrow.svg'
-import ProductsSection from './ProductsSection/ProductsSection'
+import leftArrow from "../../../images/leftArrow.svg";
+import {
+    default as main,
+    default as main2,
+    default as main3,
+} from "../../../images/main.png";
+import rightArrow from "../../../images/rightArrow.svg";
+import ProductsSection from "./ProductsSection/ProductsSection";
 
 const Home = () => {
-  
-  const [currentSlide, setCurrentSlide] = useState(0);
+    const [data, setData] = useState(null);
 
-  const onNextImage = () => {
-    setCurrentSlide((onPrevImage) => (onPrevImage + 1) % 3);
-  };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:8000/api/category"
+                );
+                setData(response.data);
+            } catch (error) {
+                console.error("Произошла ошибка при выполнении запроса", error);
+            }
+        };
 
-  const onPrevImage = () => {
-    setCurrentSlide((onPrevImage) => (onPrevImage - 1 + 3) % 3);
-  };
+        fetchData();
+    }, []);
 
-  return (
-    <div className="home container">
-      <div className="home__info">
-        <div className="home__info-images" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-          <img src={main} alt="1" className='home__info-image'/>
-          <img src={main2} alt="2" className='home__info-image'/>
-          <img src={main3} alt="3" className='home__info-image'/>
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const onNextImage = () => {
+        setCurrentSlide((onPrevImage) => (onPrevImage + 1) % 3);
+    };
+
+    const onPrevImage = () => {
+        setCurrentSlide((onPrevImage) => (onPrevImage - 1 + 3) % 3);
+    };
+
+    return (
+        <div className="home container">
+            <div className="home__info">
+                <div
+                    className="home__info-images"
+                    style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                    <img src={main} alt="1" className="home__info-image" />
+                    <img src={main2} alt="2" className="home__info-image" />
+                    <img src={main3} alt="3" className="home__info-image" />
+                </div>
+                <button
+                    onClick={() => onPrevImage()}
+                    className="home__info-arrows left-arrow"
+                >
+                    <img
+                        src={leftArrow}
+                        alt=""
+                        className="home__info-arrows-image"
+                    />
+                </button>
+                <button
+                    onClick={() => onNextImage()}
+                    className="home__info-arrows right-arrow"
+                >
+                    <img
+                        src={rightArrow}
+                        alt=""
+                        className="home__info-arrows-image"
+                    />
+                </button>
+            </div>
+
+            {/* <Bestsellers /> */}
+            <ProductsSection categories={data} />
         </div>
-        <button onClick={() => onPrevImage()} className='home__info-arrows left-arrow'>
-          <img src={leftArrow} alt="" className="home__info-arrows-image" />
-        </button>
-        <button onClick={() => onNextImage()} className='home__info-arrows right-arrow'>
-          <img src={rightArrow} alt="" className="home__info-arrows-image" />
-        </button>
-      </div>
+    );
+};
 
-      <section className="products-section">
-        <a href="" className="products-section__title">бестселлеры</a>
-        
-      </section>
-      <ProductsSection />
-    </div>
-  )
-}
-
-export default Home
+export default Home;

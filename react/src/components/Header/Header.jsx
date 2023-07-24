@@ -15,7 +15,7 @@ const Header = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get("http://localhost:8000/api/category");
-          setData(response.data); // сохранение данных в state
+          setData(response.data);
         } catch (error) {
           console.error("Произошла ошибка при выполнении запроса", error);
         }
@@ -40,14 +40,14 @@ const Header = () => {
             <div className="header__right-side">
                 <a href="" className="header__button">
                     <img src={account} alt="" className="header__button-image" />
-                    <a href="" className="header__button-text text-grey">Аккаунт</a>
+                    <p href="" className="header__button-text text-grey">Аккаунт</p>
                 </a>
                 <a href="" className="header__button">
                     <div className="header__button-images">
                         <img src={cart} alt="" className="header__button-image" />
                         <span className="header__button-counter">0</span>
                     </div>
-                    <a href="" className="header__button-text text-grey">Корзина</a>
+                    <p href="" className="header__button-text text-grey">Корзина</p>
                 </a>    
             </div>
         </div>
@@ -59,7 +59,7 @@ const Header = () => {
                 <a href="" className="header__navbar-element">Углеводы</a>
                 {data ? (
                     data.map(category => (
-                        <a href={category.slug} className="header__navbar-element">{category.name}</a>
+                        <a href={category.slug} className="header__navbar-element" key={category.slug}>{category.name}</a>
                     )
                 )) : (
                     <p>Загрузка...</p>

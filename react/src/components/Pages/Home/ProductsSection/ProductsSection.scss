@@ -1,0 +1,10 @@
+@use "../../../../styles/mixins" as m;
+@use "../../../../styles/variables" as v;
+
+.products-section {
+}
+
+.products-section__title {
+    @include m.text-bold(9px);
+    text-transform: uppercase;
+}
