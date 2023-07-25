@@ -1,21 +1,22 @@
-import React from "react";
+import heart from "../../images/heart.svg";
+import ProductRating from "./ProductRating/ProductRating";
 
-const ProductCard = (product) => {
+const ProductCard = ({ product }) => {
     return (
-        <div className="product">
+        <div className="product" key={product.id}>
             <a href={product.id} className="product__image">
                 <img
                     src={product.image}
                     alt=""
                     className="product__image-element"
                 />
-                <img className="product__image-favorite" />
-                <button className="product__image-cart-button">
+                <img src={heart} className="product__favorite" />
+                <button className="product__cart-button">
                     Добавить в корзину
                 </button>
             </a>
             <p className="product__title">{product.name}</p>
-            <div className="product__rating">fetch</div>
+            <ProductRating rating={product.rating} />
             <p className="product__price">{product.price}</p>
         </div>
     );

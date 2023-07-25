@@ -2,9 +2,20 @@
 @use "../../../../styles/variables" as v;
 
 .products-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.products-container {
+    width: 100%;
+    @include m.flex-between;
+    flex-wrap: wrap;
 }
 
 .products-section__title {
+    margin-bottom: 40px;
+
     @include m.text-bold(9px);
     text-transform: uppercase;
 }

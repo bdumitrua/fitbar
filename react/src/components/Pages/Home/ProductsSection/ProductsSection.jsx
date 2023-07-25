@@ -1,6 +1,6 @@
 import axios from "axios";
-import { React, useEffect, useState } from "react";
-import ProductCard from "../../ProductCard";
+import { useEffect, useState } from "react";
+import ProductCard from "../../../ProductCard/ProductCard";
 import "./ProductsSection.scss";
 
 const ProductsSection = ({ categories }) => {
@@ -12,7 +12,7 @@ const ProductsSection = ({ categories }) => {
                 const response = await axios.get(
                     "http://localhost:8000/api/products"
                 );
-                setData(response.data); // сохранение данных в state
+                setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
             }
@@ -20,8 +20,6 @@ const ProductsSection = ({ categories }) => {
 
         fetchData();
     }, []);
-
-    console.log(categories);
 
     return (
         <>
@@ -40,15 +38,20 @@ const ProductsSection = ({ categories }) => {
                             >
                                 {category.name}
                             </a>
-                            {data ? (
-                                data
-                                    .slice(0, 4)
-                                    .map((product) => (
-                                        <ProductCard product={product} />
-                                    ))
-                            ) : (
-                                <p>Загрузка...</p>
-                            )}
+                            <div className="products-container">
+                                {data ? (
+                                    data
+                                        .slice(0, 4)
+                                        .map((product) => (
+                                            <ProductCard
+                                                key={product.id}
+                                                product={product}
+                                            />
+                                        ))
+                                ) : (
+                                    <p>Загрузка...</p>
+                                )}
+                            </div>
                         </section>
                     ))
             ) : (

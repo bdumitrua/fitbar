@@ -1,5 +1,5 @@
 import axios from "axios";
-import { React, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Home.scss";
 
 import leftArrow from "../../../images/leftArrow.svg";
@@ -9,6 +9,7 @@ import {
     default as main3,
 } from "../../../images/main.png";
 import rightArrow from "../../../images/rightArrow.svg";
+import Bestsellers from "./ProductsSection/Bestsellers";
 import ProductsSection from "./ProductsSection/ProductsSection";
 
 const Home = () => {
@@ -72,7 +73,7 @@ const Home = () => {
                 </button>
             </div>
 
-            {/* <Bestsellers /> */}
+            <Bestsellers />
             <ProductsSection categories={data} />
         </div>
     );

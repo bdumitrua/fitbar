@@ -1,6 +1,6 @@
 import axios from "axios";
-import { React, useEffect, useState } from "react";
-import ProductCard from "../../ProductCard";
+import { useEffect, useState } from "react";
+import ProductCard from "../../../ProductCard/ProductCard";
 import "./ProductsSection.scss";
 
 const Bestsellers = () => {
@@ -12,7 +12,7 @@ const Bestsellers = () => {
                 const response = await axios.get(
                     "http://localhost:8000/api/products"
                 );
-                setData(response.data); // сохранение данных в state
+                setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
             }
@@ -22,11 +22,20 @@ const Bestsellers = () => {
     }, []);
 
     return (
-        <section className="products-section">
-            <a href="" className="products-section__title">
-                бестселлеры
-            </a>
-            <ProductCard product={data} />
+        <section className="products-section" key="bestsellers">
+            <p className="products-section__title">бестселлеры</p>
+            <div className="products-container">
+                {data ? (
+                    data
+                        .sort((a, b) => b.orders_count - a.orders_count)
+                        .slice(0, 8)
+                        .map((product) => (
+                            <ProductCard key={product.id} product={product} />
+                        ))
+                ) : (
+                    <p>Загрузка...</p>
+                )}
+            </div>
         </section>
     );
 };
