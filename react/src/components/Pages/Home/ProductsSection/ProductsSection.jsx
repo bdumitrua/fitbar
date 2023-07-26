@@ -41,6 +41,15 @@ const ProductsSection = ({ categories }) => {
                             <div className="products-container">
                                 {data ? (
                                     data
+                                        .filter(
+                                            (product) =>
+                                                product.category_id ===
+                                                category.id
+                                        )
+                                        .sort(
+                                            (a, b) =>
+                                                b.orders_count - a.orders_count
+                                        )
                                         .slice(0, 4)
                                         .map((product) => (
                                             <ProductCard
