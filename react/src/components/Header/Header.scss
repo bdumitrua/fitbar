@@ -1,10 +1,10 @@
-@use '../../styles/mixins' as m;
-@use '../../styles/variables.scss' as v;
-@use 'sass:math';
+@use "../../styles/mixins" as m;
+@use "../../styles/variables.scss" as v;
+@use "sass:math";
 
 .header {
     @include m.flex-center();
-    flex-direction: column
+    flex-direction: column;
 }
 .header__container {
     width: 100%;
@@ -15,8 +15,7 @@
     width: math.div(160, 1300) * 100%;
     @include m.flex-between();
 }
-.header__logo {
-}
+
 .header__site-name {
     @include m.text-bold(6px);
     text-transform: uppercase;
@@ -24,7 +23,7 @@
 }
 
 .header__search {
-    width: math.div(400, 1300)*100%;
+    width: math.div(400, 1300) * 100%;
 
     position: relative;
 }
@@ -40,14 +39,13 @@
 
 .header__search-button {
     padding: 7px 8px 8px 8px;
-    
+
     position: absolute;
     right: 0;
     top: 0;
 }
 
 .header__search-image {
-
 }
 
 .header__search::placeholder {
@@ -64,7 +62,6 @@
 }
 
 .header__button-text {
-
 }
 
 .header__button-images {
@@ -103,6 +100,5 @@
 }
 
 .header__navbar-element {
-
     color: v.$black;
 }
