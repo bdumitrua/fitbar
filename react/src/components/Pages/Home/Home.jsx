@@ -73,7 +73,7 @@ const Home = () => {
                 </button>
             </div>
 
-            <Bestsellers />
+            <Bestsellers categories={data} />
             <ProductsSection categories={data} />
         </div>
     );

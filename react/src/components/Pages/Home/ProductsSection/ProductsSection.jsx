@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ProductCard from "../../../ProductCard/ProductCard";
 import "./ProductsSection.scss";
 
@@ -32,12 +33,12 @@ const ProductsSection = ({ categories }) => {
                             className="products-section"
                             key={category.slug}
                         >
-                            <a
-                                href={category.slug}
+                            <Link
+                                to={category.slug}
                                 className="products-section__title"
                             >
                                 {category.name}
-                            </a>
+                            </Link>
                             <div className="products-container">
                                 {data ? (
                                     data

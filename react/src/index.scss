@@ -1,0 +1,25 @@
+@use "./styles/variables" as v;
+@import url(./styles/reset.css);
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+:root {
+    font-family: "Inter", sans-serif;
+    color: white;
+}
+
+body {
+    background-color: v.$black;
+}
+
+a {
+    color: white;
+}
+
+.text-grey {
+    color: v.$grey;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
