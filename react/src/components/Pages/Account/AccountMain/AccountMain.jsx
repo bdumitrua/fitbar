@@ -11,48 +11,48 @@ const AccountMain = () => {
                 <div className="account-info">
                     <img src="" alt="" className="account-info__image" />
                     <div className="account-info__private-info">
-                        <div
+                        <input
+                            type="text"
                             className="account-info__private-info-element"
                             placeholder="Имя"
-                        >
-                            Имя
-                        </div>
-                        <div
+                            disabled
+                        />
+                        <input
+                            type="date"
                             className="account-info__private-info-element"
                             placeholder="Дата рождения"
-                        >
-                            Дата рождения
-                        </div>
-                        <div
+                            disabled
+                        />
+                        <input
+                            type="text"
                             className="account-info__private-info-element"
                             placeholder="Фамилия"
-                        >
-                            Фамилия
-                        </div>
-                        <div
+                            disabled
+                        />
+                        <input
+                            type="tel"
                             className="account-info__private-info-element"
                             placeholder="Номер телефона"
-                        >
-                            Номер
-                        </div>
-                        <div
+                            disabled
+                        />
+                        <input
+                            type="text"
                             className="account-info__private-info-element"
                             placeholder="Отчество"
-                        >
-                            Отчество
-                        </div>
-                        <div
+                            disabled
+                        />
+                        <input
+                            type="email"
                             className="account-info__private-info-element"
                             placeholder="Электронная почта"
-                        >
-                            Почта
-                        </div>
-                        <div
+                            disabled
+                        />
+                        <input
+                            type="text"
                             className="account-info__private-info-element private-info-element-long"
                             placeholder="Адрес"
-                        >
-                            Адрес
-                        </div>
+                            disabled
+                        />
                     </div>
                 </div>
             </div>
