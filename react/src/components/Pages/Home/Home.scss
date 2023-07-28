@@ -1,11 +1,12 @@
-@use '../../../styles/mixins' as m;
-@use '../../../styles/variables' as v;
+@use "../../../styles/mixins" as m;
+@use "../../../styles/variables" as v;
 
 .home {
-
 }
 
 .home__info {
+    margin-bottom: 80px;
+
     position: relative;
 
     overflow: hidden;
@@ -14,12 +15,11 @@
 .home__info-images {
     display: flex;
     flex-wrap: nowrap;
-    
+
     transition: transform 0.5s ease-out;
 }
 
 .home__info-image {
-
 }
 
 .home__info-arrows {
@@ -35,7 +35,6 @@
 }
 
 .home__info-arrows-image {
-
 }
 
 .left-arrow {
@@ -44,12 +43,4 @@
 
 .right-arrow {
     right: 10px;
-}
-
-
-.products-section {
-}
-.products-section__title {
-    @include m.text-bold(9px);
-    text-transform: uppercase;
 }
