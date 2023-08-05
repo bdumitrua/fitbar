@@ -1,11 +1,12 @@
 .account__navbar {
-    width: 210px;
     height: 100%;
 
     display: flex;
     flex-direction: column;
 
     margin-right: 160px;
+
+    white-space: nowrap;
 }
 
 .account__navbar-element {
