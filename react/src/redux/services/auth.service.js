@@ -11,12 +11,10 @@ const AuthService = {
                     password,
                 }
             );
-            console.log(response.data.accessToken);
-            // Сохраняем токен доступа в localStorage или cookies.
-            localStorage.setItem("accessToken", response.data.accessToken);
 
+            localStorage.setItem("access_token", response.data.access_token);
             // Возвращаем токен из функции
-            return response.data.accessToken;
+            return response.data.access_token;
         } catch (error) {
             console.error("Ошибка", error);
             throw error;

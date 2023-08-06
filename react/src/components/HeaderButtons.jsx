@@ -11,7 +11,6 @@ import cart from "../images/cart.svg";
 // Переделать логику поведения модалок
 
 const HeaderButtons = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
 
     const user = useSelector((state) => state.auth.user);
@@ -30,7 +29,6 @@ const HeaderButtons = () => {
 
     // Функция для обработки успешной авторизации
     const handleSuccessfulLogin = () => {
-        setIsLoggedIn(true);
         setShowLoginModal(false);
     };
 

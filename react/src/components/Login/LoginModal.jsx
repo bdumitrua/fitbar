@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAsync, logout, saveToken } from "../../redux/slices/auth.slice";
+import {
+    loginAsync,
+    logout,
+    saveToken,
+    setLoggedIn,
+} from "../../redux/slices/auth.slice";
 import RegistrationModal from "../Registration/RegistrationModal";
 import "./LoginModal.scss";
 
@@ -14,10 +19,19 @@ const LoginModal = ({ closeLoginModal }) => {
     const [password, setPassword] = useState("");
     const [showRegistration, setShowRegistration] = useState(false); // Состояние для отображения/скрытия окна регистрации
 
-    const handleLogin = async () => {
+    useEffect(() => {
+        // Когда пользователь успешно авторизуется (user не равен null), закрываем модалку
+        if (user) {
+            closeLoginModal();
+        }
+    }, [user, closeLoginModal]);
+
+    const handleLogin = async (e) => {
+        e.preventDefault(); // Предотвращаем перезагрузку страницы
         try {
             const token = await dispatch(loginAsync({ email, password }));
             dispatch(saveToken(token));
+            dispatch(setLoggedIn(true)); // Устанавливаем состояние loggedIn в true при успешной авторизации
         } catch (error) {
             console.error("Ошибка при входе", error);
         }

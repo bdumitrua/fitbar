@@ -26,6 +26,7 @@ const initialState = {
     user: null,
     loading: false,
     error: null,
+    loggedIn: false,
 };
 
 const authSlice = createSlice({
@@ -34,6 +35,10 @@ const authSlice = createSlice({
     reducers: {
         logout: (state) => {
             state.user = null;
+            state.loggedIn = false;
+        },
+        setLoggedIn: (state, action) => {
+            state.loggedIn = action.payload; // Устанавливаем состояние авторизации
         },
     },
     extraReducers: (builder) => {
@@ -46,6 +51,7 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.user = action.payload;
                 state.error = null;
+                state.loggedIn = true;
             })
             .addCase(loginAsync.rejected, (state, action) => {
                 state.loading = false;
@@ -54,5 +60,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setLoggedIn } = authSlice.actions;
 export default authSlice.reducer;
