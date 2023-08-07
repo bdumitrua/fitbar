@@ -20,6 +20,22 @@ const AuthService = {
             throw error;
         }
     },
+    async refreshToken(refreshToken) {
+        try {
+            const response = await axios.post(
+                "http://localhost:8000/api/auth/refresh",
+                {
+                    refreshToken,
+                }
+            );
+            const newAccessToken = response.data.access_token;
+            localStorage.setItem("access_token", newAccessToken);
+            return newAccessToken;
+        } catch (error) {
+            console.error("Ошибка при обновлении токена", error);
+            throw error;
+        }
+    },
 };
 
 export default AuthService;

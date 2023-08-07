@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./DefaultLayout.scss";
 import LoginModal from "./Login/LoginModal";
 
-import { useSelector } from "react-redux";
+import axiosInstance from "../axios/instance";
 import account from "../images/account.svg";
 import cart from "../images/cart.svg";
 
@@ -13,9 +13,21 @@ import cart from "../images/cart.svg";
 const HeaderButtons = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
 
-    const user = useSelector((state) => state.auth.user);
+    const user = localStorage.getItem("access_token");
 
-    const isAuthenticated = !!user;
+    const rememberMe = localStorage.getItem("rememberMe") === "true";
+
+    // Функция для обработки успешной авторизации
+    const handleSuccessfulLogin = (token) => {
+        setShowLoginModal(false);
+
+        // Сохраняем новый токен в localStorage
+        localStorage.setItem("access_token", token.payload);
+
+        // Обновляем заголовок "Authorization" в axios
+        axiosInstance.defaults.headers.common["Authorization"] =
+            "Bearer " + token;
+    };
 
     // Функция для открытия модального окна авторизации
     const handleLoginClick = () => {
@@ -24,11 +36,6 @@ const HeaderButtons = () => {
 
     // Функция для закрытия модального окна авторизации
     const handleLoginModalClose = () => {
-        setShowLoginModal(false);
-    };
-
-    // Функция для обработки успешной авторизации
-    const handleSuccessfulLogin = () => {
         setShowLoginModal(false);
     };
 
@@ -41,7 +48,7 @@ const HeaderButtons = () => {
 
     return (
         <div className="header__right-side">
-            {isAuthenticated ? (
+            {user ? (
                 // Если пользователь авторизован, показываем кнопку для перехода в личный кабинет
                 <Link to="/user/account" className="header__button">
                     <img
@@ -69,6 +76,7 @@ const HeaderButtons = () => {
                 <LoginModal
                     closeLoginModal={handleLoginModalClose}
                     onSuccess={handleSuccessfulLogin}
+                    rememberMe={rememberMe}
                 />
             )}
 

@@ -15,6 +15,19 @@ export const loginAsync = createAsyncThunk(
     }
 );
 
+export const refreshAccessToken = createAsyncThunk(
+    "auth/refresh",
+    async (refreshToken) => {
+        try {
+            const newAccessToken = await AuthService.refreshToken(refreshToken);
+            return newAccessToken;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+);
+
 export const saveToken = (token) => {
     return {
         type: "auth/saveToken",
@@ -22,11 +35,22 @@ export const saveToken = (token) => {
     };
 };
 
+export const setHandleSuccessfulLogin = (handleSuccessfulLogin) => {
+    return {
+        type: "auth/setHandleSuccessfulLogin",
+        payload: handleSuccessfulLogin,
+    };
+};
+
 const initialState = {
     user: null,
+    accessToken: localStorage.getItem("accessToken") || null,
+    refreshToken: localStorage.getItem("refreshToken") || null,
     loading: false,
     error: null,
     loggedIn: false,
+    rememberMe: false,
+    handleSuccessfulLogin: null,
 };
 
 const authSlice = createSlice({
@@ -35,10 +59,23 @@ const authSlice = createSlice({
     reducers: {
         logout: (state) => {
             state.user = null;
-            state.loggedIn = false;
+            state.accessToken = null;
+            state.refreshToken = null;
+            // Очищаем localStorage при выходе пользователя
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+        },
+        setRememberMe: (state) => {
+            state.rememberMe = true;
+        },
+        resetRememberMe: (state) => {
+            state.rememberMe = false;
         },
         setLoggedIn: (state, action) => {
             state.loggedIn = action.payload; // Устанавливаем состояние авторизации
+        },
+        setHandleSuccessfulLogin: (state, action) => {
+            state.handleSuccessfulLogin = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -56,9 +93,19 @@ const authSlice = createSlice({
             .addCase(loginAsync.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+            })
+
+            .addCase(refreshAccessToken.fulfilled, (state, action) => {
+                state.accessToken = action.payload; // Обновляем access токен в состоянии
+                state.error = null; // Сбрасываем ошибку, если была
+            })
+
+            .addCase(refreshAccessToken.rejected, (state, action) => {
+                state.error = action.error.message; // Сохраняем сообщение об ошибке в состоянии
             });
     },
 });
 
-export const { logout, setLoggedIn } = authSlice.actions;
+export const { logout, setLoggedIn, setRememberMe, resetRememberMe } =
+    authSlice.actions;
 export default authSlice.reducer;

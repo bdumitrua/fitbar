@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axiosInstance from "../../axios/instance";
 import {
     loginAsync,
     logout,
+    refreshAccessToken,
+    resetRememberMe,
     saveToken,
     setLoggedIn,
+    setRememberMe,
 } from "../../redux/slices/auth.slice";
 import RegistrationModal from "../Registration/RegistrationModal";
 import "./LoginModal.scss";
 
-const LoginModal = ({ closeLoginModal }) => {
+const LoginModal = ({ closeLoginModal, onSuccess }) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const loading = useSelector((state) => state.auth.loading);
     const error = useSelector((state) => state.auth.error);
+    const refreshToken = useSelector((state) => state.auth.refreshToken);
+    const rememberMe = useSelector((state) => state.auth.rememberMe);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,16 +28,35 @@ const LoginModal = ({ closeLoginModal }) => {
     useEffect(() => {
         // Когда пользователь успешно авторизуется (user не равен null), закрываем модалку
         if (user) {
+            console.log(user);
             closeLoginModal();
         }
     }, [user, closeLoginModal]);
 
+    useEffect(() => {
+        if (refreshToken) {
+            dispatch(refreshAccessToken(refreshToken));
+        }
+    }, [dispatch, refreshToken]);
+
     const handleLogin = async (e) => {
-        e.preventDefault(); // Предотвращаем перезагрузку страницы
+        e.preventDefault();
         try {
             const token = await dispatch(loginAsync({ email, password }));
             dispatch(saveToken(token));
             dispatch(setLoggedIn(true)); // Устанавливаем состояние loggedIn в true при успешной авторизации
+
+            // Обновляем заголовок "Authorization" в axios
+            axiosInstance.defaults.headers.common["Authorization"] =
+                "Bearer " + token;
+
+            // Закрываем модальное окно
+            closeLoginModal();
+
+            // Вызываем функцию onSuccess, если она предоставлена
+            if (typeof onSuccess === "function") {
+                onSuccess(token);
+            }
         } catch (error) {
             console.error("Ошибка при входе", error);
         }
@@ -39,6 +64,14 @@ const LoginModal = ({ closeLoginModal }) => {
 
     const handleLogout = () => {
         dispatch(logout());
+    };
+
+    const handleRememberMeChange = () => {
+        if (rememberMe) {
+            dispatch(resetRememberMe());
+        } else {
+            dispatch(setRememberMe());
+        }
     };
 
     const handleOpenRegistration = () => {
@@ -89,6 +122,8 @@ const LoginModal = ({ closeLoginModal }) => {
                                     name=""
                                     id="remember-me"
                                     className="modal__remember"
+                                    checked={rememberMe}
+                                    onChange={handleRememberMeChange}
                                 />
                                 <label
                                     className="modal__checkbox-label"

@@ -58,6 +58,7 @@ const AccountEdit = () => {
                                         required
                                     />
                                 )}
+                                valueName="selected"
                             />
                         </div>
                         <Controller
