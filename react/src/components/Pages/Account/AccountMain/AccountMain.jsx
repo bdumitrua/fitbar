@@ -1,26 +1,34 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../../../axios/instance";
-import LoginModal from "../../../Login/LoginModal";
+import { setUser } from "../../../../redux/slices/user.slice";
 import "../Account.scss";
 import AccountLayout from "../AccountAside";
 import "./AccountMain.scss";
 
 const AccountMain = () => {
     const [data, setData] = useState({});
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
+    const accessToken = useSelector((state) => state.auth.accessToken);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get("/users/me");
                 setData(response.data);
-                console.log(response.data);
+                dispatch(setUser(response.data));
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
             }
         };
 
         fetchData();
-    }, []);
+    }, [dispatch]);
+
+    if (!data.name) {
+        return <p>Загрузка...</p>;
+    }
 
     return (
         <div className="account container">
@@ -85,7 +93,7 @@ const AccountMain = () => {
                     </div>
                 </>
             ) : (
-                <LoginModal />
+                <p>Загрузка...</p>
             )}
         </div>
     );

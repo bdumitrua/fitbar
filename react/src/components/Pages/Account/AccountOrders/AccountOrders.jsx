@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axiosInstance from "../../../../axios/instance";
 import OrderCard from "../../../OrderCard/OrderCard";
 import "../Account.scss";
 import AccountLayout from "../AccountAside";
@@ -11,9 +11,7 @@ const AccountOrders = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    "http://localhost:8000/api/orders"
-                );
+                const response = await axiosInstance.get("orders");
                 setData(response.data);
             } catch (error) {
                 console.error("Ошибка", error);

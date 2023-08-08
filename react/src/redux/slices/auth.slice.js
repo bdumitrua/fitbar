@@ -44,8 +44,8 @@ export const setHandleSuccessfulLogin = (handleSuccessfulLogin) => {
 
 const initialState = {
     user: null,
-    accessToken: localStorage.getItem("accessToken") || null,
-    refreshToken: localStorage.getItem("refreshToken") || null,
+    accessToken: null,
+    refreshToken: null,
     loading: false,
     error: null,
     loggedIn: false,
@@ -61,9 +61,6 @@ const authSlice = createSlice({
             state.user = null;
             state.accessToken = null;
             state.refreshToken = null;
-            // Очищаем localStorage при выходе пользователя
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
         },
         setRememberMe: (state) => {
             state.rememberMe = true;
@@ -87,6 +84,7 @@ const authSlice = createSlice({
             .addCase(loginAsync.fulfilled, (state, action) => {
                 state.loading = false;
                 state.user = action.payload;
+                state.accessToken = action.payload;
                 state.error = null;
                 state.loggedIn = true;
             })
@@ -106,6 +104,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout, setLoggedIn, setRememberMe, resetRememberMe } =
+export const { logout, setLoggedIn, setRememberMe, resetRememberMe, getToken } =
     authSlice.actions;
 export default authSlice.reducer;

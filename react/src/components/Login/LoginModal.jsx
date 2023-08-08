@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../axios/instance";
 import {
     loginAsync,
-    logout,
     refreshAccessToken,
     resetRememberMe,
     saveToken,
@@ -19,6 +18,7 @@ const LoginModal = ({ closeLoginModal, onSuccess }) => {
     const loading = useSelector((state) => state.auth.loading);
     const error = useSelector((state) => state.auth.error);
     const refreshToken = useSelector((state) => state.auth.refreshToken);
+    const accessToken = useSelector((state) => state.auth.accessToken);
     const rememberMe = useSelector((state) => state.auth.rememberMe);
 
     const [email, setEmail] = useState("");
@@ -28,7 +28,6 @@ const LoginModal = ({ closeLoginModal, onSuccess }) => {
     useEffect(() => {
         // Когда пользователь успешно авторизуется (user не равен null), закрываем модалку
         if (user) {
-            console.log(user);
             closeLoginModal();
         }
     }, [user, closeLoginModal]);
@@ -60,10 +59,6 @@ const LoginModal = ({ closeLoginModal, onSuccess }) => {
         } catch (error) {
             console.error("Ошибка при входе", error);
         }
-    };
-
-    const handleLogout = () => {
-        dispatch(logout());
     };
 
     const handleRememberMeChange = () => {

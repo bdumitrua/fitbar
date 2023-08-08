@@ -9,12 +9,13 @@ const AuthService = {
                 {
                     email,
                     password,
-                }
+                },
+                { withCredentials: true }
             );
 
-            localStorage.setItem("access_token", response.data.access_token);
+            //localStorage.setItem("access_token", response.data.access_token);
             // Возвращаем токен из функции
-            return response.data.access_token;
+            return response.data.data.access_token;
         } catch (error) {
             console.error("Ошибка", error);
             throw error;
@@ -29,7 +30,7 @@ const AuthService = {
                 }
             );
             const newAccessToken = response.data.access_token;
-            localStorage.setItem("access_token", newAccessToken);
+            //localStorage.setItem("access_token", newAccessToken);
             return newAccessToken;
         } catch (error) {
             console.error("Ошибка при обновлении токена", error);
