@@ -1,50 +1,44 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./DefaultLayout.scss";
-import LoginModal from "./Login/LoginModal";
 
 import axiosInstance from "../axios/instance";
 import account from "../images/account.svg";
 import cart from "../images/cart.svg";
+import Modals from "./Modals/Modals";
 
 // TODO
 // Переделать логику поведения модалок
 
 const HeaderButtons = () => {
-    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const user = localStorage.getItem("access_token");
 
-    const rememberMe = localStorage.getItem("rememberMe") === "true";
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     // Функция для обработки успешной авторизации
     const handleSuccessfulLogin = (token) => {
-        setShowLoginModal(false);
+        setShowModal(false);
 
         // Сохраняем новый токен в localStorage
         localStorage.setItem("access_token", token.payload);
 
         // Обновляем заголовок "Authorization" в axios
         axiosInstance.defaults.headers.common["Authorization"] =
-            "Bearer " + token;
+            "Bearer " + token.payload;
     };
 
     // Функция для открытия модального окна авторизации
     const handleLoginClick = () => {
-        setShowLoginModal(true);
+        setShowModal(true);
     };
-
-    // Функция для закрытия модального окна авторизации
-    const handleLoginModalClose = () => {
-        setShowLoginModal(false);
-    };
-
-    // Функция для выхода из аккаунта
-    // const handleLogout = () => {
-    //     setIsLoggedIn(false);
-    // };
-
-    // Функция для перенаправления на страницу личного кабинета
 
     return (
         <div className="header__right-side">
@@ -72,11 +66,11 @@ const HeaderButtons = () => {
                 </button>
             )}
 
-            {showLoginModal && (
-                <LoginModal
-                    closeLoginModal={handleLoginModalClose}
-                    onSuccess={handleSuccessfulLogin}
-                    rememberMe={rememberMe}
+            {showModal && (
+                <Modals
+                    handleOpenModal={handleOpenModal}
+                    handleCloseModal={handleCloseModal}
+                    handleSuccessfulLogin={handleSuccessfulLogin}
                 />
             )}
 

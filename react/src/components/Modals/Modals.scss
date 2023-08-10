@@ -16,13 +16,8 @@
     z-index: 10;
 }
 
-.registration {
-    height: 450px;
-}
-
 .modal__content {
     width: 560px;
-    height: 320px;
 
     display: flex;
     justify-content: center;
@@ -34,6 +29,14 @@
     border: white 1px solid;
 
     position: relative;
+
+    .login {
+        height: 320px;
+    }
+
+    .registration {
+        height: 450px;
+    }
 }
 
 .modal__title {
@@ -91,6 +94,10 @@
     @include m.flex-between();
 }
 
+.mb-30px {
+    margin-bottom: 30px;
+}
+
 .modal__button {
     width: 180px;
     height: 30px;
@@ -100,7 +107,7 @@
     background-color: v.$green;
     color: v.$black;
 
-    margin: 0 auto 25px;
+    margin: 0 auto 15px;
 
     transition: all 0.1s linear;
 }
