@@ -70,7 +70,7 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
                 <input
                     id="password"
                     className="modal__input"
-                    type="email"
+                    type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder=""
