@@ -3,11 +3,13 @@ import authSlice, {
     refreshAccessToken,
     setHandleSuccessfulLogin,
 } from "./slices/auth.slice";
+import registerSlice from "./slices/register.slice";
 import userSlice from "./slices/user.slice";
 
 const rootReducer = combineReducers({
     auth: authSlice,
     user: userSlice,
+    register: registerSlice,
 });
 
 const store = configureStore({

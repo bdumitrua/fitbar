@@ -108,6 +108,7 @@ const AccountEdit = () => {
                                     type="email"
                                     className="account-info__private-info-element"
                                     placeholder="Электронная почта"
+                                    disabled
                                 />
                             )}
                         />

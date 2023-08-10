@@ -1,17 +1,17 @@
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../../redux/slices/auth.slice";
-import { clearUser } from "../../../redux/slices/user.slice";
 import "./AccountAside.scss";
 
 const AccountLayout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    //TODO
+    //Пофиксить выход из аккаунта
     const handleLogout = () => {
         dispatch(logout());
-        dispatch(clearUser());
-        navigate("http://localhost:3000/home");
+        navigate("/home");
     };
 
     return (

@@ -1,19 +1,15 @@
-import axios from "axios";
+import axiosInstance from "../../axios/instance";
 
 const AuthService = {
     login: async (email, password) => {
         try {
             // Отправляем данные на сервер для проверки и получения токена.
-            const response = await axios.post(
-                "http://localhost:8000/api/auth/login",
-                {
-                    email,
-                    password,
-                }
-            );
+            const response = await axiosInstance.post("auth/login", {
+                email,
+                password,
+            });
 
             localStorage.setItem("access_token", response.data.access_token);
-            console.log(response.data.access_token);
             // Возвращаем токен из функции
             return response.data.access_token;
         } catch (error) {
@@ -23,12 +19,9 @@ const AuthService = {
     },
     async refreshToken(refreshToken) {
         try {
-            const response = await axios.post(
-                "http://localhost:8000/api/auth/refresh",
-                {
-                    refreshToken,
-                }
-            );
+            const response = await axiosInstance.post("auth/refresh", {
+                refreshToken,
+            });
             const newAccessToken = response.data.access_token;
             localStorage.setItem("access_token", newAccessToken);
             return newAccessToken;

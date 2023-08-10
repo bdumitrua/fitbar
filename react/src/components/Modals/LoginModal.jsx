@@ -47,8 +47,6 @@ const LoginModal = ({ closeModal, onSuccess, toggleModal }) => {
             axiosInstance.defaults.headers.common["Authorization"] =
                 "Bearer " + token;
 
-            // Закрываем модальное окно
-
             // Вызываем функцию onSuccess, если она предоставлена
             if (typeof onSuccess === "function") {
                 onSuccess(token);
@@ -114,10 +112,16 @@ const LoginModal = ({ closeModal, onSuccess, toggleModal }) => {
                     </button>
                 </div>
                 <div className="modal__buttons">
-                    <button className="modal__button" type="submit">
+                    <button
+                        className="modal__button button__green"
+                        type="submit"
+                    >
                         {loading ? "Вход..." : "Войти"}
                     </button>
-                    <button className="modal__button" onClick={toggleModal}>
+                    <button
+                        className="modal__button button__black"
+                        onClick={toggleModal}
+                    >
                         Регистрация
                     </button>
                 </div>

@@ -14,8 +14,15 @@ const Modals = ({
         setModal(!modal);
     };
 
+    const handleBackgroundClick = (e) => {
+        // Проверяем, что клик был по заднему фону (класс "modal")
+        if (e.target.classList.contains("modal")) {
+            handleCloseModal();
+        }
+    };
+
     return (
-        <div className="modal">
+        <div className="modal" onClick={handleBackgroundClick}>
             {!modal ? (
                 <LoginModal
                     showModal={handleOpenModal}

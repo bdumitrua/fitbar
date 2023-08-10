@@ -1,37 +1,45 @@
 import { useState } from "react";
-import axiosInstance from "../../axios/instance";
+import { useDispatch } from "react-redux";
+import { loginAsync } from "../../redux/slices/auth.slice";
+import { registerAsync } from "../../redux/slices/register.slice";
 import "./Modals.scss";
 
 const RegistrationModal = ({ closeModal, toggleModal }) => {
     const [name, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [repeatPassword, setRepeatPassword] = useState("");
     const [email, setEmail] = useState("");
     const [telNumber, setTelNumber] = useState("");
 
-    const handleSubmit = async (e) => {
+    const dispatch = useDispatch();
+
+    //TODO
+    //Пофиксить вход после регистрации(обновление состояния кнопки войти и данные в инпутах в профиле)
+    const handleRegistration = async (e) => {
         e.preventDefault();
-
         try {
-            // Отправляем данные на сервер для проверки и получения токена.
-            const response = await axiosInstance.post("auth/register", {
-                name,
-                email,
-                password,
-            });
+            const user = await dispatch(
+                registerAsync({ name, email, password })
+            );
 
-            // Сохраняем токен доступа в localStorage или cookies.
-            localStorage.setItem("accessToken", response.data.accessToken);
+            // Вместо возвращения пользователя, вы можете использовать user из ответа
+            console.log("Успешно зарегистрирован:", user);
 
+            // Здесь вы можете выполнить какие-то действия после успешной регистрации
+            // Например, автоматическая авторизация и переход на другую страницу
+            dispatch(loginAsync({ email, password })); // Пример автоматической авторизации
+
+            // Закрываем модальное окно
             closeModal();
         } catch (error) {
-            console.error("Ошибка", error);
+            console.error("Ошибка при регистрации", error);
         }
     };
 
     return (
         <div className="modal__content registration">
             <p className="modal__title">Регистрация</p>
-            <form className="modal__form" onSubmit={handleSubmit}>
+            <form className="modal__form" onSubmit={handleRegistration}>
                 <label className="modal__input-label" htmlFor="email">
                     Имя
                 </label>
@@ -42,6 +50,7 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
                     value={name}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder=""
+                    required
                 />
                 <label className="modal__input-label" htmlFor="password">
                     Адрес электронной почты
@@ -53,6 +62,7 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder=""
+                    required
                 />
                 <label className="modal__input-label" htmlFor="password">
                     Номер телефона
@@ -74,6 +84,7 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder=""
+                    required
                 />
                 <label className="modal__input-label" htmlFor="password">
                     Подтвердите пароль
@@ -81,15 +92,22 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
                 <input
                     className="modal__input mb-30px"
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={repeatPassword}
+                    onChange={(e) => setRepeatPassword(e.target.value)}
                     placeholder=""
+                    required
                 />
                 <div className="modal__buttons">
-                    <button className="modal__button" type="submit">
-                        Регистрация
+                    <button
+                        className="modal__button button__green"
+                        type="submit"
+                    >
+                        Зарегистрироваться
                     </button>
-                    <button className="modal__button" onClick={toggleModal}>
+                    <button
+                        className="modal__button button__black"
+                        onClick={toggleModal}
+                    >
                         Авторизация
                     </button>
                 </div>

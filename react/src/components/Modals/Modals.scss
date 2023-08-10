@@ -101,15 +101,27 @@
 
     border: v.$green 1px solid;
 
-    background-color: v.$green;
-    color: v.$black;
-
     margin: 0 auto 15px;
 
     transition: all 0.1s linear;
 }
 
-.modal__button:hover {
+.button__green {
+    background-color: v.$green;
+    color: v.$black;
+}
+
+.button__green:hover {
     background-color: transparent;
     color: white;
+}
+
+.button__black {
+    background-color: transparent;
+    color: white;
+}
+
+.button__black:hover {
+    background-color: v.$green;
+    color: v.$black;
 }
