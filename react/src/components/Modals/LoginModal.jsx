@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axiosInstance from "../../axios/instance";
 import {
     loginAsync,
     refreshAccessToken,
@@ -38,18 +37,13 @@ const LoginModal = ({ closeModal, toggleModal }) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        try {
-            const token = await dispatch(loginAsync({ email, password }));
-            dispatch(saveToken(token));
-            dispatch(setLoggedIn(true)); // Устанавливаем состояние loggedIn в true при успешной авторизации
 
-            // Обновляем заголовок "Authorization" в axios
-            axiosInstance.defaults.headers.common["Authorization"] =
-                "Bearer " + token;
-        } catch (error) {
-            setErrorText(
-                "Неправильные данные. Пожалуйста, проверьте email и пароль."
-            );
+        const response = await dispatch(loginAsync({ email, password }));
+        if (response.error) {
+            setErrorText("Неверная почта или пароль!");
+        } else {
+            dispatch(saveToken(response.payload));
+            dispatch(setLoggedIn(true)); // Устанавливаем состояние loggedIn в true при успешной авторизации
         }
     };
 
@@ -122,7 +116,7 @@ const LoginModal = ({ closeModal, toggleModal }) => {
                         Регистрация
                     </button>
                 </div>
-                {error && <p>{errorText}</p>}
+                {error && <p className="login-error">{errorText}</p>}
             </form>
         </div>
     );

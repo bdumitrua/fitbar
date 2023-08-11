@@ -23,20 +23,12 @@
     justify-content: center;
     flex-direction: column;
 
-    padding: 30px 50px;
+    padding: 30px 50px 40px;
 
     background-color: v.$black;
     border: white 1px solid;
 
     position: relative;
-
-    .login {
-        height: 320px;
-    }
-
-    .registration {
-        height: 450px;
-    }
 }
 
 .modal__title {
@@ -124,4 +116,11 @@
 .button__black:hover {
     background-color: v.$green;
     color: v.$black;
+}
+
+.login-error {
+    display: flex;
+    justify-content: center;
+
+    color: rgb(255, 99, 99);
 }

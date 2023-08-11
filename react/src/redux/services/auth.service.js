@@ -18,9 +18,8 @@ const AuthService = {
 
             return response.data.access_token;
         } catch (error) {
-            const response = error.response;
-            console.log(response);
-            throw response;
+            console.log(error);
+            throw error;
         }
     },
     async refreshToken(refreshToken) {

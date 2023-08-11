@@ -5,13 +5,8 @@ import AuthService from "../services/auth.service";
 export const loginAsync = createAsyncThunk(
     "auth/login",
     async ({ email, password }) => {
-        try {
-            const user = await AuthService.login(email, password);
-            return user;
-        } catch (error) {
-            console.error("slice");
-            throw error;
-        }
+        const user = await AuthService.login(email, password);
+        return user;
     }
 );
 
@@ -104,7 +99,6 @@ const authSlice = createSlice({
                 state.loggedIn = true;
             })
             .addCase(loginAsync.rejected, (state, action) => {
-                state.user = null;
                 state.loading = false;
                 state.error = action.error.message;
             })
