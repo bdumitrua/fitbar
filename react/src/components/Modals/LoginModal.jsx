@@ -11,7 +11,7 @@ import {
 } from "../../redux/slices/auth.slice";
 import "./Modals.scss";
 
-const LoginModal = ({ closeModal, onSuccess, toggleModal }) => {
+const LoginModal = ({ closeModal, toggleModal }) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const loading = useSelector((state) => state.auth.loading);
@@ -21,11 +21,11 @@ const LoginModal = ({ closeModal, onSuccess, toggleModal }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorText, setErrorText] = useState("");
 
     useEffect(() => {
         // Когда пользователь успешно авторизуется (user не равен null), закрываем модалку
         if (user) {
-            console.log(user);
             closeModal();
         }
     }, [user, closeModal]);
@@ -46,13 +46,10 @@ const LoginModal = ({ closeModal, onSuccess, toggleModal }) => {
             // Обновляем заголовок "Authorization" в axios
             axiosInstance.defaults.headers.common["Authorization"] =
                 "Bearer " + token;
-
-            // Вызываем функцию onSuccess, если она предоставлена
-            if (typeof onSuccess === "function") {
-                onSuccess(token);
-            }
         } catch (error) {
-            console.error("Ошибка при входе", error);
+            setErrorText(
+                "Неправильные данные. Пожалуйста, проверьте email и пароль."
+            );
         }
     };
 
@@ -125,7 +122,7 @@ const LoginModal = ({ closeModal, onSuccess, toggleModal }) => {
                         Регистрация
                     </button>
                 </div>
-                {error && <p>{error}</p>}
+                {error && <p>{errorText}</p>}
             </form>
         </div>
     );

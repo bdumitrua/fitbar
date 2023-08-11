@@ -3,11 +3,7 @@ import LoginModal from "./LoginModal";
 import "./Modals.scss";
 import RegistrationModal from "./RegistrationModal";
 
-const Modals = ({
-    handleCloseModal,
-    handleSuccessfulLogin,
-    handleOpenModal,
-}) => {
+const Modals = ({ handleCloseModal, handleOpenModal }) => {
     const [modal, setModal] = useState(false);
 
     const handleToggleModal = () => {
@@ -27,7 +23,6 @@ const Modals = ({
                 <LoginModal
                     showModal={handleOpenModal}
                     closeModal={handleCloseModal}
-                    onSuccess={handleSuccessfulLogin}
                     toggleModal={handleToggleModal}
                 />
             ) : (

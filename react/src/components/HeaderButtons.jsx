@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./DefaultLayout.scss";
 
-import axiosInstance from "../axios/instance";
 import account from "../images/account.svg";
 import cart from "../images/cart.svg";
 import Modals from "./Modals/Modals";
@@ -24,16 +23,14 @@ const HeaderButtons = () => {
     };
 
     // Функция для обработки успешной авторизации
-    const handleSuccessfulLogin = (token) => {
-        setShowModal(false);
+    // const handleSuccessfulLogin = (token) => {
+    //     // Сохраняем новый токен в localStorage
+    //     localStorage.setItem("access_token", token.payload);
 
-        // Сохраняем новый токен в localStorage
-        localStorage.setItem("access_token", token.payload);
-
-        // Обновляем заголовок "Authorization" в axios
-        axiosInstance.defaults.headers.common["Authorization"] =
-            "Bearer " + token.payload;
-    };
+    //     // Обновляем заголовок "Authorization" в axios
+    //     axiosInstance.defaults.headers.common["Authorization"] =
+    //         "Bearer " + token.payload;
+    // };
 
     // Функция для открытия модального окна авторизации
     const handleLoginClick = () => {
@@ -42,7 +39,7 @@ const HeaderButtons = () => {
 
     return (
         <div className="header__right-side">
-            {user ? (
+            {user && user !== undefined ? (
                 // Если пользователь авторизован, показываем кнопку для перехода в личный кабинет
                 <Link to="/user/account" className="header__button">
                     <img
@@ -70,7 +67,6 @@ const HeaderButtons = () => {
                 <Modals
                     handleOpenModal={handleOpenModal}
                     handleCloseModal={handleCloseModal}
-                    handleSuccessfulLogin={handleSuccessfulLogin}
                 />
             )}
 

@@ -9,7 +9,7 @@ export const loginAsync = createAsyncThunk(
             const user = await AuthService.login(email, password);
             return user;
         } catch (error) {
-            console.error(error);
+            console.error("slice");
             throw error;
         }
     }
@@ -17,13 +17,26 @@ export const loginAsync = createAsyncThunk(
 
 export const refreshAccessToken = createAsyncThunk(
     "auth/refresh",
-    async (refreshToken) => {
-        try {
-            const newAccessToken = await AuthService.refreshToken(refreshToken);
-            return newAccessToken;
-        } catch (error) {
-            console.error(error);
-            throw error;
+    async (_, { getState }) => {
+        const { auth } = getState();
+        const currentTime = new Date().getTime();
+        const tokenExpiration = auth.accessTokenExpiresAt;
+
+        console.log(currentTime);
+
+        if (tokenExpiration && currentTime >= tokenExpiration - 120000) {
+            try {
+                const newAccessToken = await AuthService.refreshToken(
+                    auth.refreshToken
+                );
+                return newAccessToken;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        } else {
+            // Возвращаем текущий access токен, так как он еще действителен
+            return auth.accessToken;
         }
     }
 );
@@ -63,7 +76,7 @@ const authSlice = createSlice({
             state.refreshToken = null;
             // Очищаем localStorage при выходе пользователя
             localStorage.removeItem("access_token");
-            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("access_token_expires_at");
         },
         setRememberMe: (state) => {
             state.rememberMe = true;
@@ -91,6 +104,7 @@ const authSlice = createSlice({
                 state.loggedIn = true;
             })
             .addCase(loginAsync.rejected, (state, action) => {
+                state.user = null;
                 state.loading = false;
                 state.error = action.error.message;
             })
