@@ -2,13 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./DefaultLayout.scss";
-import "./Footer/Footer.scss";
-import "./Header/Header.scss";
 
-import account from "../images/account.svg";
-import cart from "../images/cart.svg";
 import logo from "../images/logo.svg";
 import search from "../images/search.svg";
+import HeaderButtons from "./HeaderButtons";
 
 const DefaultLayout = () => {
     const [data, setData] = useState(null);
@@ -50,58 +47,14 @@ const DefaultLayout = () => {
                             />
                         </button>
                     </div>
-                    <div className="header__right-side">
-                        <Link to="/account" className="header__button">
-                            <img
-                                src={account}
-                                alt=""
-                                className="header__button-image"
-                            />
-                            <p
-                                href=""
-                                className="header__button-text text-grey"
-                            >
-                                Аккаунт
-                            </p>
-                        </Link>
-                        <Link to="/cart" className="header__button">
-                            <div className="header__button-images">
-                                <img
-                                    src={cart}
-                                    alt=""
-                                    className="header__button-image"
-                                />
-                                <span className="header__button-counter">
-                                    0
-                                </span>
-                            </div>
-                            <p
-                                href=""
-                                className="header__button-text text-grey"
-                            >
-                                Корзина
-                            </p>
-                        </Link>
-                    </div>
+                    <HeaderButtons />
                 </div>
                 <nav className="header__navbar">
                     <div className="header__navbar-container container">
-                        <a href="" className="header__navbar-element">
-                            Питание
-                        </a>
-                        <a href="" className="header__navbar-element">
-                            Одежда
-                        </a>
-                        <a href="" className="header__navbar-element">
-                            Батончики и снеки
-                        </a>
-                        <a href="" className="header__navbar-element">
-                            Углеводы
-                        </a>
                         {data ? (
                             data.map((category) => (
                                 <Link
-                                    to={category.slug}
+                                    to={`categories/${category.slug}`}
                                     className="header__navbar-element"
                                     key={category.slug}
                                 >

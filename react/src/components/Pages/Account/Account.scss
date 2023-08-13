@@ -17,4 +17,6 @@
 
 .account__page-title {
     @include m.text-bold(9px);
+
+    margin-bottom: 50px;
 }

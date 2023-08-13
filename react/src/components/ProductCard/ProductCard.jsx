@@ -14,9 +14,7 @@ const ProductCard = ({ product }) => {
                     />
                 </Link>
                 <ProductFavorite productId={product.id} />
-                <button className="product__cart-button">
-                    Добавить в корзину
-                </button>
+                <button className="product__cart-button">В корзину</button>
             </div>
             <p className="product__title">{product.name}</p>
             <ProductRating rating={product.rating} />
