@@ -25,7 +25,7 @@ const CategoryPage = ({ category }) => {
         };
 
         fetchData();
-    }, []);
+    }, [category.id]);
 
     return (
         <div className="category-page">
