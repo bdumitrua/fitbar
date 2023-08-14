@@ -1,9 +1,17 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addToCartAsync } from "../../redux/slices/cart.slice";
 import "./ProductCard.scss";
 import ProductFavorite from "./ProductFavorite/ProductFavorite";
 import ProductRating from "./ProductRating/ProductRating";
 
 const ProductCard = ({ product, itemCount }) => {
+    const dispatch = useDispatch();
+
+    const handleAddToCart = () => {
+        dispatch(addToCartAsync({ productId: product.id })); // Добавляем товар в корзину
+    };
+
     return (
         <div
             className={`product ${
@@ -20,7 +28,12 @@ const ProductCard = ({ product, itemCount }) => {
                     />
                 </Link>
                 <ProductFavorite productId={product.id} />
-                <button className="product__cart-button">В корзину</button>
+                <button
+                    onClick={() => handleAddToCart()}
+                    className="product__cart-button"
+                >
+                    В корзину
+                </button>
             </div>
             <p className="product__title">{product.name}</p>
             <ProductRating rating={product.rating} />
