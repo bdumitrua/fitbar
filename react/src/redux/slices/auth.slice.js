@@ -17,8 +17,6 @@ export const refreshAccessToken = createAsyncThunk(
         const currentTime = new Date().getTime();
         const tokenExpiration = auth.accessTokenExpiresAt;
 
-        console.log(currentTime);
-
         if (tokenExpiration && currentTime >= tokenExpiration - 120000) {
             try {
                 const newAccessToken = await AuthService.refreshToken(
@@ -52,8 +50,9 @@ export const setHandleSuccessfulLogin = (handleSuccessfulLogin) => {
 
 const initialState = {
     user: null,
-    accessToken: localStorage.getItem("accessToken") || null,
-    refreshToken: localStorage.getItem("refreshToken") || null,
+    accessToken: localStorage.getItem("access_token") || null,
+    refreshToken: localStorage.getItem("refresh_token") || null,
+    accessTokenExpiresAt: localStorage.getItem("access_token_expires_at"),
     loading: false,
     error: null,
     loggedIn: false,

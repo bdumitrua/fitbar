@@ -2,15 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import RegisterService from "../services/register.service";
 
 export const registerAsync = createAsyncThunk(
-    "auth/login",
+    "register/signup",
     async ({ name, email, password }) => {
-        try {
-            const user = await RegisterService.register(name, email, password);
-            return user;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
+        const user = await RegisterService.register(name, email, password);
+        return user;
     }
 );
 

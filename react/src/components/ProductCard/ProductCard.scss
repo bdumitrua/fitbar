@@ -3,7 +3,7 @@
 @use "sass:math";
 
 .product {
-    width: math.div(300, 1300) * 100%;
+    width: 300px;
 
     margin-bottom: 80px;
 
@@ -93,6 +93,10 @@
     margin-bottom: 10px;
 
     @include m.text-regular(4px);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .product__rating {

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ProductCard from "../../../ProductCard/ProductCard";
+import "./CategoryPage.scss";
 
-const CategoryPage = ({ categories }) => {
+const CategoryPage = ({ category }) => {
     const [data, setData] = useState(null);
     const [itemCount, setItemCount] = useState(0);
 
@@ -15,7 +16,7 @@ const CategoryPage = ({ categories }) => {
                 setData(response.data);
                 setItemCount(
                     response.data.filter(
-                        (product) => product.category_id === categories.id
+                        (product) => product.category_id === category.id
                     ).length
                 );
             } catch (error) {
@@ -28,16 +29,28 @@ const CategoryPage = ({ categories }) => {
 
     return (
         <div className="category-page">
-            <h3 className="category-page__title">{categories.name}</h3>
-            <p className="category-page__items-count">{itemCount}</p>
+            <h3 className="category-page__title">{category.name}</h3>
+            <p className="category-page__items-count">{`${itemCount} результатов`}</p>
             <button className="category-page__sort">Популярные</button>
-            {data ? (
-                data.map((product) => {
-                    <ProductCard product={product} />;
-                })
-            ) : (
-                <p>Загрузка...</p>
-            )}
+            <div className="category-page__products">
+                {data ? (
+                    data
+                        .filter(
+                            (product) => product.category_id === category.id
+                        )
+                        .map((product) => {
+                            return (
+                                <ProductCard
+                                    key={product.id}
+                                    product={product}
+                                    itemCount={itemCount}
+                                />
+                            );
+                        })
+                ) : (
+                    <p>Загрузка...</p>
+                )}
+            </div>
         </div>
     );
 };

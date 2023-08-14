@@ -116,7 +116,7 @@ const LoginModal = ({ closeModal, toggleModal }) => {
                         Регистрация
                     </button>
                 </div>
-                {error && <p className="login-error">{errorText}</p>}
+                {error && <p className="modal__error">{errorText}</p>}
             </form>
         </div>
     );

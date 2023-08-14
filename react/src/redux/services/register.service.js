@@ -14,6 +14,7 @@ const RegisterService = {
             return response.data.user;
         } catch (error) {
             console.error("Ошибка", error);
+
             throw error;
         }
     },

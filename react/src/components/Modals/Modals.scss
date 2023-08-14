@@ -118,9 +118,15 @@
     color: v.$black;
 }
 
-.login-error {
+.modal__error {
     display: flex;
     justify-content: center;
 
     color: rgb(255, 99, 99);
+
+    margin-bottom: 10px;
+}
+
+.input-error {
+    border: rgb(255, 99, 99) 1px solid;
 }

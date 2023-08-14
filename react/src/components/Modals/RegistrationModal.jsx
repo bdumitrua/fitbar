@@ -10,6 +10,7 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
     const [repeatPassword, setRepeatPassword] = useState("");
     const [email, setEmail] = useState("");
     const [telNumber, setTelNumber] = useState("");
+    const [identicalPasswordError, setIdenticalPasswordError] = useState("");
 
     const dispatch = useDispatch();
 
@@ -17,22 +18,25 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
     //Пофиксить вход после регистрации(обновление состояния кнопки войти и данные в инпутах в профиле)
     const handleRegistration = async (e) => {
         e.preventDefault();
-        try {
-            const user = await dispatch(
+        if (password === repeatPassword) {
+            const response = await dispatch(
                 registerAsync({ name, email, password })
             );
+            if (response.error) {
+                console.log(response);
+                console.log("Error!");
+            } else {
+                // Вместо возвращения пользователя, вы можете использовать user из ответа
+                console.log("Успешно зарегистрирован:", response);
 
-            // Вместо возвращения пользователя, вы можете использовать user из ответа
-            console.log("Успешно зарегистрирован:", user);
+                // Автоматическая авторизация
+                dispatch(loginAsync({ email, password })); // Пример автоматической авторизации
 
-            // Здесь вы можете выполнить какие-то действия после успешной регистрации
-            // Например, автоматическая авторизация и переход на другую страницу
-            dispatch(loginAsync({ email, password })); // Пример автоматической авторизации
-
-            // Закрываем модальное окно
-            closeModal();
-        } catch (error) {
-            console.error("Ошибка при регистрации", error);
+                // Закрываем модальное окно
+                closeModal();
+            }
+        } else {
+            setIdenticalPasswordError("Пароли не совпадают!");
         }
     };
 
@@ -90,13 +94,20 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
                     Подтвердите пароль
                 </label>
                 <input
-                    className="modal__input mb-30px"
+                    className={`modal__input ${
+                        identicalPasswordError ? "input-error" : ""
+                    }`}
                     type="password"
                     value={repeatPassword}
                     onChange={(e) => setRepeatPassword(e.target.value)}
                     placeholder=""
                     required
                 />
+                {identicalPasswordError && (
+                    <p className="modal__error register-error">
+                        {identicalPasswordError}
+                    </p>
+                )}
                 <div className="modal__buttons">
                     <button
                         className="modal__button button__green"

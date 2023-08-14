@@ -1,16 +1,18 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import axiosInstance from "../../../axios/instance";
 import "./Category.scss";
 import CategoryAside from "./CategoryAside/CategoryAside";
 import CategoryPage from "./CategoryPage/CategoryPage";
 
 const Category = () => {
     const [data, setData] = useState(null);
+    const location = useLocation();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
+                const response = await axiosInstance.get(
                     "http://localhost:8000/api/category"
                 );
                 setData(response.data);
@@ -26,9 +28,19 @@ const Category = () => {
         <div className="category container">
             <CategoryAside />
             {data ? (
-                data.map((category) => {
-                    <CategoryPage categories={category} />;
-                })
+                data
+                    .filter(
+                        (category) =>
+                            location.pathname === `/category/${category.slug}`
+                    )
+                    .map((category) => {
+                        return (
+                            <CategoryPage
+                                key={category.id}
+                                category={category}
+                            />
+                        );
+                    })
             ) : (
                 <p>Загрузка...</p>
             )}

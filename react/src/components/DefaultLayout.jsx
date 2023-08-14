@@ -54,7 +54,7 @@ const DefaultLayout = () => {
                         {data ? (
                             data.map((category) => (
                                 <Link
-                                    to={`categories/${category.slug}`}
+                                    to={`category/${category.slug}`}
                                     className="header__navbar-element"
                                     key={category.slug}
                                 >
