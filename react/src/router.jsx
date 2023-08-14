@@ -4,9 +4,9 @@ import AccountEdit from "./components/Pages/Account/AccountEdit/AccountEdit";
 import AccountMain from "./components/Pages/Account/AccountMain/AccountMain";
 import AccountOrders from "./components/Pages/Account/AccountOrders/AccountOrders";
 import Category from "./components/Pages/Category/Category";
-import CategoryPage from "./components/Pages/Category/CategoryPage/CategoryPage";
 import Home from "./components/Pages/Home/Home";
 import NotFound from "./components/Pages/NotFound/NotFound";
+import ProductPage from "./components/Pages/ProductPage/ProductPage";
 
 const router = createBrowserRouter([
     {
@@ -34,42 +34,12 @@ const router = createBrowserRouter([
                 element: <AccountOrders />,
             },
             {
-                path: "/category",
+                path: "/category/:categorySlug",
                 element: <Category />,
-                children: [
-                    {
-                        path: "/category/ziry",
-                        element: <CategoryPage />,
-                    },
-                    {
-                        path: "/category/vitaminy",
-                        element: <CategoryPage />,
-                    },
-                    {
-                        path: "/category/aminokisloty",
-                        element: <CategoryPage />,
-                    },
-                    {
-                        path: "/category/batonciki-i-sneki",
-                        element: <CategoryPage />,
-                    },
-                    {
-                        path: "/category/protein",
-                        element: <CategoryPage />,
-                    },
-                    {
-                        path: "/category/kreatin",
-                        element: <CategoryPage />,
-                    },
-                    {
-                        path: "/category/napitki",
-                        element: <CategoryPage />,
-                    },
-                    {
-                        path: "/category/predtren",
-                        element: <CategoryPage />,
-                    },
-                ],
+            },
+            {
+                path: "/products/:productId",
+                element: <ProductPage />,
             },
         ],
     },
