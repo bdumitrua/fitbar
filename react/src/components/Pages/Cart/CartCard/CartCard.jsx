@@ -5,11 +5,11 @@ const CartCard = ({ product }) => {
         <div className="cart-card">
             <img src={product.image} alt="" className="cart-card__image" />
             <div className="cart-card__main-info">
-                <p className="cart-card__title"></p>
+                <p className="cart-card__title">{product.name}</p>
                 <div className="cart-card__about-cart">
                     <p className="cart-card__info">Вкус:</p>
-                    <p className="cart-card__info">{product.taste}</p>
                     <p className="cart-card__info">Объём:</p>
+                    <p className="cart-card__info">{product.taste}</p>
                     <p className="cart-card__info">{product.weight}</p>
                 </div>
             </div>

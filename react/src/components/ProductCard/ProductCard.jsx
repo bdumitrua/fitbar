@@ -19,8 +19,6 @@ const ProductCard = ({ product, itemCount }) => {
 
     const isProductInCart = cartItems.some((item) => item.id === product.id);
 
-    console.log(isProductInCart);
-
     return (
         <div
             className={`product ${

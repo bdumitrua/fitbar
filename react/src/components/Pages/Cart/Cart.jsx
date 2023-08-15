@@ -1,3 +1,4 @@
+import "./Cart.scss";
 import CartCard from "./CartCard/CartCard";
 
 const Cart = () => {
@@ -17,8 +18,8 @@ const Cart = () => {
     };
 
     return (
-        <div className="cart">
-            <h2>Корзина</h2>
+        <div className="cart container">
+            <h2 className="cart__title">Корзина</h2>
             {cartItems.map((product) => (
                 <CartCard
                     product={product}
