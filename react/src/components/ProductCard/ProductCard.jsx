@@ -17,9 +17,9 @@ const ProductCard = ({ product, itemCount }) => {
 
     const cartItems = getCartItems();
 
-    const isProductInCart = () => {
-        cartItems.some((item) => item.id === product.id);
-    };
+    const isProductInCart = cartItems.some((item) => item.id === product.id);
+
+    console.log(isProductInCart);
 
     return (
         <div
@@ -38,16 +38,16 @@ const ProductCard = ({ product, itemCount }) => {
                 </Link>
                 <ProductFavorite productId={product.id} />
                 {isProductInCart ? (
+                    <Link to="/cart" className="product__cart-button active">
+                        Корзина
+                    </Link>
+                ) : (
                     <button
                         onClick={() => handleAddToCart()}
                         className="product__cart-button"
                     >
                         В корзину
                     </button>
-                ) : (
-                    <Link to="/cart" className="product__cart-button">
-                        Корзина
-                    </Link>
                 )}
             </div>
             <p className="product__title">{product.name}</p>

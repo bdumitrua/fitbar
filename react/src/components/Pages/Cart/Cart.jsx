@@ -1,9 +1,6 @@
-import { useDispatch } from "react-redux";
 import CartCard from "./CartCard/CartCard";
 
-const Cart = ({ userId }) => {
-    const dispatch = useDispatch();
-
+const Cart = () => {
     const getCartItems = () => {
         const items = JSON.parse(localStorage.getItem("cart")) || [];
         return items;
