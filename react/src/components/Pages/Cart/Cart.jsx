@@ -1,25 +1,33 @@
-import { useDispatch, useSelector } from "react-redux";
-import { removeFromCartAsync } from "./cartSlice";
+import { useDispatch } from "react-redux";
+import CartCard from "./CartCard/CartCard";
 
 const Cart = ({ userId }) => {
-    const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
+    const getCartItems = () => {
+        const items = JSON.parse(localStorage.getItem("cart")) || [];
+        return items;
+    };
+
+    const cartItems = getCartItems();
+
     const handleRemoveFromCart = (productId) => {
-        dispatch(removeFromCartAsync({ userId, productId })); // Удаляем товар из корзины
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+        const updatedCart = existingCart.filter(
+            (item) => item.id !== productId
+        );
+        localStorage.setItem("cart", JSON.stringify(updatedCart)); // Удаляем товар из корзины
     };
 
     return (
         <div className="cart">
             <h2>Корзина</h2>
-            {cartItems.map((item) => (
-                <div key={item.id} className="cart-item">
-                    <p>{item.name}</p>
-                    <p>{item.price} руб.</p>
-                    <button onClick={() => handleRemoveFromCart(item.id)}>
-                        Удалить
-                    </button>
-                </div>
+            {cartItems.map((product) => (
+                <CartCard
+                    product={product}
+                    key={product.id}
+                    handleRemoveFromCart={handleRemoveFromCart}
+                />
             ))}
         </div>
     );

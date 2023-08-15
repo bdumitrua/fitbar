@@ -3,16 +3,24 @@ import { cartService } from "../services/cart.service";
 
 export const addToCartAsync = createAsyncThunk(
     "cart/addToCart",
-    async ({ userId, productId }) => {
-        const response = await cartService.addToCart(userId, productId);
+    async ({ product, productId }) => {
+        const response = await cartService.addToCart(product, productId);
         return response.data;
     }
 );
 
 export const removeFromCartAsync = createAsyncThunk(
     "cart/removeFromCart",
-    async ({ userId, productId }) => {
-        const response = await cartService.removeFromCart(userId, productId);
+    async ({ productId }) => {
+        const response = await cartService.removeFromCart(productId);
+        return response.data;
+    }
+);
+
+export const getCartItemsAsync = createAsyncThunk(
+    "cart/getCartItems",
+    async () => {
+        const response = await cartService.getCartItems();
         return response.data;
     }
 );

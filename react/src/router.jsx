@@ -3,6 +3,7 @@ import DefaultLayout from "./components/DefaultLayout";
 import AccountEdit from "./components/Pages/Account/AccountEdit/AccountEdit";
 import AccountMain from "./components/Pages/Account/AccountMain/AccountMain";
 import AccountOrders from "./components/Pages/Account/AccountOrders/AccountOrders";
+import Cart from "./components/Pages/Cart/Cart";
 import Category from "./components/Pages/Category/Category";
 import Home from "./components/Pages/Home/Home";
 import NotFound from "./components/Pages/NotFound/NotFound";
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path: "/home",
                 element: <Home />,
+            },
+            {
+                path: "/cart",
+                element: <Cart />,
             },
             {
                 path: "/user/account",

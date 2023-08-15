@@ -1,15 +1,24 @@
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addToCartAsync } from "../../redux/slices/cart.slice";
 import "./ProductCard.scss";
 import ProductFavorite from "./ProductFavorite/ProductFavorite";
 import ProductRating from "./ProductRating/ProductRating";
 
 const ProductCard = ({ product, itemCount }) => {
-    const dispatch = useDispatch();
-
     const handleAddToCart = () => {
-        dispatch(addToCartAsync({ productId: product.id })); // Добавляем товар в корзину
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+        const updatedCart = [...existingCart, product];
+        localStorage.setItem("cart", JSON.stringify(updatedCart)); // Добавляем товар в корзину
+    };
+
+    const getCartItems = () => {
+        const items = JSON.parse(localStorage.getItem("cart")) || [];
+        return items;
+    };
+
+    const cartItems = getCartItems();
+
+    const isProductInCart = () => {
+        cartItems.some((item) => item.id === product.id);
     };
 
     return (
@@ -28,12 +37,18 @@ const ProductCard = ({ product, itemCount }) => {
                     />
                 </Link>
                 <ProductFavorite productId={product.id} />
-                <button
-                    onClick={() => handleAddToCart()}
-                    className="product__cart-button"
-                >
-                    В корзину
-                </button>
+                {isProductInCart ? (
+                    <button
+                        onClick={() => handleAddToCart()}
+                        className="product__cart-button"
+                    >
+                        В корзину
+                    </button>
+                ) : (
+                    <Link to="/cart" className="product__cart-button">
+                        Корзина
+                    </Link>
+                )}
             </div>
             <p className="product__title">{product.name}</p>
             <ProductRating rating={product.rating} />

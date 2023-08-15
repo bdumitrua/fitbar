@@ -22,16 +22,6 @@ const HeaderButtons = () => {
         setShowModal(false);
     };
 
-    // Функция для обработки успешной авторизации
-    // const handleSuccessfulLogin = (token) => {
-    //     // Сохраняем новый токен в localStorage
-    //     localStorage.setItem("access_token", token.payload);
-
-    //     // Обновляем заголовок "Authorization" в axios
-    //     axiosInstance.defaults.headers.common["Authorization"] =
-    //         "Bearer " + token.payload;
-    // };
-
     // Функция для открытия модального окна авторизации
     const handleLoginClick = () => {
         setShowModal(true);
@@ -70,7 +60,7 @@ const HeaderButtons = () => {
                 />
             )}
 
-            <Link to="/user/cart" className="header__button">
+            <Link to="/cart" className="header__button">
                 <div className="header__button-images">
                     <img src={cart} alt="" className="header__button-image" />
                     <span className="header__button-counter">0</span>

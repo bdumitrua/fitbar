@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../axios/instance";
-import OrderCard from "../../../OrderCard/OrderCard";
 import "../Account.scss";
 import AccountLayout from "../AccountAside";
 import "./AccountOrders.scss";
+import OrderCard from "./OrderCard/OrderCard";
 
 const AccountOrders = () => {
     const [data, setData] = useState(null);
