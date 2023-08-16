@@ -3,22 +3,12 @@ import "./ProductCard.scss";
 import ProductFavorite from "./ProductFavorite/ProductFavorite";
 import ProductRating from "./ProductRating/ProductRating";
 
-const ProductCard = ({ product, itemCount }) => {
-    const handleAddToCart = () => {
-        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-        const updatedCart = [...existingCart, product];
-        localStorage.setItem("cart", JSON.stringify(updatedCart)); // Добавляем товар в корзину
-    };
-
-    const getCartItems = () => {
-        const items = JSON.parse(localStorage.getItem("cart")) || [];
-        return items;
-    };
-
-    const cartItems = getCartItems();
-
-    const isProductInCart = cartItems.some((item) => item.id === product.id);
-
+const ProductCard = ({
+    product,
+    itemCount,
+    handleAddToCart,
+    isProductInCart,
+}) => {
     return (
         <div
             className={`product ${
@@ -41,7 +31,7 @@ const ProductCard = ({ product, itemCount }) => {
                     </Link>
                 ) : (
                     <button
-                        onClick={() => handleAddToCart()}
+                        onClick={() => handleAddToCart(product)}
                         className="product__cart-button"
                     >
                         В корзину

@@ -12,9 +12,7 @@ const Category = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosInstance.get(
-                    "http://localhost:8000/api/category"
-                );
+                const response = await axiosInstance.get("/category");
                 setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);

@@ -1,5 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import axiosInstance from "../axios/instance";
+import { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
 
@@ -8,30 +7,12 @@ export const useCartContext = () => {
 };
 
 export const CartProvider = ({ children }) => {
-    const [productInCart, setProductInCart] = useState(false);
-    const [data, setData] = useState(null);
-
     const getCartItems = () => {
         const items = JSON.parse(localStorage.getItem("cart")) || [];
         return items;
     };
 
     const [cartItems, setCartItems] = useState(getCartItems());
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get(
-                    "http://localhost:8000/api/products"
-                );
-                setData(response.data);
-            } catch (error) {
-                console.error("Произошла ошибка при выполнении запроса", error);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     const handleRemoveFromCart = (productId) => {
         const updatedCartItems = cartItems.filter(
@@ -42,15 +23,15 @@ export const CartProvider = ({ children }) => {
         localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     };
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (product) => {
         const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-        const updatedCart = [...existingCart, data];
+        const updatedCart = [...existingCart, product];
         localStorage.setItem("cart", JSON.stringify(updatedCart)); // Добавляем товар в корзину
-        setProductInCart(true);
     };
 
     const contextValue = {
-        productInCart,
+        cartItems,
+        setCartItems,
         handleAddToCart,
         handleRemoveFromCart,
     };

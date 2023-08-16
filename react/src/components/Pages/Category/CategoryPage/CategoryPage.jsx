@@ -1,18 +1,18 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axiosInstance from "../../../../utils/axios/instance";
+import { useCartContext } from "../../../../utils/providers/cart.provider";
 import ProductCard from "../../../ProductCard/ProductCard";
 import "./CategoryPage.scss";
 
 const CategoryPage = ({ category }) => {
     const [data, setData] = useState(null);
     const [itemCount, setItemCount] = useState(0);
+    const { cartItems, setCartItems, handleAddToCart } = useCartContext();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    "http://localhost:8000/api/products"
-                );
+                const response = await axiosInstance.get("/products");
                 setData(response.data);
                 setItemCount(
                     response.data.filter(
@@ -44,6 +44,17 @@ const CategoryPage = ({ category }) => {
                                     key={product.id}
                                     product={product}
                                     itemCount={itemCount}
+                                    handleAddToCart={(product) => {
+                                        handleAddToCart(product);
+                                        // После добавления товара, обновляем состояние cartItems
+                                        setCartItems((prevCartItems) => [
+                                            ...prevCartItems,
+                                            product,
+                                        ]);
+                                    }}
+                                    isProductInCart={cartItems.some(
+                                        (item) => item.id === product.id
+                                    )}
                                 />
                             );
                         })

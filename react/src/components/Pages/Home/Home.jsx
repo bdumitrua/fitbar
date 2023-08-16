@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import "./Home.scss";
 
@@ -9,6 +8,7 @@ import {
     default as main3,
 } from "../../../images/main.png";
 import rightArrow from "../../../images/rightArrow.svg";
+import axiosInstance from "../../../utils/axios/instance";
 import Bestsellers from "./ProductsSection/Bestsellers";
 import ProductsSection from "./ProductsSection/ProductsSection";
 
@@ -18,9 +18,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    "http://localhost:8000/api/category"
-                );
+                const response = await axiosInstance.get("/category");
                 setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);

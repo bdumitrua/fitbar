@@ -1,18 +1,18 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axiosInstance from "../../../../utils/axios/instance";
+import { useCartContext } from "../../../../utils/providers/cart.provider";
 import ProductCard from "../../../ProductCard/ProductCard";
 import "./ProductsSection.scss";
 
 const ProductsSection = ({ categories }) => {
     const [data, setData] = useState(null);
+    const { cartItems, setCartItems, handleAddToCart } = useCartContext();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    "http://localhost:8000/api/products"
-                );
+                const response = await axiosInstance.get("/products");
                 setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
@@ -56,6 +56,20 @@ const ProductsSection = ({ categories }) => {
                                             <ProductCard
                                                 key={product.id}
                                                 product={product}
+                                                handleAddToCart={(product) => {
+                                                    handleAddToCart(product);
+                                                    // После добавления товара, обновляем состояние cartItems
+                                                    setCartItems(
+                                                        (prevCartItems) => [
+                                                            ...prevCartItems,
+                                                            product,
+                                                        ]
+                                                    );
+                                                }}
+                                                isProductInCart={cartItems.some(
+                                                    (item) =>
+                                                        item.id === product.id
+                                                )}
                                             />
                                         ))
                                 ) : (

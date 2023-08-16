@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axiosInstance from "../../../../../utils/axios/instance";
 
 const OrderCard = ({ order }) => {
     const [data, setData] = useState([]);
@@ -7,9 +7,7 @@ const OrderCard = ({ order }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    "http://localhost:8000/api/order_products"
-                );
+                const response = await axiosInstance.get("/order_products");
                 setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
@@ -21,7 +19,7 @@ const OrderCard = ({ order }) => {
 
     return (
         <div className="order-card">
-            <img src="" alt="" className="order-card__image" />
+            <img src="" alt={data} className="order-card__image" />
             <div className="order-card__main-info">
                 <p className="order-card__title"></p>
                 <div className="order-card__about-order">
