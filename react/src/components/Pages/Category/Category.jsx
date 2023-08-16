@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import axiosInstance from "../../../axios/instance";
+import axiosInstance from "../../../utils/axios/instance";
 import "./Category.scss";
 import CategoryAside from "./CategoryAside/CategoryAside";
 import CategoryPage from "./CategoryPage/CategoryPage";

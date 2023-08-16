@@ -1,7 +1,12 @@
+import { useState } from "react";
 import "./Cart.scss";
 import CartCard from "./CartCard/CartCard";
 
 import { Link } from "react-router-dom";
+
+// TODO
+// Сделать обработку корзины с редаксом и запросами к бэку.
+// Сделать сумму товаров
 
 const Cart = () => {
     const getCartItems = () => {
@@ -9,14 +14,15 @@ const Cart = () => {
         return items;
     };
 
-    const cartItems = getCartItems();
+    const [cartItems, setCartItems] = useState(getCartItems());
 
     const handleRemoveFromCart = (productId) => {
-        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-        const updatedCart = existingCart.filter(
+        const updatedCartItems = cartItems.filter(
             (item) => item.id !== productId
         );
-        localStorage.setItem("cart", JSON.stringify(updatedCart)); // Удаляем товар из корзины
+        setCartItems(updatedCartItems);
+        localStorage.removeItem(`product_count_${productId}`);
+        localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     };
 
     return (
@@ -26,9 +32,12 @@ const Cart = () => {
                 <CartCard
                     product={product}
                     key={product.id}
-                    handleRemoveFromCart={handleRemoveFromCart}
+                    onDelete={handleRemoveFromCart}
                 />
             ))}
+            {cartItems.length == 0 && (
+                <p>Вы еще не добавили товары в свою корзину!</p>
+            )}
             <p className="cart__sum">{`Итого: ${(100.01).toFixed(2)} руб.`}</p>
             <Link to="/order" className="cart__order-button">
                 Заказать

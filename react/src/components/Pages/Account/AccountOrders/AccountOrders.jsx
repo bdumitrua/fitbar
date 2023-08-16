@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../../../../axios/instance";
+import axiosInstance from "../../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayout from "../AccountAside";
 import "./AccountOrders.scss";

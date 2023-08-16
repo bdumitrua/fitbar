@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axiosInstance from "../../../../utils/axios/instance";
 import ProductCard from "../../../ProductCard/ProductCard";
 import "./ProductsSection.scss";
 
@@ -9,7 +9,7 @@ const Bestsellers = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
+                const response = await axiosInstance.get(
                     "http://localhost:8000/api/products"
                 );
                 setData(response.data);

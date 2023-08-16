@@ -1,4 +1,4 @@
-import axiosInstance from "../../axios/instance";
+import axiosInstance from "../../utils/axios/instance";
 
 const RegisterService = {
     register: async (name, email, password) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import axiosInstance from "../../../../axios/instance";
 import { setUser } from "../../../../redux/slices/user.slice";
+import axiosInstance from "../../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayout from "../AccountAside";
 import "./AccountMain.scss";
