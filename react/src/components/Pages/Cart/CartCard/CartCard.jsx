@@ -1,6 +1,29 @@
+import { useState } from "react";
 import "./CartCard.scss";
 
+import deleteFromCart from "../../../../images/delete.svg";
+
 const CartCard = ({ product }) => {
+    const [productCount, setProductCount] = useState(
+        +localStorage.getItem(`product_count_${product.id}` || 1)
+    );
+
+    const incrementProductCount = () => {
+        setProductCount((prevCount) => {
+            const newCount = prevCount + 1;
+            localStorage.setItem(`product_count_${product.id}`, newCount);
+            return newCount;
+        });
+    };
+
+    const decrementProductCount = () => {
+        setProductCount((prevCount) => {
+            const newCount = prevCount - 1;
+            localStorage.setItem(`product_count_${product.id}`, newCount);
+            return newCount;
+        });
+    };
+
     return (
         <div className="cart-card">
             <img src={product.image} alt="" className="cart-card__image" />
@@ -14,9 +37,31 @@ const CartCard = ({ product }) => {
                 </div>
             </div>
             <div className="cart-card__more">
-                <div className="cart-card__more-info">
-                    <p className="cart-card__price">{`${product.price} руб.`}</p>
+                <div className="cart-card__product-count">
+                    <button
+                        onClick={() => decrementProductCount()}
+                        className="cart-card__count-button"
+                    >
+                        -
+                    </button>
+                    <p className="cart-card__product-counter">{productCount}</p>
+                    <button
+                        onClick={() => incrementProductCount()}
+                        className="cart-card__count-button"
+                    >
+                        +
+                    </button>
                 </div>
+                <p className="cart-card__price">{`${(
+                    product.price * productCount
+                ).toFixed(2)} руб.`}</p>
+                <button className="cart-card__product-delete">
+                    <img
+                        src={deleteFromCart}
+                        alt=""
+                        className="cart-card__delete-image"
+                    />
+                </button>
             </div>
         </div>
     );

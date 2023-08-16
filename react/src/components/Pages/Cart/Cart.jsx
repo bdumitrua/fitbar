@@ -1,6 +1,8 @@
 import "./Cart.scss";
 import CartCard from "./CartCard/CartCard";
 
+import { Link } from "react-router-dom";
+
 const Cart = () => {
     const getCartItems = () => {
         const items = JSON.parse(localStorage.getItem("cart")) || [];
@@ -27,6 +29,10 @@ const Cart = () => {
                     handleRemoveFromCart={handleRemoveFromCart}
                 />
             ))}
+            <p className="cart__sum">{`Итого: ${(100.01).toFixed(2)} руб.`}</p>
+            <Link to="/order" className="cart__order-button">
+                Заказать
+            </Link>
         </div>
     );
 };

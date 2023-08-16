@@ -55,15 +55,31 @@
 }
 
 .cart-card__more {
+    width: 400px;
     @include m.flex-between();
-    flex-direction: column;
 
-    width: math.div(210, 980);
+    margin-right: 25px;
 }
 
-.cart-card__button {
-    width: 100%;
-    height: 36px;
+.cart-card__product-count {
+    width: 150px;
+    @include m.flex-between();
+}
+
+.cart-card__count-button {
+    width: 40px;
+    height: 40px;
+
+    @include m.text-regular(7.5px);
+
+    border: white 1px solid;
+}
+
+.cart-card__product-counter {
+    @include m.text-regular(6px);
+}
+
+.cart-card__product-delete {
 }
 
 .cart-card__more-info {
