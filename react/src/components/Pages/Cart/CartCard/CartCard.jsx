@@ -3,14 +3,10 @@ import "./CartCard.scss";
 
 import deleteFromCart from "../../../../images/delete.svg";
 
-const CartCard = ({ product, onDelete }) => {
+const CartCard = ({ product, handleRemoveFromCart }) => {
     const [productCount, setProductCount] = useState(
         +localStorage.getItem(`product_count_${product.id}` || 1)
     );
-
-    const handleRemoveFromCart = () => {
-        onDelete(product.id);
-    };
 
     const incrementProductCount = () => {
         setProductCount((prevCount) => {
@@ -61,7 +57,7 @@ const CartCard = ({ product, onDelete }) => {
                 ).toFixed(2)} руб.`}</p>
                 <button
                     className="cart-card__product-delete"
-                    onClick={handleRemoveFromCart}
+                    onClick={() => handleRemoveFromCart(product.id)}
                 >
                     <img
                         src={deleteFromCart}

@@ -1,29 +1,15 @@
-import { useState } from "react";
 import "./Cart.scss";
 import CartCard from "./CartCard/CartCard";
 
 import { Link } from "react-router-dom";
+import { useCartContext } from "../../../utils/providers/cart.provider";
 
 // TODO
 // Сделать обработку корзины с редаксом и запросами к бэку.
 // Сделать сумму товаров
 
 const Cart = () => {
-    const getCartItems = () => {
-        const items = JSON.parse(localStorage.getItem("cart")) || [];
-        return items;
-    };
-
-    const [cartItems, setCartItems] = useState(getCartItems());
-
-    const handleRemoveFromCart = (productId) => {
-        const updatedCartItems = cartItems.filter(
-            (item) => item.id !== productId
-        );
-        setCartItems(updatedCartItems);
-        localStorage.removeItem(`product_count_${productId}`);
-        localStorage.setItem("cart", JSON.stringify(updatedCartItems));
-    };
+    const { handleRemoveFromCart, cartItems } = useCartContext();
 
     return (
         <div className="cart container">
@@ -32,7 +18,7 @@ const Cart = () => {
                 <CartCard
                     product={product}
                     key={product.id}
-                    onDelete={handleRemoveFromCart}
+                    handleRemoveFromCart={handleRemoveFromCart}
                 />
             ))}
             {cartItems.length == 0 && (
