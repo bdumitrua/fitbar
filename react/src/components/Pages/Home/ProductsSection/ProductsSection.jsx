@@ -7,7 +7,7 @@ import "./ProductsSection.scss";
 
 const ProductsSection = ({ categories }) => {
     const [data, setData] = useState(null);
-    const { cartItems, setCartItems, handleAddToCart } = useCartContext();
+    const { cartItems } = useCartContext();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,16 +56,6 @@ const ProductsSection = ({ categories }) => {
                                             <ProductCard
                                                 key={product.id}
                                                 product={product}
-                                                handleAddToCart={(product) => {
-                                                    handleAddToCart(product);
-                                                    // После добавления товара, обновляем состояние cartItems
-                                                    setCartItems(
-                                                        (prevCartItems) => [
-                                                            ...prevCartItems,
-                                                            product,
-                                                        ]
-                                                    );
-                                                }}
                                                 isProductInCart={cartItems.some(
                                                     (item) =>
                                                         item.id === product.id
