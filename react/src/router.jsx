@@ -1,14 +1,14 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import DefaultLayout from "./components/DefaultLayout";
-import AccountEdit from "./components/Pages/Account/AccountEdit/AccountEdit";
-import AccountMain from "./components/Pages/Account/AccountMain/AccountMain";
-import AccountOrders from "./components/Pages/Account/AccountOrders/AccountOrders";
-import Cart from "./components/Pages/Cart/Cart";
-import Category from "./components/Pages/Category/Category";
-import Home from "./components/Pages/Home/Home";
-import NotFound from "./components/Pages/NotFound/NotFound";
-import Order from "./components/Pages/Order/Order";
-import ProductPage from "./components/Pages/ProductPage/ProductPage";
+import AccountEdit from "./pages/Account/AccountEdit/AccountEdit";
+import AccountMain from "./pages/Account/AccountMain/AccountMain";
+import AccountOrders from "./pages/Account/AccountOrders/AccountOrders";
+import Cart from "./pages/Cart/Cart";
+import Category from "./pages/Category/Category";
+import Home from "./pages/Home/Home";
+import NotFound from "./pages/NotFound/NotFound";
+import Order from "./pages/Order/Order";
+import ProductPage from "./pages/ProductPage/ProductPage";
 
 const router = createBrowserRouter([
     {

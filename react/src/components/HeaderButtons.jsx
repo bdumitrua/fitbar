@@ -2,15 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./DefaultLayout.scss";
 
-import account from "../images/account.svg";
-import cart from "../images/cart.svg";
-import Modals from "./Modals/Modals";
+import account from "../assets/images/account.svg";
+import cart from "../assets/images/cart.svg";
+import Modals from "../pages/Modals/Modals";
 
 // TODO
 // Переделать логику поведения модалок
 
 const HeaderButtons = () => {
     const [showModal, setShowModal] = useState(false);
+
+    const cartLength = JSON.parse(localStorage.getItem("cart")).length;
+
+    console.log(cartLength);
 
     const user = localStorage.getItem("access_token");
 
@@ -63,7 +67,7 @@ const HeaderButtons = () => {
             <Link to="/cart" className="header__button">
                 <div className="header__button-images">
                     <img src={cart} alt="" className="header__button-image" />
-                    <span className="header__button-counter">0</span>
+                    <span className="header__button-counter">{cartLength}</span>
                 </div>
                 <p href="" className="header__button-text text-grey">
                     Корзина

@@ -1,0 +1,45 @@
+@use "../../../styles/variables" as v;
+@use "../../../styles/mixins" as m;
+@use "sass:math";
+
+.category-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.category-page__title {
+    @include m.text-bold(9px);
+    margin-bottom: 15px;
+}
+.category-page__items-count {
+    margin-bottom: 50px;
+}
+.category-page__sort {
+    width: 300px;
+    height: 36px;
+
+    margin-bottom: 20px;
+    margin-left: auto;
+
+    background-color: v.$green;
+    color: v.$black;
+}
+.category-page__products {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.category-page__products > .last-row-one-item:nth-last-child(1) {
+    margin-right: auto;
+}
+
+.category-page__products > .last-row-two-items:nth-last-child(1) {
+    margin-right: auto;
+}
+
+.category-page__products > .last-row-two-items:nth-last-child(2) {
+    margin-right: 37.025px;
+}

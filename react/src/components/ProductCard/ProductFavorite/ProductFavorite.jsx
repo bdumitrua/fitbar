@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ReactSVG } from "react-svg";
-import heart from "../../../images/heart.svg";
+import heart from "../../../assets/images/heart.svg";
 
 const ProductFavorite = ({ productId }) => {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -12,7 +12,7 @@ const ProductFavorite = ({ productId }) => {
     useEffect(() => {
         const favoriteProduct = localStorage.getItem(localStorageKey);
         setIsFavorite(!!favoriteProduct);
-    }, []);
+    }, [localStorageKey]);
 
     // Функция для переключения состояния добавления в избранное
     const toggleFavorite = () => {

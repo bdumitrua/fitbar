@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../utils/providers/cart.provider";
+import ProductRating from "../ProductRating/ProductRating";
 import ProductAddToCart from "./ProductAddToCart/ProductAddToCart";
 import "./ProductCard.scss";
 import ProductFavorite from "./ProductFavorite/ProductFavorite";
-import ProductRating from "./ProductRating/ProductRating";
 
 const ProductCard = ({ product, itemCount, isProductInCart }) => {
     const { setCartItems, handleAddToCart } = useCartContext();
@@ -15,7 +15,7 @@ const ProductCard = ({ product, itemCount, isProductInCart }) => {
             }`}
             key={product.id}
         >
-            <div href={product.id} className="product__image">
+            <div className="product__image">
                 <Link to={`/products/${product.id}`} className="product__link">
                     <img
                         src={product.image}
