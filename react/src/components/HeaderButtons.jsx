@@ -12,9 +12,9 @@ import Modals from "../pages/Modals/Modals";
 const HeaderButtons = () => {
     const [showModal, setShowModal] = useState(false);
 
-    const cartLength = JSON.parse(localStorage.getItem("cart")).length;
-
-    console.log(cartLength);
+    const cartLength = JSON.parse(localStorage.getItem("cart"))
+        ? JSON.parse(localStorage.getItem("cart")).length
+        : 0;
 
     const user = localStorage.getItem("access_token");
 

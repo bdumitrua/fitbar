@@ -1,13 +1,13 @@
 import { useState } from "react";
 import ProductRating from "../../components/ProductRating/ProductRating";
 
-const ProductReview = () => {
+const ProductReview = ({ productId }) => {
     const [data, setData] = useState();
 
     return (
         <div className="product-page__review">
             ProductReview
-            <ProductRating rating={data.rating} />
+            <ProductRating rating={1} />
         </div>
     );
 };

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { ReactSVG } from "react-svg";
-import heart from "../../../assets/images/heart.svg";
+import "./ProductPage.scss";
 
-const ProductFavorite = ({ productId }) => {
+const ProductPageFavorite = ({ productId }) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     // Ключ, который будет использоваться для сохранения в localStorage
@@ -26,24 +25,24 @@ const ProductFavorite = ({ productId }) => {
     };
 
     return (
-        <button className="product__favorite" onClick={() => toggleFavorite()}>
-            <ReactSVG
-                src={heart}
-                className={`product__favorite-heart ${
-                    isFavorite ? "active" : ""
-                }`}
-                beforeInjection={(svg) => {
-                    const path = svg.querySelector("path");
-                    if (path) {
-                        path.setAttribute(
-                            "fill",
-                            isFavorite ? "#CEF600" : "none"
-                        );
-                    }
-                }}
-            />
-        </button>
+        <>
+            {isFavorite ? (
+                <button
+                    className="product-page__favorite-button"
+                    onClick={() => toggleFavorite()}
+                >
+                    Добавить в избранное
+                </button>
+            ) : (
+                <button
+                    className="product-page__favorite-button active"
+                    onClick={() => toggleFavorite()}
+                >
+                    Убрать из избранного
+                </button>
+            )}
+        </>
     );
 };
 
-export default ProductFavorite;
+export default ProductPageFavorite;

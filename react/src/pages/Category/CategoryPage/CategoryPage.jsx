@@ -27,10 +27,21 @@ const CategoryPage = ({ category }) => {
         fetchData();
     }, [category.id]);
 
+    function getEnding(number, wordForms) {
+        const cases = [2, 0, 1, 1, 1, 2];
+        return wordForms[
+            number % 100 > 4 && number % 100 < 20
+                ? 2
+                : cases[Math.min(number % 10, 5)]
+        ];
+    }
+    const resultForms = ["результат", "результата", "результатов"];
+    const resultEnding = getEnding(itemCount, resultForms);
+
     return (
         <div className="category-page">
             <h3 className="category-page__title">{category.name}</h3>
-            <p className="category-page__items-count">{`${itemCount} результатов`}</p>
+            <p className="category-page__items-count">{`${itemCount} ${resultEnding}`}</p>
             <button className="category-page__sort">Популярные</button>
             <div className="category-page__products">
                 {data ? (
