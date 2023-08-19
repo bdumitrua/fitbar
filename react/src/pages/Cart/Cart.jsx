@@ -11,6 +11,14 @@ import { useCartContext } from "../../utils/providers/cart.provider";
 const Cart = () => {
     const { handleRemoveFromCart, cartItems } = useCartContext();
 
+    const totalPrice = cartItems.reduce((accumulator, currentItem) => {
+        return (
+            +accumulator +
+            +currentItem.price *
+                localStorage.getItem(`product_count_${currentItem.id}`)
+        );
+    }, 0);
+
     return (
         <div className="cart container">
             <h2 className="cart__title">Корзина</h2>
@@ -24,7 +32,9 @@ const Cart = () => {
             {cartItems.length == 0 && (
                 <p>Вы еще не добавили товары в свою корзину!</p>
             )}
-            <p className="cart__sum">{`Итого: ${(100.01).toFixed(2)} руб.`}</p>
+            <p className="cart__sum">{`Итого: ${totalPrice.toFixed(
+                2
+            )} руб.`}</p>
             <Link to="/order" className="cart__order-button">
                 Заказать
             </Link>

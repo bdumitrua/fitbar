@@ -83,7 +83,7 @@ const AccountEdit = () => {
                                     id="phone"
                                     className="account-info__private-info-element"
                                     placeholder="Номер телефона"
-                                    maxLength="18"
+                                    maxLength="11"
                                 />
                             )}
                         />

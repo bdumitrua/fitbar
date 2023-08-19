@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ProductRating from "../../../components/ProductRating/ProductRating";
 import axiosInstance from "../../../utils/axios/instance";
 import { useMainContext } from "../../../utils/providers/main.provider";
@@ -6,6 +7,7 @@ import ProductReviewButtons from "./ProductReviewButtons";
 
 const ProductReviews = ({ reviews }) => {
     const { formatDate } = useMainContext();
+    const [data, setData] = useState(null);
 
     const handleLike = async (reviewId) => {
         try {
@@ -23,9 +25,31 @@ const ProductReviews = ({ reviews }) => {
         }
     };
 
+    const handleRemoveVote = async (reviewId) => {
+        try {
+            await axiosInstance.delete(`/reviews/votes/remove/${reviewId}`);
+        } catch (error) {
+            console.error("Ошибка при отмене оценки отзыва", error);
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axiosInstance.get(`/reviews/votes/`);
+                console.log(response.data.votes);
+                setData(response.data.votes);
+            } catch (error) {
+                console.error("Произошла ошибка при выполнении запроса", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div className="product-page__reviews">
-            {reviews ? (
+            {reviews && data ? (
                 reviews.map((review) => (
                     <div className="product-page__review" key={review.id}>
                         <div className="product-page__review-header">
@@ -71,8 +95,12 @@ const ProductReviews = ({ reviews }) => {
                             reviewId={review.id}
                             onLike={handleLike}
                             onDislike={handleDislike}
+                            onRemoveVote={handleRemoveVote}
                             likes={review.helpful_yes}
                             dislikes={review.helpful_no}
+                            isVote={data.some(
+                                (item) => item.review_id === review.id
+                            )}
                         />
                     </div>
                 ))

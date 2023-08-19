@@ -9,6 +9,9 @@ import ProductPageCounter from "./ProductPageCounter";
 import ProductPageFavorite from "./ProductPageFavorite";
 import ProductReviews from "./ProductReview/ProductReview";
 
+// TODO
+// Пофиксить кнопки лайка/дизлайка отзыва
+
 const ProductPage = () => {
     const { handleAddToCart, cartItems, setCartItems } = useCartContext();
 
