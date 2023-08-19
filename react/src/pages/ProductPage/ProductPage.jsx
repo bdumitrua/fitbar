@@ -7,7 +7,7 @@ import "./ProductPage.scss";
 import ProductPageAddToCart from "./ProductPageAddToCart";
 import ProductPageCounter from "./ProductPageCounter";
 import ProductPageFavorite from "./ProductPageFavorite";
-import ProductReviews from "./ProductReview";
+import ProductReviews from "./ProductReview/ProductReview";
 
 const ProductPage = () => {
     const { handleAddToCart, cartItems, setCartItems } = useCartContext();

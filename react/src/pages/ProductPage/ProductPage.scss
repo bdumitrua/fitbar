@@ -182,5 +182,82 @@
     color: v.$black;
 }
 
+.product-page__reviews {
+    display: flex;
+    flex-direction: column;
+}
 .product-page__review {
+    display: flex;
+    flex-direction: column;
+    max-width: 650px;
+
+    padding: 30px;
+    margin-bottom: 50px;
+
+    border: v.$grey 1px solid;
+}
+.product-page__review-header {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+.product-page__review-avatar {
+    margin-right: 15px;
+}
+.product-page__review-name {
+    @include m.text-bold(5px);
+    margin-right: 170px;
+}
+
+.product-page__review-header-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-left: auto;
+}
+
+.product-page__review-date {
+    @include m.text-regular(4px);
+    color: v.$grey;
+    margin-left: 30px;
+}
+.product-page__review-opinion {
+    @include m.text-bold(4px);
+    display: flex;
+    margin-bottom: 40px;
+}
+
+.grey {
+    color: v.$grey;
+    margin-left: 8px;
+}
+.product-page__review-comments-title {
+    @include m.text-bold(4px);
+    margin-bottom: 10px;
+}
+.product-page__review-comments {
+    @include m.text-regular(4px);
+    color: v.$grey;
+    margin-bottom: 20px;
+    margin-left: 25px;
+}
+.product-page__review_helpful {
+    @include m.text-regular(4px);
+
+    margin-bottom: 20px;
+}
+
+.product-page__review-helpful-buttons {
+    display: flex;
+    gap: 30px;
+}
+.product-page__review-helpful-button {
+    width: 80px;
+    height: 42px;
+
+    background-color: transparent;
+    color: white;
+    border: v.$green 1px solid;
 }

@@ -1,8 +1,27 @@
-import ProductRating from "../../components/ProductRating/ProductRating";
-import { useMainContext } from "../../utils/providers/main.provider";
+import ProductRating from "../../../components/ProductRating/ProductRating";
+import axiosInstance from "../../../utils/axios/instance";
+import { useMainContext } from "../../../utils/providers/main.provider";
+import "../ProductPage.scss";
+import ProductReviewButtons from "./ProductReviewButtons";
 
 const ProductReviews = ({ reviews }) => {
     const { formatDate } = useMainContext();
+
+    const handleLike = async (reviewId) => {
+        try {
+            await axiosInstance.post(`/reviews/votes/like/${reviewId}`);
+        } catch (error) {
+            console.error("Ошибка при лайке отзыва", error);
+        }
+    };
+
+    const handleDislike = async (reviewId) => {
+        try {
+            await axiosInstance.post(`/reviews/votes/dislike/${reviewId}`);
+        } catch (error) {
+            console.error("Ошибка при дизлайке отзыва", error);
+        }
+    };
 
     return (
         <div className="product-page__reviews">
@@ -16,12 +35,17 @@ const ProductReviews = ({ reviews }) => {
                                 className="product-page__review-avatar"
                             />
                             <p className="product-page__review-name">Иван И.</p>
-                            <ProductRating rating={review.rating} />
-                            <p className="product-page__review-date">
-                                {formatDate(review.created_at)}
-                            </p>
+                            <div className="product-page__review-header-right">
+                                <ProductRating rating={review.rating} />
+                                <p className="product-page__review-date">
+                                    {formatDate(review.created_at)}
+                                </p>
+                            </div>
                         </div>
-                        <p className="product-page__review-opinion">{`Мнение о товаре: ${review.recommendation}`}</p>
+                        <div className="product-page__review-opinion">
+                            Мнение о товаре:{" "}
+                            <p className="grey">{review.recommendation}</p>
+                        </div>
                         <p className="product-page__review-comments-title">
                             Достоинства
                         </p>
@@ -43,6 +67,13 @@ const ProductReviews = ({ reviews }) => {
                         <p className="product-page__review_helpful">
                             Вам помог этот отзыв?
                         </p>
+                        <ProductReviewButtons
+                            reviewId={review.id}
+                            onLike={handleLike}
+                            onDislike={handleDislike}
+                            likes={review.helpful_yes}
+                            dislikes={review.helpful_no}
+                        />
                     </div>
                 ))
             ) : (
