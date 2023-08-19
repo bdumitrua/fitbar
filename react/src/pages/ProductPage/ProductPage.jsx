@@ -7,7 +7,7 @@ import "./ProductPage.scss";
 import ProductPageAddToCart from "./ProductPageAddToCart";
 import ProductPageCounter from "./ProductPageCounter";
 import ProductPageFavorite from "./ProductPageFavorite";
-import ProductReview from "./ProductReview";
+import ProductReviews from "./ProductReview";
 
 const ProductPage = () => {
     const { handleAddToCart, cartItems, setCartItems } = useCartContext();
@@ -75,7 +75,10 @@ const ProductPage = () => {
                             Читать далее...
                         </button>
                         <p className="product-page__section-title">Отзывы</p>
-                        <ProductReview productId={productId} />
+                        <ProductReviews
+                            productId={productId}
+                            reviews={data.reviews}
+                        />
                     </div>
                     <div className="product-page__right-side">
                         <p className="product-page__product-title">

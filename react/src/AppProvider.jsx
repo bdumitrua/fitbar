@@ -1,7 +1,12 @@
 import { CartProvider } from "./utils/providers/cart.provider";
+import { MainProvider } from "./utils/providers/main.provider";
 
 const AppProviders = ({ children }) => {
-    return <CartProvider>{children}</CartProvider>;
+    return (
+        <MainProvider>
+            <CartProvider>{children}</CartProvider>;
+        </MainProvider>
+    );
 };
 
 export default AppProviders;
