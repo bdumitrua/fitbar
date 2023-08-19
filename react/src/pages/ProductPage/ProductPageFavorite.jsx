@@ -4,8 +4,6 @@ import "./ProductPage.scss";
 const ProductPageFavorite = ({ productId }) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
-    // Ключ, который будет использоваться для сохранения в localStorage
-
     // Проверка, есть ли товар в избранном при загрузке компонента
     useEffect(() => {
         const favoriteProduct = localStorage.getItem(
@@ -26,7 +24,7 @@ const ProductPageFavorite = ({ productId }) => {
 
     return (
         <>
-            {isFavorite ? (
+            {!isFavorite ? (
                 <button
                     className="product-page__favorite-button"
                     onClick={() => toggleFavorite()}

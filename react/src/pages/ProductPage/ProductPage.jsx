@@ -5,6 +5,7 @@ import axiosInstance from "../../utils/axios/instance";
 import { useCartContext } from "../../utils/providers/cart.provider";
 import "./ProductPage.scss";
 import ProductPageAddToCart from "./ProductPageAddToCart";
+import ProductPageCounter from "./ProductPageCounter";
 import ProductPageFavorite from "./ProductPageFavorite";
 import ProductReview from "./ProductReview";
 
@@ -56,26 +57,6 @@ const ProductPage = () => {
         "Предтрен",
     ];
 
-    const [productCount, setProductCount] = useState(
-        +localStorage.getItem(`product_count_${productId}` || 1)
-    );
-
-    const incrementProductCount = () => {
-        setProductCount((prevCount) => {
-            const newCount = prevCount + 1;
-            localStorage.setItem(`product_count_${productId}`, newCount);
-            return newCount;
-        });
-    };
-
-    const decrementProductCount = () => {
-        setProductCount((prevCount) => {
-            const newCount = prevCount - 1;
-            localStorage.setItem(`product_count_${productId}`, newCount);
-            return newCount;
-        });
-    };
-
     return (
         <div className="product-page container">
             {data ? (
@@ -103,7 +84,9 @@ const ProductPage = () => {
                         <p className="product-page__product-subtitle">
                             {data.short_description}
                         </p>
-                        <p className="product-page__product-category">{}</p>
+                        <p className="product-page__product-category">
+                            {categoryNames[data.category_id]}
+                        </p>
                         <div className="product-page__rating">
                             <ProductRating rating={data.rating} />
                             <p className="product-page__reviews-count">{`${reviewsCount} ${reviewsEnding}`}</p>
@@ -126,23 +109,7 @@ const ProductPage = () => {
                         <p className="product-page__selector-title">
                             Количество:
                         </p>
-                        <div className="product-page__count">
-                            <button
-                                onClick={() => decrementProductCount()}
-                                className="product-page__count-button"
-                            >
-                                -
-                            </button>
-                            <p className="product-page__product-counter">
-                                {productCount}
-                            </p>
-                            <button
-                                onClick={() => incrementProductCount()}
-                                className="product-page__count-button"
-                            >
-                                +
-                            </button>
-                        </div>
+                        <ProductPageCounter productId={data.id} />
                         <ProductPageAddToCart
                             isProductInCart={cartItems.some(
                                 (item) => item.id === data.id
@@ -150,10 +117,6 @@ const ProductPage = () => {
                             product={data}
                             handleAddToCart={(product) => {
                                 handleAddToCart(product);
-                                localStorage.setItem(
-                                    `product_count_${product.id}`,
-                                    productCount
-                                );
                                 // После добавления товара, обновляем состояние cartItems
                                 setCartItems((prevCartItems) => [
                                     ...prevCartItems,

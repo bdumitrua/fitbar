@@ -5,7 +5,7 @@ const ProductReview = ({ productId }) => {
     const [data, setData] = useState();
 
     return (
-        <div className="product-page__review">
+        <div className="">
             ProductReview
             <ProductRating rating={1} />
         </div>
