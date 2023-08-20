@@ -1,4 +1,4 @@
-import axiosInstance from "../../axios/instance";
+import axiosInstance from "../../utils/axios/instance";
 
 const AuthService = {
     login: async (email, password) => {
@@ -9,11 +9,16 @@ const AuthService = {
                 password,
             });
 
+            const expirationTime =
+                new Date().getTime() + response.data.expires_in * 1000; // Преобразуем секунды в миллисекунды
             localStorage.setItem("access_token", response.data.access_token);
-            // Возвращаем токен из функции
+            localStorage.setItem("access_token_expires_at", expirationTime);
+            axiosInstance.defaults.headers.common["Authorization"] =
+                "Bearer " + response.data.access_token;
+
             return response.data.access_token;
         } catch (error) {
-            console.error("Ошибка", error);
+            console.log(error);
             throw error;
         }
     },
@@ -24,6 +29,11 @@ const AuthService = {
             });
             const newAccessToken = response.data.access_token;
             localStorage.setItem("access_token", newAccessToken);
+
+            // Обновляем заголовок "Authorization" в axios с новым access токеном
+            axiosInstance.defaults.headers.common["Authorization"] =
+                "Bearer " + newAccessToken;
+
             return newAccessToken;
         } catch (error) {
             console.error("Ошибка при обновлении токена", error);

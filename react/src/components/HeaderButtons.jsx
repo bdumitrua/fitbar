@@ -2,16 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./DefaultLayout.scss";
 
-import axiosInstance from "../axios/instance";
-import account from "../images/account.svg";
-import cart from "../images/cart.svg";
-import Modals from "./Modals/Modals";
+import account from "../assets/images/account.svg";
+import cart from "../assets/images/cart.svg";
+import Modals from "../pages/Modals/Modals";
 
 // TODO
 // Переделать логику поведения модалок
 
 const HeaderButtons = () => {
     const [showModal, setShowModal] = useState(false);
+
+    const cartLength = JSON.parse(localStorage.getItem("cart"))
+        ? JSON.parse(localStorage.getItem("cart")).length
+        : 0;
 
     const user = localStorage.getItem("access_token");
 
@@ -23,18 +26,6 @@ const HeaderButtons = () => {
         setShowModal(false);
     };
 
-    // Функция для обработки успешной авторизации
-    const handleSuccessfulLogin = (token) => {
-        setShowModal(false);
-
-        // Сохраняем новый токен в localStorage
-        localStorage.setItem("access_token", token.payload);
-
-        // Обновляем заголовок "Authorization" в axios
-        axiosInstance.defaults.headers.common["Authorization"] =
-            "Bearer " + token.payload;
-    };
-
     // Функция для открытия модального окна авторизации
     const handleLoginClick = () => {
         setShowModal(true);
@@ -42,7 +33,7 @@ const HeaderButtons = () => {
 
     return (
         <div className="header__right-side">
-            {user ? (
+            {user && user !== undefined ? (
                 // Если пользователь авторизован, показываем кнопку для перехода в личный кабинет
                 <Link to="/user/account" className="header__button">
                     <img
@@ -70,14 +61,13 @@ const HeaderButtons = () => {
                 <Modals
                     handleOpenModal={handleOpenModal}
                     handleCloseModal={handleCloseModal}
-                    handleSuccessfulLogin={handleSuccessfulLogin}
                 />
             )}
 
-            <Link to="/user/cart" className="header__button">
+            <Link to="/cart" className="header__button">
                 <div className="header__button-images">
                     <img src={cart} alt="" className="header__button-image" />
-                    <span className="header__button-counter">0</span>
+                    <span className="header__button-counter">{cartLength}</span>
                 </div>
                 <p href="" className="header__button-text text-grey">
                     Корзина

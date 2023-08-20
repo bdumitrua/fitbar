@@ -1,10 +1,10 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./DefaultLayout.scss";
 
-import logo from "../images/logo.svg";
-import search from "../images/search.svg";
+import logo from "../assets/images/logo.svg";
+import search from "../assets/images/search.svg";
+import axiosInstance from "../utils/axios/instance";
 import HeaderButtons from "./HeaderButtons";
 
 const DefaultLayout = () => {
@@ -13,9 +13,7 @@ const DefaultLayout = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    "http://localhost:8000/api/category"
-                );
+                const response = await axiosInstance.get("/category");
                 setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
@@ -54,7 +52,7 @@ const DefaultLayout = () => {
                         {data ? (
                             data.map((category) => (
                                 <Link
-                                    to={`categories/${category.slug}`}
+                                    to={`category/${category.slug}`}
                                     className="header__navbar-element"
                                     key={category.slug}
                                 >
