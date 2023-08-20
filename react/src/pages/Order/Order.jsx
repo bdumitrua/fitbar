@@ -1,10 +1,15 @@
 import { Controller, useForm } from "react-hook-form";
+import axiosInstance from "../../utils/axios/instance";
 import { useCartContext } from "../../utils/providers/cart.provider";
 import "./Order.scss";
 import OrderCard from "./OrderCard";
 
 const Order = () => {
-    const { handleSubmit, control } = useForm();
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm();
     const { cartItems } = useCartContext();
 
     const totalPrice = cartItems.reduce((accumulator, currentItem) => {
@@ -14,6 +19,40 @@ const Order = () => {
                 localStorage.getItem(`product_count_${currentItem.id}`)
         );
     }, 0);
+
+    const totalQuantity = cartItems.reduce((accumulator, currentItem) => {
+        return (
+            +accumulator +
+            +localStorage.getItem(`product_count_${currentItem.id}`)
+        );
+    }, 0);
+
+    const onSubmit = async (data) => {
+        const deliveryData = {
+            ...data,
+            total_price: parseFloat(totalPrice.toFixed(2)),
+            total_quantity: totalQuantity,
+        };
+
+        console.log(deliveryData);
+
+        const orderData = {
+            delivery: deliveryData,
+            items: cartItems, // предполагается, что у вас есть массив cartItems
+        };
+
+        try {
+            const response = await axiosInstance.post(
+                "/orders/create",
+                orderData
+            );
+            console.log(response);
+            // Обработка успешного оформления заказа
+        } catch (error) {
+            console.error("Ошибка при оформлении заказа", error);
+            // Обработка ошибки оформления заказа
+        }
+    };
 
     function getEnding(number, wordForms) {
         const cases = [2, 0, 1, 1, 1, 2];
@@ -32,7 +71,7 @@ const Order = () => {
                 <form
                     action=""
                     className="order__form"
-                    onSubmit={handleSubmit()}
+                    onSubmit={handleSubmit(onSubmit)}
                 >
                     <div className="order__container">
                         <h3 className="order__title">Данные для доставки</h3>
@@ -42,6 +81,7 @@ const Order = () => {
                         <Controller
                             name="name"
                             control={control}
+                            rules={{ required: "Обязательное поле" }}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -58,6 +98,7 @@ const Order = () => {
                         <Controller
                             name="region"
                             control={control}
+                            rules={{ required: "Обязательное поле" }}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -74,6 +115,7 @@ const Order = () => {
                         <Controller
                             name="city"
                             control={control}
+                            rules={{ required: "Обязательное поле" }}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -90,6 +132,7 @@ const Order = () => {
                         <Controller
                             name="adress"
                             control={control}
+                            rules={{ required: "Обязательное поле" }}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -106,6 +149,7 @@ const Order = () => {
                         <Controller
                             name="tel"
                             control={control}
+                            rules={{ required: "Обязательное поле" }}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -120,13 +164,21 @@ const Order = () => {
                         <label htmlFor="comment" className="order__label">
                             Комментарии
                         </label>
-                        <textarea
-                            maxLength={1500}
-                            className="order__textarea"
+                        <Controller
                             name="comment"
-                            id="comment"
-                            rows="10"
-                        ></textarea>
+                            control={control}
+                            defaultValue=""
+                            rules={{ maxLength: 1500 }}
+                            render={({ field }) => (
+                                <textarea
+                                    {...field}
+                                    className="order__textarea"
+                                    name="comment"
+                                    id="comment"
+                                    rows="10"
+                                ></textarea>
+                            )}
+                        />
                     </div>
                     <button type="submit" className="order__send-order">
                         Оформить мой заказ

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import axiosInstance from "../axios/instance";
 
 const CartContext = createContext();
 
@@ -18,12 +19,18 @@ export const CartProvider = ({ children }) => {
         const updatedCartItems = cartItems.filter(
             (item) => item.id !== productId
         );
+        axiosInstance.delete(`/cart/delete/${productId}`);
         setCartItems(updatedCartItems);
         localStorage.removeItem(`product_count_${productId}`);
         localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     };
 
     const handleAddToCart = (product) => {
+        const quantity = JSON.parse(
+            localStorage.getItem(`product_count_${product.id}`)
+        );
+        axiosInstance.post(`/cart/store/${product.id}`);
+        axiosInstance.patch(`/cart/update/${product.id}`, { quantity });
         const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
         const updatedCart = [...existingCart, product];
         localStorage.setItem("cart", JSON.stringify(updatedCart)); // Добавляем товар в корзину

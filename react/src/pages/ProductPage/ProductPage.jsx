@@ -115,7 +115,12 @@ const ProductPage = () => {
                         <p className="product-page__selector-title">
                             Количество:
                         </p>
-                        <ProductPageCounter productId={data.id} />
+                        <ProductPageCounter
+                            isProductInCart={cartItems.some(
+                                (item) => item.id === data.id
+                            )}
+                            productId={data.id}
+                        />
                         <ProductPageAddToCart
                             isProductInCart={cartItems.some(
                                 (item) => item.id === data.id

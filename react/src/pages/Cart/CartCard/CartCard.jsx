@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./CartCard.scss";
 
 import deleteFromCart from "../../../assets/images/delete.svg";
+import axiosInstance from "../../../utils/axios/instance";
 
 const CartCard = ({ product, handleRemoveFromCart }) => {
     const [productCount, setProductCount] = useState(
@@ -11,6 +12,7 @@ const CartCard = ({ product, handleRemoveFromCart }) => {
     const incrementProductCount = () => {
         setProductCount((prevCount) => {
             const newCount = prevCount + 1;
+            axiosInstance.patch(`/cart/increase/${product.id}`);
             localStorage.setItem(`product_count_${product.id}`, newCount);
             return newCount;
         });
@@ -19,6 +21,7 @@ const CartCard = ({ product, handleRemoveFromCart }) => {
     const decrementProductCount = () => {
         setProductCount((prevCount) => {
             const newCount = prevCount - 1;
+            axiosInstance.patch(`/cart/decrease/${product.id}`);
             localStorage.setItem(`product_count_${product.id}`, newCount);
             return newCount;
         });

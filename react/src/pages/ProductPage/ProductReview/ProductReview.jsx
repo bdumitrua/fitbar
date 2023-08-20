@@ -37,7 +37,6 @@ const ProductReviews = ({ reviews }) => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get(`/reviews/votes/`);
-                console.log(response.data.votes);
                 setData(response.data.votes);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);

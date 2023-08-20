@@ -62,6 +62,14 @@
 
     background-color: v.$green;
     color: v.$black;
+
+    transition: all 0.1s;
+}
+
+.order__send-order:hover {
+    background-color: transparent;
+    color: white;
+    border: v.$green 1px solid;
 }
 
 .order__cart-data {
