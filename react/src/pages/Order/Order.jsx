@@ -5,11 +5,7 @@ import "./Order.scss";
 import OrderCard from "./OrderCard";
 
 const Order = () => {
-    const {
-        handleSubmit,
-        control,
-        formState: { errors },
-    } = useForm();
+    const { handleSubmit, control } = useForm();
     const { cartItems } = useCartContext();
 
     const totalPrice = cartItems.reduce((accumulator, currentItem) => {

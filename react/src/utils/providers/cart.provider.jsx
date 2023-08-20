@@ -26,11 +26,18 @@ export const CartProvider = ({ children }) => {
     };
 
     const handleAddToCart = (product) => {
-        const quantity = JSON.parse(
-            localStorage.getItem(`product_count_${product.id}`)
-        );
+        let quantity;
+        if (localStorage.getItem(`product_count_${product.id}`)) {
+            quantity = JSON.parse(
+                localStorage.getItem(`product_count_${product.id}`)
+            );
+        } else {
+            localStorage.setItem(`product_count_${product.id}`, 1);
+            quantity = 1;
+        }
         axiosInstance.post(`/cart/store/${product.id}`);
         axiosInstance.patch(`/cart/update/${product.id}`, { quantity });
+
         const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
         const updatedCart = [...existingCart, product];
         localStorage.setItem("cart", JSON.stringify(updatedCart)); // Добавляем товар в корзину
