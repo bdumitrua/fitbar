@@ -1,3 +1,5 @@
+import "./Order.scss";
+
 const OrderCard = ({ product }) => {
     const itemsCount = localStorage.getItem(`product_count_${product.id}`);
 
