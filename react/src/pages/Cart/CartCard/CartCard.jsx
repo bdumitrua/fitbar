@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./CartCard.scss";
 
+import { Link } from "react-router-dom";
+
 import deleteFromCart from "../../../assets/images/delete.svg";
 import axiosInstance from "../../../utils/axios/instance";
 
@@ -29,9 +31,16 @@ const CartCard = ({ product, handleRemoveFromCart }) => {
 
     return (
         <div className="cart-card">
-            <img src={product.image} alt="" className="cart-card__image" />
+            <Link to={`/products/${product.id}`}>
+                <img src={product.image} alt="" className="cart-card__image" />
+            </Link>
             <div className="cart-card__main-info">
-                <p className="cart-card__title">{product.name}</p>
+                <Link
+                    to={`/products/${product.id}`}
+                    className="cart-card__title"
+                >
+                    <p>{product.name}</p>
+                </Link>
                 <div className="cart-card__about-cart">
                     <p className="cart-card__info">Вкус:</p>
                     <p className="cart-card__info">Объём:</p>
