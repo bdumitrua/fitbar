@@ -27,7 +27,7 @@ export const CartProvider = ({ children }) => {
 
     const handleAddToCart = (product) => {
         let quantity;
-        if (localStorage.getItem(`product_count_${product.id}`)) {
+        if (JSON.parse(localStorage.getItem(`product_count_${product.id}`))) {
             quantity = JSON.parse(
                 localStorage.getItem(`product_count_${product.id}`)
             );
@@ -40,7 +40,9 @@ export const CartProvider = ({ children }) => {
 
         const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
         const updatedCart = [...existingCart, product];
-        localStorage.setItem("cart", JSON.stringify(updatedCart)); // Добавляем товар в корзину
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+        setCartItems((prevCartItems) => [...prevCartItems, product]);
     };
 
     const contextValue = {

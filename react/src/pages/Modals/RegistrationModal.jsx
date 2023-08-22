@@ -1,111 +1,156 @@
-import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginAsync } from "../../redux/slices/auth.slice";
 import { registerAsync } from "../../redux/slices/register.slice";
 import "./Modals.scss";
 
 const RegistrationModal = ({ closeModal, toggleModal }) => {
-    const [name, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [repeatPassword, setRepeatPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [telNumber, setTelNumber] = useState("");
-    const [identicalPasswordError, setIdenticalPasswordError] = useState("");
+    const {
+        control,
+        handleSubmit,
+        setError,
+        formState: { errors },
+    } = useForm();
 
     const dispatch = useDispatch();
 
-    //TODO
-    //Пофиксить вход после регистрации(обновление состояния кнопки войти и данные в инпутах в профиле)
-    const handleRegistration = async (e) => {
-        e.preventDefault();
-        if (password === repeatPassword) {
-            const response = await dispatch(
-                registerAsync({ name, email, password })
-            );
-            if (response.error) {
-                console.log(response);
-                console.log("Error!");
-            } else {
-                // Вместо возвращения пользователя, вы можете использовать user из ответа
-                console.log("Успешно зарегистрирован:", response);
+    const handleRegistration = async (data) => {
+        if (data.password !== data.repeatPassword) {
+            setError("repeatPassword", {
+                type: "manual",
+                message: "Пароли не совпадают!",
+            });
+            return;
+        }
 
-                // Автоматическая авторизация
-                dispatch(loginAsync({ email, password })); // Пример автоматической авторизации
-
-                // Закрываем модальное окно
-                closeModal();
-            }
+        const response = await dispatch(registerAsync(data));
+        if (response.error) {
+            console.log(response);
+            console.log("Error!");
         } else {
-            setIdenticalPasswordError("Пароли не совпадают!");
+            console.log("Успешно зарегистрирован:", response);
+
+            dispatch(
+                loginAsync({ email: data.email, password: data.password })
+            );
+
+            closeModal();
         }
     };
 
     return (
         <div className="modal__content registration">
             <p className="modal__title">Регистрация</p>
-            <form className="modal__form" onSubmit={handleRegistration}>
-                <label className="modal__input-label" htmlFor="email">
+            <form
+                className="modal__form"
+                onSubmit={handleSubmit(handleRegistration)}
+            >
+                <label className="modal__input-label" htmlFor="name">
                     Имя
                 </label>
-                <input
-                    id="name"
+                <Controller
                     className="modal__input"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder=""
-                    required
+                    name="name"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <input
+                            className="modal__input"
+                            id="name"
+                            type="text"
+                            {...field}
+                            placeholder=""
+                            required
+                        />
+                    )}
                 />
-                <label className="modal__input-label" htmlFor="password">
+                {errors.name && (
+                    <p className="modal__error">Это поле обязательно</p>
+                )}
+                <label className="modal__input-label" htmlFor="name">
                     Адрес электронной почты
                 </label>
-                <input
-                    id="email"
+                <Controller
                     className="modal__input"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder=""
-                    required
+                    name="email"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <input
+                            className="modal__input"
+                            id="email"
+                            type="email"
+                            {...field}
+                            placeholder=""
+                            required
+                        />
+                    )}
                 />
-                <label className="modal__input-label" htmlFor="password">
+                {errors.email && (
+                    <p className="modal__error">Это поле обязательно</p>
+                )}
+                <label className="modal__input-label" htmlFor="tel">
                     Номер телефона
                 </label>
-                <input
-                    className="modal__input"
-                    type="tel"
-                    value={telNumber}
-                    onChange={(e) => setTelNumber(e.target.value)}
-                    placeholder=""
+                <Controller
+                    name="tel"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <input
+                            id="tel"
+                            className="modal__input"
+                            type="tel"
+                            {...field}
+                            placeholder=""
+                            required
+                        />
+                    )}
                 />
+                {errors.tel && (
+                    <p className="modal__error">Это поле обязательно</p>
+                )}
                 <label className="modal__input-label" htmlFor="password">
                     Пароль
                 </label>
-                <input
-                    id="password"
-                    className="modal__input"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder=""
-                    required
+                <Controller
+                    name="password"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <input
+                            id="password"
+                            type="password"
+                            {...field}
+                            placeholder=""
+                            className="modal__input"
+                            required
+                        />
+                    )}
                 />
-                <label className="modal__input-label" htmlFor="password">
-                    Подтвердите пароль
+                {errors.password && (
+                    <p className="modal__error">Это поле обязательно</p>
+                )}
+                <label className="modal__input-label" htmlFor="repeatPassword">
+                    Повторите пароль
                 </label>
-                <input
-                    className={`modal__input ${
-                        identicalPasswordError ? "input-error" : ""
-                    }`}
-                    type="password"
-                    value={repeatPassword}
-                    onChange={(e) => setRepeatPassword(e.target.value)}
-                    placeholder=""
-                    required
+                <Controller
+                    name="repeatPassword"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <input
+                            id="repeatPassword"
+                            className="modal__input"
+                            type="password"
+                            placeholder=""
+                            {...field}
+                        />
+                    )}
                 />
-                {identicalPasswordError && (
-                    <p className="modal__error register-error">
-                        {identicalPasswordError}
+                {errors.repeatPassword && (
+                    <p className="modal__error">
+                        {errors.repeatPassword.message}
                     </p>
                 )}
                 <div className="modal__buttons">

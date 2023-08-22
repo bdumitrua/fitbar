@@ -10,12 +10,21 @@ const AccountMain = () => {
     const [data, setData] = useState({});
     const dispatch = useDispatch();
 
+    const [firstname, setFirstname] = useState("");
+    const [surname, setSurname] = useState("");
+    const [patronymic, setPatronymic] = useState("");
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get("/users/me");
                 setData(response.data);
                 dispatch(setUser(response.data));
+                const [surname, firstname, patronymic] =
+                    response.data.name.split(" ");
+                setSurname(surname || "");
+                setFirstname(firstname || "");
+                setPatronymic(patronymic || "");
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
             }
@@ -43,7 +52,7 @@ const AccountMain = () => {
                                     className="account-info__private-info-element"
                                     placeholder="Имя"
                                     disabled
-                                    value={data.name}
+                                    value={firstname}
                                 />
                                 <input
                                     type="date"
@@ -56,11 +65,13 @@ const AccountMain = () => {
                                     className="account-info__private-info-element"
                                     placeholder="Фамилия"
                                     disabled
+                                    value={surname}
                                 />
                                 <input
                                     type="tel"
                                     className="account-info__private-info-element"
                                     placeholder="Номер телефона"
+                                    value={data.phone || ""}
                                     disabled
                                 />
                                 <input
@@ -68,6 +79,7 @@ const AccountMain = () => {
                                     className="account-info__private-info-element"
                                     placeholder="Отчество"
                                     disabled
+                                    value={patronymic}
                                 />
                                 <input
                                     type="email"

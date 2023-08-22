@@ -3,10 +3,10 @@ import CartCard from "./CartCard/CartCard";
 
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../utils/providers/cart.provider";
+import CartTotalPrice from "./CartTotalPrice";
 
 // TODO
-// Сделать обработку корзины с редаксом и запросами к бэку.
-// Сделать сумму товаров
+// Сделать обработку корзины с редаксом
 
 const Cart = () => {
     const { handleRemoveFromCart, cartItems } = useCartContext();
@@ -32,9 +32,7 @@ const Cart = () => {
             {cartItems.length == 0 && (
                 <p>Вы еще не добавили товары в свою корзину!</p>
             )}
-            <p className="cart__sum">{`Итого: ${totalPrice.toFixed(
-                2
-            )} руб.`}</p>
+            <CartTotalPrice totalPrice={totalPrice} />
             <Link to="/order" className="cart__order-button">
                 Заказать
             </Link>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
+import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayout from "../AccountAside";
 import "../AccountMain/AccountMain.scss";
@@ -12,8 +13,20 @@ const AccountEdit = () => {
     const [selectedDate, setSelectedDate] = useState(null);
 
     const onSubmit = (data) => {
-        // You can handle form submission here
-        console.log(data);
+        const { firstname, surname, patronymic, ...otherData } = data;
+        const name = `${surname} ${firstname} ${patronymic}`;
+
+        // Добавьте `fullName` в отправляемые данные
+        const requestData = {
+            ...otherData,
+            name,
+        };
+
+        // Отправьте данные на сервер
+        // Запутался с адресами
+        // По идее надо axiosInstance.put(`/address/update/${address.id}`)
+        // Но как доставать нужный айди адресса если у пользователя их может быть несколь хз ибо непонятно какой из них менять
+        axiosInstance.put("/users/update", requestData);
     };
 
     return (
@@ -28,7 +41,7 @@ const AccountEdit = () => {
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <Controller
-                            name="name"
+                            name="firstname"
                             control={control}
                             render={({ field }) => (
                                 <input
@@ -36,6 +49,7 @@ const AccountEdit = () => {
                                     type="text"
                                     className="account-info__private-info-element"
                                     placeholder="Имя"
+                                    id="firstname"
                                 />
                             )}
                         />
@@ -46,7 +60,7 @@ const AccountEdit = () => {
                                 render={({ field }) => (
                                     <DatePicker
                                         {...field}
-                                        dateFormat="dd MM yyyy"
+                                        dateFormat="dd.MM.yyyy"
                                         placeholderText="Выберите дату"
                                         selected={selectedDate}
                                         onChange={(date) =>
@@ -55,7 +69,6 @@ const AccountEdit = () => {
                                         showYearDropdown
                                         scrollableYearDropdown
                                         yearDropdownItemNumber={100}
-                                        required
                                     />
                                 )}
                                 valueName="selected"
@@ -70,6 +83,7 @@ const AccountEdit = () => {
                                     type="text"
                                     className="account-info__private-info-element"
                                     placeholder="Фамилия"
+                                    id="surname"
                                 />
                             )}
                         />
@@ -96,6 +110,7 @@ const AccountEdit = () => {
                                     type="text"
                                     className="account-info__private-info-element"
                                     placeholder="Отчество"
+                                    id="patronymic"
                                 />
                             )}
                         />
@@ -108,7 +123,7 @@ const AccountEdit = () => {
                                     type="email"
                                     className="account-info__private-info-element"
                                     placeholder="Электронная почта"
-                                    disabled
+                                    id="email"
                                 />
                             )}
                         />
@@ -121,6 +136,7 @@ const AccountEdit = () => {
                                     type="text"
                                     className="account-info__private-info-element private-info-element-long"
                                     placeholder="Адрес"
+                                    id="address"
                                 />
                             )}
                         />
@@ -133,6 +149,8 @@ const AccountEdit = () => {
                                     type="password"
                                     className="account-info__private-info-element"
                                     placeholder="Пароль"
+                                    id="password"
+                                    required
                                 />
                             )}
                         />
@@ -145,6 +163,8 @@ const AccountEdit = () => {
                                     type="password"
                                     className="account-info__private-info-element"
                                     placeholder="Подтверждение пароля"
+                                    id="confirmPassword"
+                                    required
                                 />
                             )}
                         />
