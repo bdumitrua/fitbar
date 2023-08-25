@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
-import AccountLayout from "../AccountAside";
+import AccountLayout from "../AccountLayout";
 import "../AccountMain/AccountMain.scss";
 import "./AccountEdit.scss";
 

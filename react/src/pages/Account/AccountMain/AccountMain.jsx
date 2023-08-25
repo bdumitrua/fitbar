@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slices/user.slice";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
-import AccountLayout from "../AccountAside";
+import AccountLayoutAdmin from "../Admin/AccountLayoutAdmin";
 import "./AccountMain.scss";
 
 const AccountMain = () => {
@@ -37,7 +37,7 @@ const AccountMain = () => {
         <div className="account container">
             {data ? (
                 <>
-                    <AccountLayout />
+                    <AccountLayoutAdmin />
                     <div className="account-container">
                         <p className="account__page-title">Личный кабинет</p>
                         <div className="account-info">

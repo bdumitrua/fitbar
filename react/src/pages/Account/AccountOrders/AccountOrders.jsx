@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
-import AccountLayout from "../AccountAside";
+import AccountLayout from "../AccountLayout";
 import "./AccountOrders.scss";
 import OrderAccountCard from "./OrderCard/OrderAccountCard";
 
