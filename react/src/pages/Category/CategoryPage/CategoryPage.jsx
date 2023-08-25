@@ -15,7 +15,9 @@ const CategoryPage = ({ category }) => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get("/products");
-                setData(response.data);
+                setData(
+                    response.data.slice().sort((a, b) => b.rating - a.rating)
+                );
                 setItemCount(
                     response.data.filter(
                         (product) => product.category_id === category.id
