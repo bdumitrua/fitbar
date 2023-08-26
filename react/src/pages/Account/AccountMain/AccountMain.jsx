@@ -42,7 +42,7 @@ const AccountMain = () => {
                         <p className="account__page-title">Личный кабинет</p>
                         <div className="account-info">
                             <img
-                                src=""
+                                src={data.image}
                                 alt=""
                                 className="account-info__image"
                             />

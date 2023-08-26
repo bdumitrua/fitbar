@@ -3,7 +3,7 @@ import DefaultLayout from "./components/DefaultLayout";
 import AccountEdit from "./pages/Account/AccountEdit/AccountEdit";
 import AccountMain from "./pages/Account/AccountMain/AccountMain";
 import AccountOrders from "./pages/Account/AccountOrders/AccountOrders";
-import Assortment from "./pages/Account/Admin/Assortment";
+import Assortment from "./pages/Account/Admin/Assortment/Assortment";
 import OrderRequests from "./pages/Account/Admin/OrderRequests";
 import Cart from "./pages/Cart/Cart";
 import Category from "./pages/Category/Category";

@@ -40,9 +40,10 @@ export const CartProvider = ({ children }) => {
 
         const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
         const updatedCart = [...existingCart, product];
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
-
+        console.log(cartItems);
         setCartItems((prevCartItems) => [...prevCartItems, product]);
+        console.log(cartItems);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
     };
 
     const contextValue = {

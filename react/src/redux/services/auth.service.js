@@ -16,7 +16,6 @@ const AuthService = {
             axiosInstance.defaults.headers.common["Authorization"] =
                 "Bearer " + response.data.access_token;
 
-            console.log(response);
             return response.data.access_token;
         } catch (error) {
             console.log(error);

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayout from "../AccountLayout";
@@ -11,6 +12,31 @@ import "./AccountEdit.scss";
 const AccountEdit = () => {
     const { handleSubmit, control } = useForm();
     const [selectedDate, setSelectedDate] = useState(null);
+
+    const [data, setData] = useState({});
+    const dispatch = useDispatch();
+
+    const [dataFirstname, setDataFirstname] = useState("");
+    const [dataSurname, setDataSurname] = useState("");
+    const [dataPatronymic, setDataPatronymic] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axiosInstance.get("/users/me");
+                setData(response.data);
+                const [surname, firstname, patronymic] =
+                    response.data.name.split(" ");
+                setDataSurname(surname || "");
+                setDataFirstname(firstname || "");
+                setDataPatronymic(patronymic || "");
+            } catch (error) {
+                console.error("Произошла ошибка при выполнении запроса", error);
+            }
+        };
+
+        fetchData();
+    }, [dispatch]);
 
     const onSubmit = (data) => {
         const { firstname, surname, patronymic, ...otherData } = data;
@@ -22,7 +48,6 @@ const AccountEdit = () => {
             name,
         };
 
-        // Отправьте данные на сервер
         // Запутался с адресами
         // По идее надо axiosInstance.put(`/address/update/${address.id}`)
         // Но как доставать нужный айди адресса если у пользователя их может быть несколь хз ибо непонятно какой из них менять
@@ -35,7 +60,23 @@ const AccountEdit = () => {
             <div className="account-container">
                 <p className="account__page-title">Личный кабинет</p>
                 <div className="account-info">
-                    <img src="" alt="" className="account-info__image" />
+                    <div className="account-info__image-container">
+                        <Controller
+                            name="avatar"
+                            control={control}
+                            defaultValue={data.image}
+                            render={({ field }) => (
+                                <input
+                                    {...field}
+                                    type="file"
+                                    className="account-info__image-input"
+                                    placeholder="Имя"
+                                    id="avatar"
+                                />
+                            )}
+                        />
+                        <img src="" alt="" className="account-info__image" />
+                    </div>
                     <form
                         className="account-info__private-info"
                         onSubmit={handleSubmit(onSubmit)}
@@ -43,6 +84,7 @@ const AccountEdit = () => {
                         <Controller
                             name="firstname"
                             control={control}
+                            defaultValue={dataFirstname}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -77,6 +119,7 @@ const AccountEdit = () => {
                         <Controller
                             name="surname"
                             control={control}
+                            defaultValue={dataSurname}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -90,6 +133,7 @@ const AccountEdit = () => {
                         <Controller
                             name="phone"
                             control={control}
+                            defaultValue={data.phone}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -103,6 +147,7 @@ const AccountEdit = () => {
                         />
                         <Controller
                             name="patronymic"
+                            defaultValue={dataPatronymic}
                             control={control}
                             render={({ field }) => (
                                 <input
@@ -117,6 +162,7 @@ const AccountEdit = () => {
                         <Controller
                             name="email"
                             control={control}
+                            defaultValue={data.email}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -130,6 +176,7 @@ const AccountEdit = () => {
                         <Controller
                             name="address"
                             control={control}
+                            defaultValue={data.address}
                             render={({ field }) => (
                                 <input
                                     {...field}
