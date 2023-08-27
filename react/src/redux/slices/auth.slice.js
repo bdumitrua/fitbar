@@ -10,6 +10,10 @@ export const loginAsync = createAsyncThunk(
     }
 );
 
+export const logoutAsync = createAsyncThunk("auth/logout", async () => {
+    await AuthService.logout();
+});
+
 export const refreshAccessToken = createAsyncThunk(
     "auth/refresh",
     async (_, { getState }) => {
@@ -56,6 +60,7 @@ const initialState = {
     loading: false,
     error: null,
     loggedIn: false,
+    loggedOut: false,
     rememberMe: false,
     handleSuccessfulLogin: null,
 };
@@ -64,14 +69,6 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        logout: (state) => {
-            state.user = null;
-            state.accessToken = null;
-            state.refreshToken = null;
-            // Очищаем localStorage при выходе пользователя
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("access_token_expires_at");
-        },
         setRememberMe: (state) => {
             state.rememberMe = true;
         },
@@ -79,7 +76,10 @@ const authSlice = createSlice({
             state.rememberMe = false;
         },
         setLoggedIn: (state, action) => {
-            state.loggedIn = action.payload; // Устанавливаем состояние авторизации
+            state.loggedIn = action.payload;
+        },
+        setLoggedOut: (state, action) => {
+            state.loggedIn = action.payload;
         },
         setHandleSuccessfulLogin: (state, action) => {
             state.handleSuccessfulLogin = action.payload;
@@ -102,6 +102,23 @@ const authSlice = createSlice({
                 state.error = action.error.message;
             })
 
+            .addCase(logoutAsync.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(logoutAsync.fulfilled, (state) => {
+                state.loading = false;
+                state.user = null;
+                state.accessToken = null;
+                state.refreshToken = null;
+                state.error = null;
+                state.loggedOut = true;
+            })
+            .addCase(logoutAsync.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
             .addCase(refreshAccessToken.fulfilled, (state, action) => {
                 state.accessToken = action.payload; // Обновляем access токен в состоянии
                 state.error = null; // Сбрасываем ошибку, если была
@@ -113,6 +130,11 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout, setLoggedIn, setRememberMe, resetRememberMe } =
-    authSlice.actions;
+export const {
+    logout,
+    setLoggedIn,
+    setLoggedOut,
+    setRememberMe,
+    resetRememberMe,
+} = authSlice.actions;
 export default authSlice.reducer;

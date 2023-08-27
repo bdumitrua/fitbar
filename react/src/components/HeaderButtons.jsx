@@ -17,7 +17,7 @@ const HeaderButtons = () => {
 
     const cartLength = cartItems ? cartItems.length : 0;
 
-    const user = localStorage.getItem("access_token");
+    const user = !!localStorage.getItem("access_token");
 
     const handleOpenModal = () => {
         setShowModal(true);

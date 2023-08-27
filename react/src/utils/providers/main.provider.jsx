@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const MainContext = createContext();
 
@@ -7,6 +7,14 @@ export const useMainContext = () => {
 };
 
 export const MainProvider = ({ children }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(
+        !!localStorage.getItem("access_token")
+    );
+
+    useEffect(() => {
+        setIsAuthenticated(!!localStorage.getItem("access_token"));
+    }, []);
+
     const formatDate = (dateString) => {
         const months = [
             "января",
@@ -34,6 +42,8 @@ export const MainProvider = ({ children }) => {
 
     const contextValue = {
         formatDate,
+        isAuthenticated,
+        setIsAuthenticated,
     };
 
     return (
