@@ -5,6 +5,7 @@ import "./DefaultLayout.scss";
 import account from "../assets/images/account.svg";
 import cart from "../assets/images/cart.svg";
 import Modals from "../pages/Modals/Modals";
+import { useCartContext } from "../utils/providers/cart.provider";
 
 // TODO
 // Переделать логику поведения модалок
@@ -12,9 +13,9 @@ import Modals from "../pages/Modals/Modals";
 const HeaderButtons = () => {
     const [showModal, setShowModal] = useState(false);
 
-    const cartLength = JSON.parse(localStorage.getItem("cart"))
-        ? JSON.parse(localStorage.getItem("cart")).length
-        : 0;
+    const { cartItems } = useCartContext();
+
+    const cartLength = cartItems ? cartItems.length : 0;
 
     const user = localStorage.getItem("access_token");
 

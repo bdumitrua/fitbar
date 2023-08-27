@@ -22,6 +22,9 @@ const AuthService = {
             throw error;
         }
     },
+
+    //TODO
+    //Пофиксить обновление токена
     async refreshToken(refreshToken) {
         try {
             const response = await axiosInstance.post("auth/refresh", {

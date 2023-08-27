@@ -9,6 +9,9 @@ import ProductPageCounter from "./ProductPageCounter";
 import ProductPageFavorite from "./ProductPageFavorite";
 import ProductReviews from "./ProductReview/ProductReview";
 
+// TODO
+// Пофиксить кнопки лайка/дизлайка отзыва
+
 const ProductPage = () => {
     const { handleAddToCart, cartItems, setCartItems } = useCartContext();
 
@@ -112,7 +115,12 @@ const ProductPage = () => {
                         <p className="product-page__selector-title">
                             Количество:
                         </p>
-                        <ProductPageCounter productId={data.id} />
+                        <ProductPageCounter
+                            isProductInCart={cartItems.some(
+                                (item) => item.id === data.id
+                            )}
+                            productId={data.id}
+                        />
                         <ProductPageAddToCart
                             isProductInCart={cartItems.some(
                                 (item) => item.id === data.id

@@ -13,3 +13,88 @@
     @include m.text-bold(9px);
     @include m.flex-center();
 }
+
+.order-card-account {
+    width: 100%;
+    display: flex;
+
+    margin-bottom: 40px;
+
+    border: v.$green 1px solid;
+
+    .order-card__product-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+}
+
+.order-card__about {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.order-card__about-header {
+    @include m.flex-between();
+
+    padding: 10px 15px;
+
+    background-color: v.$green;
+    color: v.$black;
+}
+
+.order-card__about-header-left-side {
+    display: flex;
+}
+
+.order-card__header-right-side {
+    display: flex;
+    align-items: end;
+
+    white-space: nowrap;
+
+    span {
+        margin-right: 8px;
+        margin-bottom: 2px;
+    }
+
+    p {
+        @include m.text-bold(5px);
+    }
+}
+
+.order-card__main-info {
+    @include m.flex-between();
+    padding: 15px;
+}
+
+.order-card__main-info-left-side {
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.order-card__status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    gap: 8px;
+
+    .order-card__status-info {
+        padding: 5px 8px;
+        border-radius: 15px;
+
+        background-color: v.$green;
+        color: v.$black;
+    }
+}
+
+.order-cart__products {
+    display: flex;
+    gap: 15px;
+}

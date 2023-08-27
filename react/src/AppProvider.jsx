@@ -4,7 +4,7 @@ import { MainProvider } from "./utils/providers/main.provider";
 const AppProviders = ({ children }) => {
     return (
         <MainProvider>
-            <CartProvider>{children}</CartProvider>;
+            <CartProvider>{children}</CartProvider>
         </MainProvider>
     );
 };

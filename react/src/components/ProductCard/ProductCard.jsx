@@ -6,7 +6,7 @@ import "./ProductCard.scss";
 import ProductFavorite from "./ProductFavorite/ProductFavorite";
 
 const ProductCard = ({ product, itemCount, isProductInCart }) => {
-    const { setCartItems, handleAddToCart } = useCartContext();
+    const { handleAddToCart } = useCartContext();
 
     return (
         <div
@@ -37,11 +37,6 @@ const ProductCard = ({ product, itemCount, isProductInCart }) => {
                                 `product_count_${product.id}`,
                                 1
                             );
-                            // После добавления товара, обновляем состояние cartItems
-                            setCartItems((prevCartItems) => [
-                                ...prevCartItems,
-                                product,
-                            ]);
                         }}
                     />
                 )}
