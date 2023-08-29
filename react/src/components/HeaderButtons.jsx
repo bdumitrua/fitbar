@@ -7,9 +7,6 @@ import cart from "../assets/images/cart.svg";
 import Modals from "../pages/Modals/Modals";
 import { useCartContext } from "../utils/providers/cart.provider";
 
-// TODO
-// Переделать логику поведения модалок
-
 const HeaderButtons = () => {
     const [showModal, setShowModal] = useState(false);
 
@@ -17,7 +14,7 @@ const HeaderButtons = () => {
 
     const cartLength = cartItems ? cartItems.length : 0;
 
-    const user = !!localStorage.getItem("access_token");
+    const user = localStorage.getItem("access_token");
 
     const handleOpenModal = () => {
         setShowModal(true);

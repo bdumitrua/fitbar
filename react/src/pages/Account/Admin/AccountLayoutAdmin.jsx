@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { logoutAsync, setLoggedOut } from "../../../redux/slices/auth.slice";
+import { logout } from "../../../redux/slices/auth.slice";
 import "../AccountAside.scss";
 
 const AccountLayoutAdmin = () => {
@@ -11,8 +11,7 @@ const AccountLayoutAdmin = () => {
     //TODO
     //Пофиксить выход из аккаунта
     const handleLogout = () => {
-        dispatch(logoutAsync());
-        dispatch(setLoggedOut(true));
+        dispatch(logout());
         navigate("/home");
     };
 

@@ -23,19 +23,19 @@ const AuthService = {
         }
     },
 
-    logout: async () => {
-        try {
-            await axiosInstance.post("/auth/logout");
+    // logout: async () => {
+    //     try {
+    //         await axiosInstance.post("/auth/logout");
 
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("access_token_expires_at");
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
+    //         localStorage.removeItem("access_token");
+    //         localStorage.removeItem("access_token_expires_at");
+    //     } catch (error) {
+    //         console.error(error);
+    //         throw error;
+    //     }
 
-        // Очищаем localStorage при выходе пользователя
-    },
+    //     // Очищаем localStorage при выходе пользователя
+    // },
 
     //TODO
     //Пофиксить обновление токена
