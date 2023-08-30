@@ -1,9 +1,6 @@
 @use "../../styles/mixins" as m;
 @use "../../styles/variables" as v;
 
-.home {
-}
-
 .home__info {
     margin-bottom: 80px;
 
@@ -19,9 +16,6 @@
     transition: transform 0.5s ease-out;
 }
 
-.home__info-image {
-}
-
 .home__info-arrows {
     width: 40px;
     height: 40px;
@@ -32,9 +26,6 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
-}
-
-.home__info-arrows-image {
 }
 
 .left-arrow {

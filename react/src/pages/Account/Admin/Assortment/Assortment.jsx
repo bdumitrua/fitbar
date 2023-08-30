@@ -60,6 +60,12 @@ const Assortment = () => {
                 ) : (
                     <p>Загрузка...</p>
                 )}
+                <button
+                    onClick={increaseItemsLen}
+                    className="assortment__show-more"
+                >
+                    Показать больше товаров...
+                </button>
             </div>
         </div>
     );

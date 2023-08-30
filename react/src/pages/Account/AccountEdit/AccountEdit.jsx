@@ -43,7 +43,6 @@ const AccountEdit = () => {
         const { firstname, surname, patronymic, ...otherData } = data;
         const name = `${surname} ${firstname} ${patronymic}`;
 
-        // Добавьте `fullName` в отправляемые данные
         const requestData = {
             ...otherData,
             name,
