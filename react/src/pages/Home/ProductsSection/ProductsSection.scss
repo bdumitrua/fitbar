@@ -19,3 +19,9 @@
     @include m.text-bold(9px);
     text-transform: uppercase;
 }
+
+@media (max-width: 800px) {
+    .products-section {
+        padding: 0 20px;
+    }
+}

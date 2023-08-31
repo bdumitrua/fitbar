@@ -59,9 +59,6 @@
     }
 }
 
-.product__favorite-heart {
-}
-
 .product__favorite-heart:active {
     animation: fillPopAnimation 0.3s ease;
 }
@@ -86,6 +83,17 @@
     right: 10px;
 
     transition: all 0.15s linear;
+}
+
+.product-mobile__cart-button {
+    display: none;
+
+    position: absolute;
+    width: 40px;
+    height: 40px;
+
+    top: 25px;
+    right: 25px;
 }
 
 .product__cart-button:hover {
@@ -174,6 +182,27 @@
 
     .product-section > .product:nth-child(n + 4) {
         display: flex;
+    }
+
+    .product__cart-button {
+        display: none;
+    }
+
+    .product-mobile__cart-button {
+        display: flex;
+    }
+
+    .product-mobile__cart-button.active {
+        color: v.$green;
+    }
+
+    .product__favorite {
+        width: 48px;
+        height: 48px;
+
+        position: absolute;
+        top: 20px;
+        left: 20px;
     }
 }
 

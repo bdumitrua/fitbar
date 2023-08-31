@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./DefaultLayout.scss";
+import "./DefaultLayoutMobile.scss";
 
+import burger from "../assets/images/burger.svg";
+import exit from "../assets/images/exit.svg";
 import logo from "../assets/images/logo.svg";
 import search from "../assets/images/search.svg";
 import axiosInstance from "../utils/axios/instance";
 import HeaderButtons from "./HeaderButtons";
+import HeaderButtonsMobile from "./HeaderButtonsMobile";
 
 const DefaultLayout = () => {
     const [data, setData] = useState(null);
+    const [showNav, setShowNav] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,7 +32,7 @@ const DefaultLayout = () => {
         <>
             <header className="header">
                 <div className="header__container container">
-                    <Link to="/" className="header__left-side">
+                    <Link to="/home" className="header__left-side">
                         <img src={logo} alt="" className="header__logo" />
                         <span className="header__site-name">fitbar</span>
                     </Link>
@@ -64,6 +69,85 @@ const DefaultLayout = () => {
                         )}
                     </div>
                 </nav>
+            </header>
+
+            {/* MOBILE HEADER */}
+
+            <header className="header-mobile">
+                <div className="header__container">
+                    <div className="header-mobile__navbar">
+                        <button onClick={() => setShowNav(() => true)}>
+                            <img
+                                src={burger}
+                                alt=""
+                                className="header-mobile__button-image"
+                            />
+                        </button>
+                        <div
+                            className={`header-mobile__navbar-container ${
+                                showNav ? "active" : ""
+                            }`}
+                        ></div>
+                        <div
+                            className={`header-mobile__navbar-elements ${
+                                showNav ? "active" : ""
+                            }`}
+                        >
+                            <div className="header-mobile__navbar-buttons">
+                                <Link
+                                    to="/home"
+                                    className="header-mobile__navbar-home"
+                                >
+                                    <img
+                                        src={logo}
+                                        alt=""
+                                        className="header__logo"
+                                    />
+                                </Link>
+                                <button onClick={() => setShowNav(() => false)}>
+                                    <img
+                                        src={exit}
+                                        alt="exit"
+                                        className="header-mobile__navbar-exit"
+                                    />
+                                </button>
+                            </div>
+
+                            {data ? (
+                                data.map((category) => (
+                                    <Link
+                                        to={`category/${category.slug}`}
+                                        className="header-mobile__navbar-element"
+                                        key={category.slug}
+                                    >
+                                        {category.name}
+                                    </Link>
+                                ))
+                            ) : (
+                                <p>Загрузка...</p>
+                            )}
+                        </div>
+                        <div className="header-mobile__search">
+                            {/* <input
+                                type="search"
+                                className="header-mobile__search-input"
+                                placeholder="Поиск..."
+                            /> */}
+                            <button className="header-mobile__search-button">
+                                <img
+                                    src={search}
+                                    alt=""
+                                    className="header-mobile__button-image"
+                                />
+                            </button>
+                        </div>
+                    </div>
+
+                    <Link to="/home" className="header-mobile__mid">
+                        <span className="header-mobile__site-name">fitbar</span>
+                    </Link>
+                    <HeaderButtonsMobile />
+                </div>
             </header>
             <Outlet />
             <div className="footer-bar">fitbar</div>

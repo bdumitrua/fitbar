@@ -1,9 +1,14 @@
 @use "../../styles/mixins" as m;
 @use "../../styles/variables" as v;
 
-.home__info {
-    margin-bottom: 80px;
+.home {
+    max-width: 1340px;
+    padding: 0 20px;
+    margin: 0 auto 80px;
+}
 
+.home__info {
+    margin: 0 auto 80px;
     position: relative;
 
     overflow: hidden;
@@ -34,4 +39,15 @@
 
 .right-arrow {
     right: 10px;
+}
+
+@media (max-width: 800px) {
+    .home {
+        max-width: 1340px;
+        padding: 0;
+    }
+
+    .home__info-image {
+        width: calc(100% - 1px);
+    }
 }
