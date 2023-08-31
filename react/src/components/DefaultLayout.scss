@@ -45,7 +45,7 @@ a {
     display: flex;
     justify-content: space-between;
 
-    padding: 40px 0 10px 0;
+    padding: 40px 20px 10px;
 }
 
 .footer__category {
@@ -59,6 +59,12 @@ a {
 
     @include m.text-bold(4px);
 }
+
+.footer__category-elements {
+    display: flex;
+    flex-direction: column;
+}
+
 .footer__category-element {
     margin-bottom: 30px;
 
@@ -187,6 +193,10 @@ a {
     .header__navbar-element {
         padding: 0 10px;
     }
+
+    .footer__category-products {
+        display: none;
+    }
 }
 
 @media (max-width: 900px) {
@@ -204,5 +214,70 @@ a {
         height: 80px;
 
         padding: 0 50px;
+    }
+
+    .footer__category-title {
+        font-size: 14px;
+    }
+
+    .footer__category-element {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer__category-title {
+        font-size: 12px;
+
+        margin-bottom: 15px;
+    }
+
+    .footer__category-element {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    .header__container {
+        height: 70px;
+
+        padding: 0 30px;
+    }
+
+    .footer__category-title {
+        font-size: 10px;
+
+        margin-bottom: 15px;
+    }
+
+    .footer__category-element {
+        font-size: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 450px) {
+    .footer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer__category-title {
+        margin-bottom: 10px;
+
+        font-size: 12px;
+    }
+
+    .footer__category-elements {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        column-gap: 10px;
+    }
+
+    .footer__category-element {
+        font-size: 12px;
     }
 }

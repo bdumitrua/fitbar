@@ -157,24 +157,26 @@ const DefaultLayout = () => {
                     <span className="footer__category-title">
                         Помощь и информация
                     </span>
-                    <a href="" className="footer__category-element">
-                        Связь с нами
-                    </a>
-                    <a href="" className="footer__category-element">
-                        Центр поддержки
-                    </a>
-                    <a href="" className="footer__category-element">
-                        Доставка
-                    </a>
-                    <a href="" className="footer__category-element">
-                        Политика возврата
-                    </a>
-                    <a href="" className="footer__category-element">
-                        Отслеживание заказа
-                    </a>
+                    <div className="footer__category-elements">
+                        <a href="" className="footer__category-element">
+                            Связь с нами
+                        </a>
+                        <a href="" className="footer__category-element">
+                            Центр поддержки
+                        </a>
+                        <a href="" className="footer__category-element">
+                            Доставка
+                        </a>
+                        <a href="" className="footer__category-element">
+                            Политика возврата
+                        </a>
+                        <a href="" className="footer__category-element">
+                            Отслеживание заказа
+                        </a>
+                    </div>
                 </div>
 
-                <div className="footer__category">
+                <div className="footer__category footer__category-products">
                     <span className="footer__category-title">Продукты</span>
                     <a href="" className="footer__category-element">
                         Питание
@@ -194,28 +196,32 @@ const DefaultLayout = () => {
                     <span className="footer__category-title">
                         Информация о компании
                     </span>
-                    <a href="" className="footer__category-element">
-                        О нас
-                    </a>
-                    <a href="" className="footer__category-element">
-                        Ваше мнение о нас
-                    </a>
-                    <a href="" className="footer__category-element">
-                        Партнеры
-                    </a>
-                    <a href="" className="footer__category-element">
-                        Политика компании
-                    </a>
+                    <div className="footer__category-elements">
+                        <a href="" className="footer__category-element">
+                            О нас
+                        </a>
+                        <a href="" className="footer__category-element">
+                            Ваше мнение о нас
+                        </a>
+                        <a href="" className="footer__category-element">
+                            Партнеры
+                        </a>
+                        <a href="" className="footer__category-element">
+                            Политика компании
+                        </a>
+                    </div>
                 </div>
 
                 <div className="footer__category">
                     <span className="footer__category-title">Акции</span>
-                    <a href="" className="footer__category-element">
-                        Реферальная система
-                    </a>
-                    <a href="" className="footer__category-element">
-                        Скидки
-                    </a>
+                    <div className="footer__category-elements">
+                        <a href="" className="footer__category-element">
+                            Реферальная система
+                        </a>
+                        <a href="" className="footer__category-element">
+                            Скидки
+                        </a>
+                    </div>
                 </div>
             </footer>
         </>

@@ -99,14 +99,15 @@
     @include m.flex-between();
     gap: 40px;
 }
+
 .header-mobile__button {
     position: relative;
 }
+
 .header-mobile__button-image {
     padding: 10px;
 }
-.header-mobile__button-images {
-}
+
 .header-mobile__button-counter {
     position: absolute;
     top: -2px;
@@ -128,6 +129,20 @@
 
     .header-mobile__navbar-element {
         font-size: 16px;
+    }
+
+    .header-mobile__right-side {
+        gap: 0;
+    }
+
+    .header-mobile__navbar {
+        gap: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .header-mobile__site-name {
+        font-size: 20px;
     }
 }
 
