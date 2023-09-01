@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useMainContext } from "../../../../utils/providers/main.provider";
 import "./AssortmentCard.scss";
 
-const AssortmentCard = ({ product }) => {
+const AssortmentCard = ({ product, handleOpenModal }) => {
     const { formatDate } = useMainContext();
 
     return (
@@ -36,7 +36,12 @@ const AssortmentCard = ({ product }) => {
                 </div>
             </div>
             <div className="assortment-card__buttons">
-                <button className="assortment-card__button">Изменить</button>
+                <button
+                    className="assortment-card__button"
+                    onClick={handleOpenModal}
+                >
+                    Изменить
+                </button>
                 <button className="assortment-card__button">Удалить</button>
             </div>
         </div>
