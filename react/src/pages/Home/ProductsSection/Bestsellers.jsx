@@ -24,7 +24,7 @@ const Bestsellers = () => {
     return (
         <section className="products-section" key="bestsellers">
             <p className="products-section__title">бестселлеры</p>
-            <div className="products-container">
+            <div className="products-container bestsellers">
                 {data ? (
                     data
                         .sort((a, b) => b.orders_count - a.orders_count)

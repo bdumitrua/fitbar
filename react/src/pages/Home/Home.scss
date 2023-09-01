@@ -2,11 +2,13 @@
 @use "../../styles/variables" as v;
 
 .home {
+    max-width: 1340px;
+    padding: 0 20px;
+    margin: 0 auto 80px;
 }
 
 .home__info {
-    margin-bottom: 80px;
-
+    margin: 0 auto 80px;
     position: relative;
 
     overflow: hidden;
@@ -19,7 +21,8 @@
     transition: transform 0.5s ease-out;
 }
 
-.home__info-image {
+.home-mobile__info-images {
+    display: none;
 }
 
 .home__info-arrows {
@@ -34,13 +37,40 @@
     z-index: 1;
 }
 
-.home__info-arrows-image {
-}
-
 .left-arrow {
     left: 10px;
 }
 
 .right-arrow {
     right: 10px;
+}
+
+@media (max-width: 800px) {
+    .home {
+        max-width: 1340px;
+        padding: 0;
+    }
+
+    .home__info {
+        margin-bottom: 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    .home__info {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 400px) {
+    .home__info-images {
+        display: none;
+    }
+
+    .home-mobile__info-images {
+        display: flex;
+        flex-wrap: nowrap;
+
+        transition: transform 0.5s ease-out;
+    }
 }

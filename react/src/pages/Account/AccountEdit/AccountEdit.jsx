@@ -13,7 +13,8 @@ const AccountEdit = () => {
     const { handleSubmit, control } = useForm();
     const [selectedDate, setSelectedDate] = useState(null);
 
-    const [data, setData] = useState({});
+    const [data, setData] = useState(null);
+
     const dispatch = useDispatch();
 
     const [dataFirstname, setDataFirstname] = useState("");
@@ -42,7 +43,6 @@ const AccountEdit = () => {
         const { firstname, surname, patronymic, ...otherData } = data;
         const name = `${surname} ${firstname} ${patronymic}`;
 
-        // Добавьте `fullName` в отправляемые данные
         const requestData = {
             ...otherData,
             name,
@@ -56,176 +56,189 @@ const AccountEdit = () => {
 
     return (
         <div className="account container">
-            <AccountLayout />
-            <div className="account-container">
-                <p className="account__page-title">Личный кабинет</p>
-                <div className="account-info">
-                    <div className="account-info__image-container">
-                        <Controller
-                            name="avatar"
-                            control={control}
-                            defaultValue={data.image}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="file"
-                                    className="account-info__image-input"
-                                    placeholder="Имя"
-                                    id="avatar"
+            {data ? (
+                <>
+                    <AccountLayout />
+                    <div className="account-container">
+                        <p className="account__page-title">Личный кабинет</p>
+                        <div className="account-info">
+                            <div className="account-info__image-container">
+                                <Controller
+                                    name="photo"
+                                    control={control}
+                                    defaultValue={data.image}
+                                    render={({ field, onChange }) => (
+                                        <input
+                                            {...field}
+                                            type="file"
+                                            className="account-info__image-input"
+                                            placeholder="Аватар"
+                                            id="photo"
+                                            onChange={(event) => {
+                                                onChange(event.target.files[0]);
+                                            }}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
-                        <img src="" alt="" className="account-info__image" />
-                    </div>
-                    <form
-                        className="account-info__private-info"
-                        onSubmit={handleSubmit(onSubmit)}
-                    >
-                        <Controller
-                            name="firstname"
-                            control={control}
-                            defaultValue={dataFirstname}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    className="account-info__private-info-element"
-                                    placeholder="Имя"
-                                    id="firstname"
+                                <img
+                                    src=""
+                                    alt=""
+                                    className="account-info__image"
                                 />
-                            )}
-                        />
-                        <div className="account-info__private-info-element">
-                            <Controller
-                                name="birthdate"
-                                control={control}
-                                render={({ field }) => (
-                                    <DatePicker
-                                        {...field}
-                                        dateFormat="dd.MM.yyyy"
-                                        placeholderText="Выберите дату"
-                                        selected={selectedDate}
-                                        onChange={(date) =>
-                                            setSelectedDate(date)
-                                        }
-                                        showYearDropdown
-                                        scrollableYearDropdown
-                                        yearDropdownItemNumber={100}
-                                    />
-                                )}
-                                valueName="selected"
-                            />
-                        </div>
-                        <Controller
-                            name="surname"
-                            control={control}
-                            defaultValue={dataSurname}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    className="account-info__private-info-element"
-                                    placeholder="Фамилия"
-                                    id="surname"
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="phone"
-                            control={control}
-                            defaultValue={data.phone}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="tel"
-                                    id="phone"
-                                    className="account-info__private-info-element"
-                                    placeholder="Номер телефона"
-                                    maxLength="11"
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="patronymic"
-                            defaultValue={dataPatronymic}
-                            control={control}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    className="account-info__private-info-element"
-                                    placeholder="Отчество"
-                                    id="patronymic"
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="email"
-                            control={control}
-                            defaultValue={data.email}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="email"
-                                    className="account-info__private-info-element"
-                                    placeholder="Электронная почта"
-                                    id="email"
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="address"
-                            control={control}
-                            defaultValue={data.address}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    className="account-info__private-info-element private-info-element-long"
-                                    placeholder="Адрес"
-                                    id="address"
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="password"
-                            control={control}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="password"
-                                    className="account-info__private-info-element"
-                                    placeholder="Пароль"
-                                    id="password"
-                                    required
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="confirmPassword"
-                            control={control}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="password"
-                                    className="account-info__private-info-element"
-                                    placeholder="Подтверждение пароля"
-                                    id="confirmPassword"
-                                    required
-                                />
-                            )}
-                        />
-                        <div className="account-info__update-info">
-                            <button
-                                className="account-info__update-info-button"
-                                type="submit"
+                            </div>
+                            <form
+                                className="account-info__private-info"
+                                onSubmit={handleSubmit(onSubmit)}
                             >
-                                Применить
-                            </button>
+                                <Controller
+                                    name="firstname"
+                                    control={control}
+                                    defaultValue={dataFirstname}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            className="account-info__private-info-element"
+                                            placeholder="Имя"
+                                            id="firstname"
+                                        />
+                                    )}
+                                />
+                                <div className="account-info__private-info-element">
+                                    <Controller
+                                        name="birthdate"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <DatePicker
+                                                {...field}
+                                                dateFormat="dd.MM.yyyy"
+                                                placeholderText="Выберите дату"
+                                                selected={selectedDate}
+                                                onChange={(date) =>
+                                                    setSelectedDate(date)
+                                                }
+                                                showYearDropdown
+                                                scrollableYearDropdown
+                                                yearDropdownItemNumber={100}
+                                            />
+                                        )}
+                                        valueName="selected"
+                                    />
+                                </div>
+                                <Controller
+                                    name="surname"
+                                    control={control}
+                                    defaultValue={dataSurname}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            className="account-info__private-info-element"
+                                            placeholder="Фамилия"
+                                            id="surname"
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    name="phone"
+                                    control={control}
+                                    defaultValue={data.phone}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="tel"
+                                            id="phone"
+                                            className="account-info__private-info-element"
+                                            placeholder="Номер телефона"
+                                            maxLength="11"
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    name="patronymic"
+                                    defaultValue={dataPatronymic}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            className="account-info__private-info-element"
+                                            placeholder="Отчество"
+                                            id="patronymic"
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    name="email"
+                                    control={control}
+                                    defaultValue={data.email}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="email"
+                                            className="account-info__private-info-element"
+                                            placeholder="Электронная почта"
+                                            id="email"
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    name="address"
+                                    control={control}
+                                    defaultValue={data.address}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            className="account-info__private-info-element private-info-element-long"
+                                            placeholder="Адрес"
+                                            id="address"
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    name="password"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="password"
+                                            className="account-info__private-info-element"
+                                            placeholder="Пароль"
+                                            id="password"
+                                            required
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    name="confirmPassword"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="password"
+                                            className="account-info__private-info-element"
+                                            placeholder="Подтверждение пароля"
+                                            id="confirmPassword"
+                                            required
+                                        />
+                                    )}
+                                />
+                                <div className="account-info__update-info">
+                                    <button
+                                        className="account-info__update-info-button"
+                                        type="submit"
+                                    >
+                                        Применить
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                </>
+            ) : (
+                <p>Загрузка...</p>
+            )}
         </div>
     );
 };

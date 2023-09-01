@@ -1,4 +1,4 @@
-const FindProductModal = ({ handleOpenModal, handleCloseModal }) => {
+const UpdateProductModal = ({ handleOpenModal, handleCloseModal }) => {
     const handleBackgroundClick = (e) => {
         // Проверяем, что клик был по заднему фону (класс "modal")
         if (e.target.classList.contains("modal")) {
@@ -13,4 +13,4 @@ const FindProductModal = ({ handleOpenModal, handleCloseModal }) => {
     );
 };
 
-export default FindProductModal;
+export default UpdateProductModal;

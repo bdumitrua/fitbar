@@ -39,7 +39,7 @@ const ProductsSection = ({ categories }) => {
                             >
                                 {category.name}
                             </Link>
-                            <div className="products-container">
+                            <div className="products-container product-section">
                                 {data ? (
                                     data
                                         .filter(

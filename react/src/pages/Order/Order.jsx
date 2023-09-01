@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axios/instance";
@@ -10,7 +9,6 @@ const Order = () => {
     const { handleSubmit, control } = useForm();
     const { cartItems } = useCartContext();
     const navigate = useNavigate();
-    const [data, setData] = useState({});
 
     const totalPrice = cartItems.reduce((accumulator, currentItem) => {
         return (
@@ -36,7 +34,7 @@ const Order = () => {
 
         const orderData = {
             delivery: deliveryData,
-            items: cartItems, // предполагается, что у вас есть массив cartItems
+            items: cartItems,
         };
 
         try {
@@ -47,34 +45,19 @@ const Order = () => {
             console.log(response);
             localStorage.removeItem("cart");
             navigate("/home");
-            // Обработка успешного оформления заказа
         } catch (error) {
             console.error("Ошибка при оформлении заказа", error);
-            // Обработка ошибки оформления заказа
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get("/users/me");
-                setData(response.data);
-            } catch (error) {
-                console.error("Произошла ошибка при выполнении запроса", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    function getEnding(number, wordForms) {
+    const getEnding = (number, wordForms) => {
         const cases = [2, 0, 1, 1, 1, 2];
         return wordForms[
             number % 100 > 4 && number % 100 < 20
                 ? 2
                 : cases[Math.min(number % 10, 5)]
         ];
-    }
+    };
     const reviewsForms = ["позиция", "позиции", "позиций"];
     const reviewsEnding = getEnding(cartItems.length, reviewsForms);
 
@@ -94,7 +77,6 @@ const Order = () => {
                         <Controller
                             name="name"
                             control={control}
-                            defaultValue={data.name}
                             rules={{ required: "Обязательное поле" }}
                             render={({ field }) => (
                                 <input
@@ -163,8 +145,10 @@ const Order = () => {
                         <Controller
                             name="tel"
                             control={control}
-                            defaultValue={data.number}
-                            rules={{ required: "Обязательное поле" }}
+                            rules={{
+                                required: "Обязательное поле",
+                                maxLength: 11,
+                            }}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -172,7 +156,6 @@ const Order = () => {
                                     id="tel"
                                     className="order__form-element"
                                     placeholder=""
-                                    maxLength="11"
                                 />
                             )}
                         />

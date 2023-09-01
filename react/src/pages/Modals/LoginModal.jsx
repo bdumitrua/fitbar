@@ -6,6 +6,7 @@ import {
     resetRememberMe,
     saveToken,
     setLoggedIn,
+    setLoggedOut,
     setRememberMe,
 } from "../../redux/slices/auth.slice";
 import "./Modals.scss";
@@ -43,10 +44,13 @@ const LoginModal = ({ closeModal, toggleModal }) => {
             setErrorText("Неверная почта или пароль!");
         } else {
             dispatch(saveToken(response.payload));
+            dispatch(setLoggedOut(false));
             dispatch(setLoggedIn(true)); // Устанавливаем состояние loggedIn в true при успешной авторизации
         }
     };
 
+    //TODO
+    //Доделать кнопку запомнить меня
     const handleRememberMeChange = () => {
         if (rememberMe) {
             dispatch(resetRememberMe());
@@ -104,7 +108,7 @@ const LoginModal = ({ closeModal, toggleModal }) => {
                 </div>
                 <div className="modal__buttons">
                     <button
-                        className="modal__button button__green"
+                        className="modal__button button__green login"
                         type="submit"
                     >
                         {loading ? "Вход..." : "Войти"}

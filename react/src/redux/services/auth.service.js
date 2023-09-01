@@ -4,7 +4,7 @@ const AuthService = {
     login: async (email, password) => {
         try {
             // Отправляем данные на сервер для проверки и получения токена.
-            const response = await axiosInstance.post("auth/login", {
+            const response = await axiosInstance.post("/auth/login", {
                 email,
                 password,
             });
@@ -18,10 +18,24 @@ const AuthService = {
 
             return response.data.access_token;
         } catch (error) {
-            console.log(error);
+            console.error(error);
             throw error;
         }
     },
+
+    // logout: async () => {
+    //     try {
+    //         await axiosInstance.post("/auth/logout");
+
+    //         localStorage.removeItem("access_token");
+    //         localStorage.removeItem("access_token_expires_at");
+    //     } catch (error) {
+    //         console.error(error);
+    //         throw error;
+    //     }
+
+    //     // Очищаем localStorage при выходе пользователя
+    // },
 
     //TODO
     //Пофиксить обновление токена

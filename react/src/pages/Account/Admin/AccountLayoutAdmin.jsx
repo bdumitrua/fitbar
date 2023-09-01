@@ -36,7 +36,9 @@ const AccountLayoutAdmin = () => {
             <Link
                 to="/special/href/to/admin/orders"
                 className={`account__navbar-element ${
-                    location.pathname === "/user/account/orders" ? "active" : ""
+                    location.pathname === "/special/href/to/admin/orders"
+                        ? "active"
+                        : ""
                 }`}
             >
                 Заявки
@@ -44,7 +46,9 @@ const AccountLayoutAdmin = () => {
             <Link
                 to="/special/href/to/admin/assortment"
                 className={`account__navbar-element ${
-                    location.pathname === "/user/account/orders" ? "active" : ""
+                    location.pathname === "/special/href/to/admin/assortment"
+                        ? "active"
+                        : ""
                 }`}
             >
                 Ассортимент

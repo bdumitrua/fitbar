@@ -5,6 +5,9 @@ import ProductAddToCart from "./ProductAddToCart/ProductAddToCart";
 import "./ProductCard.scss";
 import ProductFavorite from "./ProductFavorite/ProductFavorite";
 
+import { ReactSVG } from "react-svg";
+import cart from "../../assets/images/cartProduct.svg";
+
 const ProductCard = ({ product, itemCount, isProductInCart }) => {
     const { handleAddToCart } = useCartContext();
 
@@ -25,9 +28,26 @@ const ProductCard = ({ product, itemCount, isProductInCart }) => {
                 </Link>
                 <ProductFavorite productId={product.id} />
                 {isProductInCart ? (
-                    <Link to="/cart" className="product__cart-button active">
-                        Корзина
-                    </Link>
+                    <>
+                        <Link
+                            to="/cart"
+                            className="product__cart-button active"
+                        >
+                            Корзина
+                        </Link>
+                        <Link to="/cart" className="">
+                            <ReactSVG
+                                src={cart}
+                                className="product-mobile__cart-button"
+                                beforeInjection={(svg) => {
+                                    const path = svg.querySelector("path");
+                                    if (path) {
+                                        path.setAttribute("stroke", "#CEF600");
+                                    }
+                                }}
+                            />
+                        </Link>
+                    </>
                 ) : (
                     <ProductAddToCart
                         product={product}
