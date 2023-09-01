@@ -181,6 +181,11 @@ a {
     color: white;
 }
 
+.header__navbar-element.active {
+    background-color: v.$black;
+    color: white;
+}
+
 @media (max-width: 1050px) {
     .header__search {
         width: 350px;

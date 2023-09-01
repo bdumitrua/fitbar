@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import "./DefaultLayout.scss";
 import "./DefaultLayoutMobile.scss";
 
@@ -14,6 +14,7 @@ import HeaderButtonsMobile from "./HeaderButtonsMobile";
 const DefaultLayout = () => {
     const [data, setData] = useState(null);
     const [showNav, setShowNav] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -58,7 +59,12 @@ const DefaultLayout = () => {
                             data.map((category) => (
                                 <Link
                                     to={`category/${category.slug}`}
-                                    className="header__navbar-element"
+                                    className={`header__navbar-element ${
+                                        `/category/${category.slug}` ===
+                                        location.pathname
+                                            ? "active"
+                                            : ""
+                                    }`}
                                     key={category.slug}
                                 >
                                     {category.name}
