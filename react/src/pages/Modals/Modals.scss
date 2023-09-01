@@ -88,14 +88,19 @@
 }
 
 .modal__button {
-    width: 180px;
     height: 30px;
+
+    padding: 0 25px;
+    margin: 5px auto 0px;
 
     border: v.$green 1px solid;
 
-    margin: 0 auto 15px;
-
     transition: all 0.1s linear;
+}
+
+.modal__button.login {
+    padding: 0;
+    width: 180px;
 }
 
 .button__green {
@@ -129,4 +134,43 @@
 
 .input-error {
     border: rgb(255, 99, 99) 1px solid;
+}
+
+@media (max-width: 500px) {
+    .modal__content {
+        padding: 30px 30px 40px;
+    }
+}
+
+@media (max-width: 450px) {
+    .modal__button {
+        padding: 0 15px;
+
+        font-size: 14px;
+    }
+
+    .modal__button.login {
+        padding: 0;
+        width: 150px;
+    }
+}
+
+@media (max-width: 400px) {
+    .modal__buttons {
+        gap: 10px;
+    }
+    .modal__button {
+        padding: 0 10px;
+
+        font-size: 12px;
+    }
+
+    .modal__checkbox-label {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .modal__recover-password {
+        font-size: 12px;
+    }
 }

@@ -108,7 +108,7 @@ const LoginModal = ({ closeModal, toggleModal }) => {
                 </div>
                 <div className="modal__buttons">
                     <button
-                        className="modal__button button__green"
+                        className="modal__button button__green login"
                         type="submit"
                     >
                         {loading ? "Вход..." : "Войти"}
