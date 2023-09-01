@@ -21,6 +21,10 @@
     transition: transform 0.5s ease-out;
 }
 
+.home-mobile__info-images {
+    display: none;
+}
+
 .home__info-arrows {
     width: 40px;
     height: 40px;
@@ -47,7 +51,26 @@
         padding: 0;
     }
 
-    .home__info-image {
-        width: calc(100% - 1px);
+    .home__info {
+        margin-bottom: 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    .home__info {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 400px) {
+    .home__info-images {
+        display: none;
+    }
+
+    .home-mobile__info-images {
+        display: flex;
+        flex-wrap: nowrap;
+
+        transition: transform 0.5s ease-out;
     }
 }

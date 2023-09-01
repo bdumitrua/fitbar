@@ -31,11 +31,21 @@
         @include m.flex-center;
         gap: 25px;
     }
+
+    .products-section__title {
+        margin-bottom: 30px;
+    }
 }
 
 @media (max-width: 500px) {
     .products-container {
         @include m.flex-center;
         gap: 15px;
+    }
+
+    .products-section__title {
+        font-size: 28px;
+
+        margin-bottom: 20px;
     }
 }

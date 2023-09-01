@@ -7,7 +7,6 @@ const ProductRating = ({ rating }) => {
     const roundedRating = Math.round(rating);
 
     const totalStars = 5;
-    const starSize = 16;
 
     const stars = [];
     for (let i = 1; i <= totalStars; i++) {
@@ -16,14 +15,7 @@ const ProductRating = ({ rating }) => {
         const altText = isFilled ? "Filled Star" : "Empty Star";
 
         stars.push(
-            <div
-                key={i}
-                style={{
-                    display: "flex",
-                    width: starSize,
-                    height: starSize,
-                }}
-            >
+            <div key={i} className="product-card__rating">
                 <img src={starIconSrc} alt={altText} />
             </div>
         );
