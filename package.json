@@ -2,7 +2,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "cd ./react/ & npm run dev",
+        "init": "cd ./react/ & npm i & npm run dev",
         "build": "vite build"
     },
     "devDependencies": {
