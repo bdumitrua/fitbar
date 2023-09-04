@@ -16,7 +16,7 @@ import ProductReviews from "./ProductReview/ProductReview";
 const ProductPage = () => {
     const [isActive, setIsActive] = useState(false);
 
-    const { handleAddToCart, cartItems, setCartItems } = useCartContext();
+    const { handleAddToCart, cartItems } = useCartContext();
 
     const location = useLocation();
     const splittedPathname = location.pathname.split("/");

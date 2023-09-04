@@ -4,6 +4,8 @@
 .category-aside {
     white-space: nowrap;
     margin-right: 110px;
+
+    margin-bottom: 80px;
 }
 
 .category-aside__title {
@@ -11,17 +13,21 @@
 
     margin-bottom: 50px;
 }
+
 .category-aside__filter {
 }
+
 .category-aside__filter-title {
     @include m.text-bold(4px);
 
     margin-top: 40px;
     margin-bottom: 30px;
 }
+
 .category-aside__filter-element {
     margin-bottom: 10px;
 }
+
 .category-aside__filter-checkbox {
     display: none;
 }
@@ -46,4 +52,5 @@
 .category-aside__filter-checkbox:checked
     + .category-aside__filter-label::before {
     background-color: v.$green;
+    border: none;
 }
