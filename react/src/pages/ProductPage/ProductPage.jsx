@@ -141,11 +141,6 @@ const ProductPage = () => {
                             product={data}
                             handleAddToCart={(product) => {
                                 handleAddToCart(product);
-                                // После добавления товара, обновляем состояние cartItems
-                                setCartItems((prevCartItems) => [
-                                    ...prevCartItems,
-                                    product,
-                                ]);
                             }}
                         />
                         <ProductPageFavorite productId={data.id} />
