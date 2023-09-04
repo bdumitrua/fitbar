@@ -64,9 +64,9 @@ const CartCard = ({ product, handleRemoveFromCart }) => {
                         +
                     </button>
                 </div>
-                <p className="cart-card__price">{`${(
+                <p className="cart-card__price">{`${Math.round(
                     product.price * productCount
-                ).toFixed(2)} руб.`}</p>
+                )} руб.`}</p>
                 <button
                     className="cart-card__product-delete"
                     onClick={() => handleRemoveFromCart(product.id)}

@@ -106,21 +106,22 @@ const LoginModal = ({ closeModal, toggleModal }) => {
                         Восстановить пароль
                     </button>
                 </div>
+                <button
+                    className="modal__button button__green login"
+                    type="submit"
+                >
+                    {loading ? "Вход..." : "Войти"}
+                </button>
+                {error && <p className="modal__error">{errorText}</p>}
                 <div className="modal__buttons">
+                    Нет аккаунта?
                     <button
-                        className="modal__button button__green login"
-                        type="submit"
-                    >
-                        {loading ? "Вход..." : "Войти"}
-                    </button>
-                    <button
-                        className="modal__button button__black"
+                        className="modal__switch-button"
                         onClick={toggleModal}
                     >
-                        Регистрация
+                        Зарегистрироваться
                     </button>
                 </div>
-                {error && <p className="modal__error">{errorText}</p>}
             </form>
         </div>
     );

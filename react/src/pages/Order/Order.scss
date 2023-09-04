@@ -34,6 +34,7 @@
     display: flex;
 
     padding: 12px;
+    margin-top: 6px;
     margin-bottom: 25px;
 
     border: v.$grey 1px solid;
@@ -49,6 +50,8 @@
     height: 48px;
 
     padding: 0 12px;
+
+    margin-top: 6px;
     margin-bottom: 20px;
 
     border: v.$grey 1px solid;
@@ -59,6 +62,8 @@
     height: 45px;
 
     margin-bottom: 80px;
+
+    @include m.text-bold(5px);
 
     background-color: v.$green;
     color: v.$black;
@@ -117,6 +122,7 @@
 
     object-fit: cover;
 }
+
 .order-card__info {
     display: flex;
     flex-direction: column;

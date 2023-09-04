@@ -8,9 +8,9 @@ const OrderCard = ({ product }) => {
             <img src={product.image} alt="" className="order-card__image" />
             <div className="order-card__info">
                 <p className="order-card__name">{product.name}</p>
-                <p className="order-card__price">{`${(
+                <p className="order-card__price">{`${Math.round(
                     product.price * itemsCount
-                ).toFixed(2)} руб.`}</p>
+                )} руб.`}</p>
             </div>
         </div>
     );

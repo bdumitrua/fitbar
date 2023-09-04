@@ -30,10 +30,10 @@
     background-color: v.$black;
     color: white;
 
-    border: v.$green 1px solid;
-
     appearance: none;
     -webkit-appearance: none;
+
+    border: v.$green 1px solid;
 }
 
 .category-page__products {
