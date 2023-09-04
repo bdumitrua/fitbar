@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import Loader from "../../../components/Loader/Loader";
 import { setUser } from "../../../redux/slices/user.slice";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
@@ -99,7 +100,7 @@ const AccountMain = () => {
                     </div>
                 </>
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </div>
     );

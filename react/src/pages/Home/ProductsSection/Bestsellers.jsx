@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Loader from "../../../components/Loader/Loader";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import axiosInstance from "../../../utils/axios/instance";
 import { useCartContext } from "../../../utils/providers/cart.provider";
@@ -39,7 +40,7 @@ const Bestsellers = () => {
                             />
                         ))
                 ) : (
-                    <p>Загрузка...</p>
+                    <Loader />
                 )}
             </div>
         </section>

@@ -10,6 +10,7 @@ import search from "../assets/images/search.svg";
 import axiosInstance from "../utils/axios/instance";
 import HeaderButtons from "./HeaderButtons";
 import HeaderButtonsMobile from "./HeaderButtonsMobile";
+import Loader from "./Loader/Loader";
 
 const DefaultLayout = () => {
     const [data, setData] = useState(null);
@@ -71,7 +72,7 @@ const DefaultLayout = () => {
                                 </Link>
                             ))
                         ) : (
-                            <p>Загрузка...</p>
+                            <Loader />
                         )}
                     </div>
                 </nav>
@@ -130,7 +131,7 @@ const DefaultLayout = () => {
                                     </Link>
                                 ))
                             ) : (
-                                <p>Загрузка...</p>
+                                <Loader />
                             )}
                         </div>
                         <div className="header-mobile__search">

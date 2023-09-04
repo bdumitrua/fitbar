@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 import axiosInstance from "../../utils/axios/instance";
 import "./Category.scss";
 import CategoryAside from "./CategoryAside/CategoryAside";
@@ -40,7 +41,7 @@ const Category = () => {
                         );
                     })
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </div>
     );

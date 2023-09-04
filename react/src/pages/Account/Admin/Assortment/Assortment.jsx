@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Loader from "../../../../components/Loader/Loader";
 import axiosInstance from "../../../../utils/axios/instance";
 import CreateProductModal from "../../../Modals/CreateProductModal";
 import FindProductsModal from "../../../Modals/FindProductsModal";
@@ -107,7 +108,7 @@ const Assortment = () => {
                             );
                         })
                 ) : (
-                    <p>Загрузка...</p>
+                    <Loader />
                 )}
                 {showUpdateModal && (
                     <UpdateProductModal

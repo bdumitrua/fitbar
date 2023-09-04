@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 import ProductRating from "../../components/ProductRating/ProductRating";
 import axiosInstance from "../../utils/axios/instance";
 import { useCartContext } from "../../utils/providers/cart.provider";
@@ -147,7 +148,7 @@ const ProductPage = () => {
                     </div>
                 </>
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </div>
     );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import axiosInstance from "../../../utils/axios/instance";
 import { useCartContext } from "../../../utils/providers/cart.provider";
@@ -24,7 +25,7 @@ const ProductsSection = ({ categories }) => {
 
     return (
         <>
-            {categories ? (
+            {categories && data ? (
                 categories
                     .sort((a, b) => b.orders_count - a.orders_count)
                     .slice(0, 2)
@@ -40,36 +41,30 @@ const ProductsSection = ({ categories }) => {
                                 {category.name}
                             </Link>
                             <div className="products-container product-section">
-                                {data ? (
-                                    data
-                                        .filter(
-                                            (product) =>
-                                                product.category_id ===
-                                                category.id
-                                        )
-                                        .sort(
-                                            (a, b) =>
-                                                b.orders_count - a.orders_count
-                                        )
-                                        .slice(0, 4)
-                                        .map((product) => (
-                                            <ProductCard
-                                                key={product.id}
-                                                product={product}
-                                                isProductInCart={cartItems.some(
-                                                    (item) =>
-                                                        item.id === product.id
-                                                )}
-                                            />
-                                        ))
-                                ) : (
-                                    <p>Загрузка...</p>
-                                )}
+                                {data
+                                    .filter(
+                                        (product) =>
+                                            product.category_id === category.id
+                                    )
+                                    .sort(
+                                        (a, b) =>
+                                            b.orders_count - a.orders_count
+                                    )
+                                    .slice(0, 4)
+                                    .map((product) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            product={product}
+                                            isProductInCart={cartItems.some(
+                                                (item) => item.id === product.id
+                                            )}
+                                        />
+                                    ))}
                             </div>
                         </section>
                     ))
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </>
     );

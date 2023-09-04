@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import Loader from "../../../components/Loader/Loader";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayout from "../AccountLayout";
@@ -237,7 +238,7 @@ const AccountEdit = () => {
                     </div>
                 </>
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </div>
     );

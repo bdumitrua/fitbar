@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Loader from "../../../../components/Loader/Loader";
 import axiosInstance from "../../../../utils/axios/instance";
 
 const OrderCardProduct = ({ productId }) => {
@@ -32,7 +33,7 @@ const OrderCardProduct = ({ productId }) => {
                     />
                 </Link>
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </>
     );
