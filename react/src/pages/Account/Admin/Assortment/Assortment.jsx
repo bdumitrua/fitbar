@@ -117,12 +117,14 @@ const Assortment = () => {
                     />
                 )}
 
-                <button
-                    onClick={increaseItemsLen}
-                    className="assortment__show-more"
-                >
-                    Показать больше товаров...
-                </button>
+                <div className="assortment__show">
+                    <button
+                        onClick={increaseItemsLen}
+                        className="assortment__show-more"
+                    >
+                        Показать больше товаров...
+                    </button>
+                </div>
             </div>
         </div>
     );
