@@ -29,10 +29,16 @@
 }
 
 .cart-card__title {
+    height: 40px;
     width: 100%;
+    max-width: 340px;
 
     margin-top: 10px;
+    margin-right: auto;
 
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
     @include m.text-bold(5px);
 }
 
