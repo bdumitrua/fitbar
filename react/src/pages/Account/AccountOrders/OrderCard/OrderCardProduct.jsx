@@ -12,7 +12,6 @@ const OrderCardProduct = ({ productId }) => {
                 const response = await axiosInstance.get(
                     `/products/show/${productId}`
                 );
-                console.log(response.data);
                 setData(response.data);
             } catch (error) {
                 console.error("Error", error);

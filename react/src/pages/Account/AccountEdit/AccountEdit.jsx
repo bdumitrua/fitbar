@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
@@ -11,6 +12,15 @@ import "../AccountMain/AccountMain.scss";
 import "./AccountEdit.scss";
 
 const AccountEdit = () => {
+    const navigate = useNavigate();
+    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            navigate("/home");
+        }
+    }, [isLoggedIn, navigate]);
+
     const { handleSubmit, control } = useForm();
     const [selectedDate, setSelectedDate] = useState(null);
 
