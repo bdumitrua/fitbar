@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./DefaultLayout.scss";
 
-import { useSelector } from "react-redux";
 import account from "../assets/images/account.svg";
 import cart from "../assets/images/cart.svg";
 import Modals from "../pages/Modals/Modals";
@@ -15,9 +14,7 @@ const HeaderButtons = () => {
 
     const cartLength = cartItems ? cartItems.length : 0;
 
-    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-
-    const user = localStorage.getItem("access_token");
+    const access = localStorage.getItem("access_token");
 
     const handleOpenModal = () => {
         setShowModal(true);
@@ -34,7 +31,7 @@ const HeaderButtons = () => {
 
     return (
         <div className="header__right-side">
-            {user && user !== undefined && isLoggedIn ? (
+            {access && access !== undefined ? (
                 // Если пользователь авторизован, показываем кнопку для перехода в личный кабинет
                 <Link to="/user/account" className="header__button">
                     <img

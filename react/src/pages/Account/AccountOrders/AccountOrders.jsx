@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
@@ -9,13 +8,13 @@ import OrderAccountCard from "./OrderCard/OrderAccountCard";
 
 const AccountOrders = () => {
     const navigate = useNavigate();
-    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+    const access = localStorage.getItem("access_token");
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        if (!access || access === undefined) {
             navigate("/home");
         }
-    }, [isLoggedIn, navigate]);
+    }, [access, navigate]);
 
     const [data, setData] = useState();
     const [length, setLength] = useState(0);

@@ -25,11 +25,9 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
 
         const response = await dispatch(registerAsync(data));
         if (response.error) {
-            console.log(response);
+            console.error(response);
             console.log("Error!");
         } else {
-            console.log("Успешно зарегистрирован:", response);
-
             dispatch(
                 loginAsync({ email: data.email, password: data.password })
             );

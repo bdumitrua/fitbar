@@ -46,6 +46,8 @@ const LoginModal = ({ closeModal, toggleModal }) => {
             dispatch(saveToken(response.payload));
             dispatch(setLoggedOut(false));
             dispatch(setLoggedIn(true)); // Устанавливаем состояние loggedIn в true при успешной авторизации
+
+            closeModal();
         }
     };
 

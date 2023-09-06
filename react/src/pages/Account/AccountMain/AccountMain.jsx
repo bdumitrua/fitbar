@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
 import { setUser } from "../../../redux/slices/user.slice";
@@ -10,13 +10,13 @@ import "./AccountMain.scss";
 
 const AccountMain = () => {
     const navigate = useNavigate();
-    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+    const access = localStorage.getItem("access_token");
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        if (!access || access === undefined) {
             navigate("/home");
         }
-    }, [isLoggedIn, navigate]);
+    }, [access, navigate]);
 
     const [data, setData] = useState({});
     const dispatch = useDispatch();
