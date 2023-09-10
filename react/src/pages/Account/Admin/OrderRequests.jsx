@@ -1,17 +1,16 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AccountLayoutAdmin from "./AccountLayoutAdmin";
 
 const OrderRequests = () => {
     const navigate = useNavigate();
-    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+    const access = localStorage.getItem("access_token");
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        if (!access || access === undefined) {
             navigate("/home");
         }
-    }, [isLoggedIn, navigate]);
+    }, [access, navigate]);
 
     return (
         <div className="order-requests container">
