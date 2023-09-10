@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -33,6 +34,14 @@ class OrderService
 
         // Сортировка заказов по статусу в заданном порядке
         return Order::orderByRaw('FIELD(status, "' . implode('","', $statusOrder) . '")')->paginate(10);
+    }
+
+    // Поиск заказов по имени пользователя
+    public function search(Request $request)
+    {
+        $usersId = User::where('name', 'LIKE', '%' . $request->name . '%')->pluck('id');
+
+        return Order::whereIn('user_id', $usersId)->get();
     }
 
     // Получение информации о конкретном заказе

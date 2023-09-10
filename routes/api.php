@@ -129,6 +129,8 @@ Route::prefix('orders')->controller(ApiOrderController::class)->group(function (
         Route::middleware(['role:' . $MANAGER])->group(function () {
             // Получение всех заказов для админки
             Route::get('/all', 'all')->name('orders.all');
+            // Поиск заказов по имени пользователя
+            Route::get('/search', 'search')->name('orders.search');
             // Измененить статус заказа
             Route::patch('/update/{order}', 'update');
         });

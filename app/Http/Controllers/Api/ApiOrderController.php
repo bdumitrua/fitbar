@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStatusRequest;
 use App\Models\Order;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
 
 class ApiOrderController extends Controller
 {
@@ -29,6 +30,14 @@ class ApiOrderController extends Controller
     {
         return $this->handleServiceCall(function () {
             return $this->orderService->all();
+        });
+    }
+
+    // Поиск заказов по имени пользователя
+    public function search(Request $request)
+    {
+        return $this->handleServiceCall(function () use ($request) {
+            return $this->orderService->search($request);
         });
     }
 
