@@ -12,7 +12,10 @@ class UserService
 {
     public function me()
     {
-        return User::find(Auth::id())->load('roles', 'orders', 'reviews', 'addresses', 'cart');
+        $user = User::find(Auth::id());
+        $user->role = $user->roles()->max('role_id');
+
+        return $user;
     }
 
     public function update(UserRequest $request)
