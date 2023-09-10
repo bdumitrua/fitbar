@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -16,7 +17,7 @@ class OrderService
     // Получение всех заказов текущего пользователя
     public function index()
     {
-        return Auth::user()->orders;
+        return User::find(Auth::id())->orders()->paginate(10);
     }
 
     // Получение информации о конкретном заказе
