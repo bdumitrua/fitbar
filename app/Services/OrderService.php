@@ -20,6 +20,21 @@ class OrderService
         return User::find(Auth::id())->orders()->paginate(10);
     }
 
+    // Получение всех заказов для админки
+    public function all()
+    {
+        $statusOrder = [
+            'pending',
+            'processing',
+            'shipped',
+            'delivered',
+            'cancelled',
+        ];
+
+        // Сортировка заказов по статусу в заданном порядке
+        return Order::orderByRaw('FIELD(status, "' . implode('","', $statusOrder) . '")')->get();
+    }
+
     // Получение информации о конкретном заказе
     public function show(Order $order)
     {

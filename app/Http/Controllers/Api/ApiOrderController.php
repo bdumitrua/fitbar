@@ -15,11 +15,20 @@ class ApiOrderController extends Controller
     {
         $this->orderService = $orderService;
     }
+
     // Получение всех заказов текущего пользователя
     public function index()
     {
         return $this->handleServiceCall(function () {
             return $this->orderService->index();
+        });
+    }
+
+    // Получение всех заказов для админки
+    public function all()
+    {
+        return $this->handleServiceCall(function () {
+            return $this->orderService->all();
         });
     }
 

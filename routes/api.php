@@ -124,8 +124,14 @@ Route::prefix('orders')->controller(ApiOrderController::class)->group(function (
         Route::get('/id/{order}', 'show')->name('orders.show');
         // Создать заказ
         Route::post('create', 'store')->name('orders.create');
-        // Измененить статус заказа
-        Route::patch('/update/{order}', 'update');
+
+        $MANAGER = 3;
+        Route::middleware(['role:' . $MANAGER])->group(function () {
+            // Получение всех заказов для админки
+            Route::get('/all', 'all')->name('orders.all');
+            // Измененить статус заказа
+            Route::patch('/update/{order}', 'update');
+        });
     });
 });
 
