@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Helpers\FileHelper;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -15,7 +16,12 @@ class ProductService
      */
     public function index()
     {
-        return Product::all();
+        return Product::paginate(10);
+    }
+
+    public function search(Request $request)
+    {
+        return Product::where('name', 'LIKE', '%' . $request->name . '%')->paginate(15);
     }
 
     /**
@@ -23,6 +29,8 @@ class ProductService
      */
     public function show(Product $product)
     {
+        $product->reviews = $product->reviews()->paginate(5);
+
         return $product;
     }
 
