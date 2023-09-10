@@ -14,7 +14,7 @@ const HeaderButtons = () => {
 
     const cartLength = cartItems ? cartItems.length : 0;
 
-    const user = localStorage.getItem("access_token");
+    const access = localStorage.getItem("access_token");
 
     const handleOpenModal = () => {
         setShowModal(true);
@@ -31,7 +31,7 @@ const HeaderButtons = () => {
 
     return (
         <div className="header__right-side">
-            {user && user !== undefined ? (
+            {access && access !== undefined ? (
                 // Если пользователь авторизован, показываем кнопку для перехода в личный кабинет
                 <Link to="/user/account" className="header__button">
                     <img

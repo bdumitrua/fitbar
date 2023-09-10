@@ -63,7 +63,9 @@ const ProductCard = ({ product, itemCount, isProductInCart }) => {
             </div>
             <p className="product__title">{product.name}</p>
             <ProductRating rating={product.rating} />
-            <p className="product__price">От {product.price} руб.</p>
+            <p className="product__price">
+                От {Math.round(+product.price)} руб.
+            </p>
         </div>
     );
 };

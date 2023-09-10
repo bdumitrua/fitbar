@@ -5,8 +5,8 @@ import AuthService from "../services/auth.service";
 export const loginAsync = createAsyncThunk(
     "auth/login",
     async ({ email, password }) => {
-        const user = await AuthService.login(email, password);
-        return user;
+        const access_token = await AuthService.login(email, password);
+        return access_token;
     }
 );
 
@@ -101,7 +101,8 @@ const authSlice = createSlice({
             })
             .addCase(loginAsync.fulfilled, (state, action) => {
                 state.loading = false;
-                state.user = action.payload;
+                state.accessToken = action.payload;
+                state.refreshToken = action.payload;
                 state.error = null;
                 state.loggedIn = true;
             })

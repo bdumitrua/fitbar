@@ -3,6 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayout from "../AccountLayout";
@@ -10,6 +12,15 @@ import "../AccountMain/AccountMain.scss";
 import "./AccountEdit.scss";
 
 const AccountEdit = () => {
+    const navigate = useNavigate();
+    const access = localStorage.getItem("access_token");
+
+    useEffect(() => {
+        if (!access || access === undefined) {
+            navigate("/home");
+        }
+    }, [access, navigate]);
+
     const { handleSubmit, control } = useForm();
     const [selectedDate, setSelectedDate] = useState(null);
 
@@ -50,7 +61,7 @@ const AccountEdit = () => {
 
         // Запутался с адресами
         // По идее надо axiosInstance.put(`/address/update/${address.id}`)
-        // Но как доставать нужный айди адресса если у пользователя их может быть несколь хз ибо непонятно какой из них менять
+        // Но как доставать нужный айди адресса если у пользователя их может быть нескольko хз ибо непонятно какой из них менять
         axiosInstance.put("/users/update", requestData);
     };
 
@@ -237,7 +248,7 @@ const AccountEdit = () => {
                     </div>
                 </>
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </div>
     );

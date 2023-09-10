@@ -25,11 +25,9 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
 
         const response = await dispatch(registerAsync(data));
         if (response.error) {
-            console.log(response);
+            console.error(response);
             console.log("Error!");
         } else {
-            console.log("Успешно зарегистрирован:", response);
-
             dispatch(
                 loginAsync({ email: data.email, password: data.password })
             );
@@ -153,18 +151,18 @@ const RegistrationModal = ({ closeModal, toggleModal }) => {
                         {errors.repeatPassword.message}
                     </p>
                 )}
+
+                <button className="modal__button button__green" type="submit">
+                    Зарегистрироваться
+                </button>
+
                 <div className="modal__buttons">
+                    Уже есть аккаунт?
                     <button
-                        className="modal__button button__green"
-                        type="submit"
-                    >
-                        Зарегистрироваться
-                    </button>
-                    <button
-                        className="modal__button button__black"
+                        className="modal__switch-button"
                         onClick={toggleModal}
                     >
-                        Авторизация
+                        Войти
                     </button>
                 </div>
             </form>

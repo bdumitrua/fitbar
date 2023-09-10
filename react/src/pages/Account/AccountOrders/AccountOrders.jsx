@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayout from "../AccountLayout";
@@ -6,6 +7,15 @@ import "./AccountOrders.scss";
 import OrderAccountCard from "./OrderCard/OrderAccountCard";
 
 const AccountOrders = () => {
+    const navigate = useNavigate();
+    const access = localStorage.getItem("access_token");
+
+    useEffect(() => {
+        if (!access || access === undefined) {
+            navigate("/home");
+        }
+    }, [access, navigate]);
+
     const [data, setData] = useState();
     const [length, setLength] = useState(0);
 

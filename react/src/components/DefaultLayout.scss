@@ -179,11 +179,15 @@ a {
 .header__navbar-element:hover {
     background-color: v.$black;
     color: white;
+
+    font-weight: 400;
 }
 
 .header__navbar-element.active {
     background-color: v.$black;
     color: white;
+
+    font-weight: 400;
 }
 
 @media (max-width: 1050px) {

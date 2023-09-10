@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
+import Loader from "../../../components/Loader/Loader";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import axiosInstance from "../../../utils/axios/instance";
 import { useCartContext } from "../../../utils/providers/cart.provider";
@@ -8,7 +9,7 @@ const Bestsellers = () => {
     const [data, setData] = useState(null);
     const { cartItems } = useCartContext();
 
-    useEffect(() => {
+    useMemo(() => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get("/products");
@@ -39,7 +40,7 @@ const Bestsellers = () => {
                             />
                         ))
                 ) : (
-                    <p>Загрузка...</p>
+                    <Loader />
                 )}
             </div>
         </section>

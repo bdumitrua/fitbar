@@ -63,8 +63,6 @@
 }
 .modal__more-features {
     @include m.flex-between();
-
-    margin-bottom: 30px;
 }
 
 .modal__remember {
@@ -80,7 +78,11 @@
 }
 
 .modal__buttons {
-    @include m.flex-between();
+    @include m.flex-center();
+    margin-top: 33px;
+    gap: 10px;
+
+    color: v.$grey;
 }
 
 .mb-30px {
@@ -91,7 +93,7 @@
     height: 30px;
 
     padding: 0 25px;
-    margin: 5px auto 0px;
+    margin: 33px auto 0px;
 
     border: v.$green 1px solid;
 
@@ -101,6 +103,10 @@
 .modal__button.login {
     padding: 0;
     width: 180px;
+}
+
+.modal__switch-button {
+    text-decoration: underline;
 }
 
 .button__green {

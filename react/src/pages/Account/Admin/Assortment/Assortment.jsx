@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../../../components/Loader/Loader";
 import axiosInstance from "../../../../utils/axios/instance";
 import CreateProductModal from "../../../Modals/CreateProductModal";
 import FindProductsModal from "../../../Modals/FindProductsModal";
@@ -8,6 +11,15 @@ import "./Assortment.scss";
 import AssortmentCard from "./AssortmentCard";
 
 const Assortment = () => {
+    const navigate = useNavigate();
+    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            navigate("/home");
+        }
+    }, [isLoggedIn, navigate]);
+
     const [data, setData] = useState(null);
     const [itemsLen, setItemsLen] = useState(3);
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -107,7 +119,7 @@ const Assortment = () => {
                             );
                         })
                 ) : (
-                    <p>Загрузка...</p>
+                    <Loader />
                 )}
                 {showUpdateModal && (
                     <UpdateProductModal
@@ -116,12 +128,14 @@ const Assortment = () => {
                     />
                 )}
 
-                <button
-                    onClick={increaseItemsLen}
-                    className="assortment__show-more"
-                >
-                    Показать больше товаров...
-                </button>
+                <div className="assortment__show">
+                    <button
+                        onClick={increaseItemsLen}
+                        className="assortment__show-more"
+                    >
+                        Показать больше товаров...
+                    </button>
+                </div>
             </div>
         </div>
     );

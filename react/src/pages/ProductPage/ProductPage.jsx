@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 import ProductRating from "../../components/ProductRating/ProductRating";
 import axiosInstance from "../../utils/axios/instance";
 import { useCartContext } from "../../utils/providers/cart.provider";
@@ -13,7 +14,9 @@ import ProductReviews from "./ProductReview/ProductReview";
 // Пофиксить кнопки лайка/дизлайка отзыва
 
 const ProductPage = () => {
-    const { handleAddToCart, cartItems, setCartItems } = useCartContext();
+    const [isActive, setIsActive] = useState(false);
+
+    const { handleAddToCart, cartItems } = useCartContext();
 
     const location = useLocation();
     const splittedPathname = location.pathname.split("/");
@@ -35,7 +38,11 @@ const ProductPage = () => {
         fetchData();
     }, [productId]);
 
-    const reviewsCount = data ? data.reviews.length : "Нет";
+    const reviewsCount = data
+        ? data.reviews
+            ? data.reviews.length
+            : "Нет"
+        : "Нет";
 
     function getEnding(number, wordForms) {
         const cases = [2, 0, 1, 1, 1, 2];
@@ -71,11 +78,18 @@ const ProductPage = () => {
                             className="product-page__product-image"
                         />
                         <p className="product-page__section-title">Описание</p>
-                        <span className="product-page__long-desc">
+                        <span
+                            className={`product-page__long-desc ${
+                                isActive ? "active" : ""
+                            }`}
+                        >
                             {data.long_description}
                         </span>
-                        <button className="product-page__learn-more">
-                            Читать далее...
+                        <button
+                            className="product-page__learn-more"
+                            onClick={() => setIsActive(() => !isActive)}
+                        >
+                            {!isActive ? "Читать далее..." : "Скрыть"}
                         </button>
                         <p className="product-page__section-title">Отзывы</p>
                         <ProductReviews
@@ -128,18 +142,13 @@ const ProductPage = () => {
                             product={data}
                             handleAddToCart={(product) => {
                                 handleAddToCart(product);
-                                // После добавления товара, обновляем состояние cartItems
-                                setCartItems((prevCartItems) => [
-                                    ...prevCartItems,
-                                    product,
-                                ]);
                             }}
                         />
                         <ProductPageFavorite productId={data.id} />
                     </div>
                 </>
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </div>
     );

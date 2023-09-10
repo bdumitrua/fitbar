@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import deleteFromCart from "../../../assets/images/delete.svg";
 import axiosInstance from "../../../utils/axios/instance";
 
-const CartCard = ({ product, handleRemoveFromCart }) => {
+const CartCard = ({ product, handleRemoveFromCart, updateTotalPrice }) => {
     const [productCount, setProductCount] = useState(
         +localStorage.getItem(`product_count_${product.id}` || 1)
     );
@@ -16,16 +16,21 @@ const CartCard = ({ product, handleRemoveFromCart }) => {
             const newCount = prevCount + 1;
             axiosInstance.patch(`/cart/increase/${product.id}`);
             localStorage.setItem(`product_count_${product.id}`, newCount);
+            updateTotalPrice(); // Добавьте это
             return newCount;
         });
     };
 
     const decrementProductCount = () => {
         setProductCount((prevCount) => {
-            const newCount = prevCount - 1;
-            axiosInstance.patch(`/cart/decrease/${product.id}`);
-            localStorage.setItem(`product_count_${product.id}`, newCount);
-            return newCount;
+            if (prevCount > 1) {
+                const newCount = prevCount - 1;
+                axiosInstance.patch(`/cart/decrease/${product.id}`);
+                localStorage.setItem(`product_count_${product.id}`, newCount);
+                updateTotalPrice(); // Добавьте это
+                return newCount;
+            }
+            return prevCount;
         });
     };
 
@@ -64,9 +69,9 @@ const CartCard = ({ product, handleRemoveFromCart }) => {
                         +
                     </button>
                 </div>
-                <p className="cart-card__price">{`${(
+                <p className="cart-card__price">{`${Math.round(
                     product.price * productCount
-                ).toFixed(2)} руб.`}</p>
+                )} руб.`}</p>
                 <button
                     className="cart-card__product-delete"
                     onClick={() => handleRemoveFromCart(product.id)}

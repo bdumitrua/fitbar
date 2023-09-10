@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
 import { setUser } from "../../../redux/slices/user.slice";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
@@ -7,6 +9,15 @@ import AccountLayoutAdmin from "../Admin/AccountLayoutAdmin";
 import "./AccountMain.scss";
 
 const AccountMain = () => {
+    const navigate = useNavigate();
+    const access = localStorage.getItem("access_token");
+
+    useEffect(() => {
+        if (!access || access === undefined) {
+            navigate("/home");
+        }
+    }, [access, navigate]);
+
     const [data, setData] = useState({});
     const dispatch = useDispatch();
 
@@ -99,7 +110,7 @@ const AccountMain = () => {
                     </div>
                 </>
             ) : (
-                <p>Загрузка...</p>
+                <Loader />
             )}
         </div>
     );

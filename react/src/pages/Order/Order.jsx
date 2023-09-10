@@ -28,7 +28,7 @@ const Order = () => {
     const onSubmit = async (data) => {
         const deliveryData = {
             ...data,
-            total_price: parseFloat(totalPrice.toFixed(2)),
+            total_price: parseInt(Math.round(totalPrice)),
             total_quantity: totalQuantity,
         };
 
@@ -193,8 +193,8 @@ const Order = () => {
                 ))}
                 <div className="order__cart-footer">
                     <p className="order__cart-price">Итого к оплате</p>
-                    <p className="order__cart-price-sum">{`${totalPrice.toFixed(
-                        2
+                    <p className="order__cart-price-sum">{`${Math.round(
+                        totalPrice
                     )} руб.`}</p>
                 </div>
             </div>
