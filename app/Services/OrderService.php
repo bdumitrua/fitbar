@@ -24,14 +24,16 @@ class OrderService
     public function show(Order $order)
     {
         $user = Auth::user();
+        $order->products = $order->products()->pluck('product_id')->all();
 
         // Проверяем, принадлежит ли заказ текущему пользователю
         if ($user->maxRole >= 3) {
             return $order;
         }
 
-        if ($user->id !== $order->user->id)
+        if ($user->id !== $order->user->id) {
             throw new HttpException(Response::HTTP_FORBIDDEN, 'Access denied');
+        }
 
         return $order;
     }
