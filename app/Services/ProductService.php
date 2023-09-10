@@ -23,6 +23,8 @@ class ProductService
      */
     public function show(Product $product)
     {
+        $product->reviews = $product->reviews()->paginate(5);
+
         return $product;
     }
 
