@@ -138,6 +138,10 @@ Route::prefix('orders')->controller(ApiOrderController::class)->group(function (
 });
 
 Route::prefix('products')->controller(ApiProductController::class)->group(function () {
+    // Получить все продукты
+    Route::get('/', 'index')->name('products.index');
+    // Поиск по имени товара
+    Route::get('/search', 'search')->name('products.search');
     // Получить продукт (по id)
     Route::get('/show/{product}', 'show')->name('products.show');
     // Получить похожие продукты (продукты той-же категории с небольшим отличием по цене (+-30%))
@@ -145,8 +149,6 @@ Route::prefix('products')->controller(ApiProductController::class)->group(functi
 
     $MANAGER = 3;
     Route::middleware(['auth:api', 'role:' . $MANAGER])->group(function () {
-        // Получить все продукты
-        Route::get('/', 'index')->name('products.index');
         // Создать продукт
         Route::post('create', 'store')->name('products.create');
         // Изменить продукт по id 

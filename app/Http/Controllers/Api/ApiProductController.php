@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 
 class ApiProductController extends Controller
 {
@@ -22,6 +23,13 @@ class ApiProductController extends Controller
     {
         return $this->handleServiceCall(function () {
             return $this->productService->index();
+        });
+    }
+
+    public function search(Request $request)
+    {
+        return $this->handleServiceCall(function () use ($request) {
+            return $this->productService->search($request);
         });
     }
 
