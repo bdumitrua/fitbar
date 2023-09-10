@@ -13,7 +13,7 @@ class UserService
     public function me()
     {
         $user = User::find(Auth::id());
-        $user->role = $user->roles()->max('role_id');
+        $user->role = $user->getMaxRoleAttribute() ?? 1;
 
         return $user;
     }
@@ -36,6 +36,7 @@ class UserService
             'email' => $request->email,
             'phone' => $request->phone,
             'photo' => $path,
+            'date_of_birth' => $request->birth
         ]);
     }
 }

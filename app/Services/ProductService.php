@@ -29,7 +29,7 @@ class ProductService
      */
     public function show(Product $product)
     {
-        $product->reviews = $product->reviews()->paginate(5);
+        $product->reviews = $product->reviews()->take(3)->get();
 
         return $product;
     }
@@ -55,7 +55,13 @@ class ProductService
      */
     public function store(ProductRequest $request)
     {
-        $path = FileHelper::saveImageFromUrl($request->image, 'products');
+        $path = '';
+        $folder = 'products';
+        if ($request->hasFile('image')) {
+            $path = FileHelper::saveImage($request->file('image'), $folder);
+        } else {
+            $path = FileHelper::saveImageFromUrl($request->input('image'), $folder);
+        }
 
         if (Product::where('name', $request->name)->exists()) {
             throw new HttpException(Response::HTTP_CONFLICT, 'Product with this name already exists');
@@ -79,8 +85,11 @@ class ProductService
     public function update(ProductRequest $request, Product $product)
     {
         $path = '';
+        $folder = 'products';
         if ($request->hasFile('image')) {
-            $path = FileHelper::saveImageFromUrl($request->image, 'products');
+            $path = FileHelper::saveImage($request->file('image'), $folder);
+        } elseif ($request->has('image')) {
+            $path = FileHelper::saveImageFromUrl($request->input('image'), $folder);
         } else {
             $path = $product->image;
         }
