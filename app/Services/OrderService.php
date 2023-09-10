@@ -32,7 +32,7 @@ class OrderService
         ];
 
         // Сортировка заказов по статусу в заданном порядке
-        return Order::orderByRaw('FIELD(status, "' . implode('","', $statusOrder) . '")')->get();
+        return Order::orderByRaw('FIELD(status, "' . implode('","', $statusOrder) . '")')->paginate(10);
     }
 
     // Получение информации о конкретном заказе
