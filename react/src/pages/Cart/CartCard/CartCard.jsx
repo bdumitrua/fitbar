@@ -16,9 +16,9 @@ const CartCard = ({ product, handleRemoveFromCart, updateTotalPrice }) => {
             const newCount = prevCount + 1;
             axiosInstance.patch(`/cart/increase/${product.id}`);
             localStorage.setItem(`product_count_${product.id}`, newCount);
-            updateTotalPrice(); // Добавьте это
             return newCount;
         });
+        updateTotalPrice();
     };
 
     const decrementProductCount = () => {
@@ -27,11 +27,11 @@ const CartCard = ({ product, handleRemoveFromCart, updateTotalPrice }) => {
                 const newCount = prevCount - 1;
                 axiosInstance.patch(`/cart/decrease/${product.id}`);
                 localStorage.setItem(`product_count_${product.id}`, newCount);
-                updateTotalPrice(); // Добавьте это
                 return newCount;
             }
             return prevCount;
         });
+        updateTotalPrice();
     };
 
     return (

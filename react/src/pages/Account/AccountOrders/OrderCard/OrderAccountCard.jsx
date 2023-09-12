@@ -19,15 +19,15 @@ const OrderAccountCard = ({ order }) => {
 
                             <div className="order-card__header-right-side">
                                 <span>оплачено</span>{" "}
-                                <p>{`${order.total_price} руб.`}</p>
+                                <p>{`${Math.floor(order.total_price)} руб.`}</p>
                             </div>
                         </div>
                         <div className="order-card__main-info">
                             <div className="order-card__main-info-left-side">
-                                <p className="order-card__status">
+                                <div className="order-card__status">
                                     Доставка в пункт выдачи{" "}
-                                    <div className="order-card__status-info">{`${order.status}`}</div>
-                                </p>
+                                    <p className="order-card__status-info">{`${order.status}`}</p>
+                                </div>
                                 <p className="order-card__info">{`Дата доставки: ${formatDate(
                                     order.updated_at
                                 )}`}</p>

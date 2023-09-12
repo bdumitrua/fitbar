@@ -1,7 +1,7 @@
 const FindProductModal = ({ handleOpenModal, handleCloseModal }) => {
     const handleBackgroundClick = (e) => {
         // Проверяем, что клик был по заднему фону (класс "modal")
-        if (e.target.classList.contains("modal")) {
+        if (e.target.classList.contains("modal-admin")) {
             handleCloseModal();
         }
     };

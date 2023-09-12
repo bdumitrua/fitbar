@@ -21,7 +21,6 @@ const AccountEdit = () => {
         }
     }, [access, navigate]);
 
-    const { handleSubmit, control } = useForm();
     const [selectedDate, setSelectedDate] = useState(null);
 
     const [data, setData] = useState(null);
@@ -65,6 +64,29 @@ const AccountEdit = () => {
         axiosInstance.put("/users/update", requestData);
     };
 
+    const { handleSubmit, control, setValue } = useForm({
+        defaultValues: {
+            firstname: dataFirstname,
+            surname: dataSurname,
+            patronymic: dataPatronymic,
+            photo: data ? data.image : "",
+            phone: data ? data.phone : "",
+            email: data ? data.email : "",
+            address: data ? data.address : "",
+        },
+    });
+
+    useEffect(() => {
+        setValue("firstname", dataFirstname);
+        setValue("surname", dataSurname);
+        setValue("patronymic", dataPatronymic);
+        setValue("phone", data ? data.phone : "");
+        setValue("email", data ? data.email : "");
+        setValue("photo", data ? data.photo : "");
+        setValue("address", data ? data.address : "");
+        // Установите начальные значения для других полей
+    }, [data]);
+
     return (
         <div className="account container">
             {data ? (
@@ -72,12 +94,14 @@ const AccountEdit = () => {
                     <AccountLayout />
                     <div className="account-container">
                         <p className="account__page-title">Личный кабинет</p>
-                        <div className="account-info">
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className="account-info"
+                        >
                             <div className="account-info__image-container">
                                 <Controller
                                     name="photo"
                                     control={control}
-                                    defaultValue={data.image}
                                     render={({ field, onChange }) => (
                                         <input
                                             {...field}
@@ -97,14 +121,10 @@ const AccountEdit = () => {
                                     className="account-info__image"
                                 />
                             </div>
-                            <form
-                                className="account-info__private-info"
-                                onSubmit={handleSubmit(onSubmit)}
-                            >
+                            <div className="account-info__private-info">
                                 <Controller
                                     name="firstname"
                                     control={control}
-                                    defaultValue={dataFirstname}
                                     render={({ field }) => (
                                         <input
                                             {...field}
@@ -139,7 +159,6 @@ const AccountEdit = () => {
                                 <Controller
                                     name="surname"
                                     control={control}
-                                    defaultValue={dataSurname}
                                     render={({ field }) => (
                                         <input
                                             {...field}
@@ -153,7 +172,6 @@ const AccountEdit = () => {
                                 <Controller
                                     name="phone"
                                     control={control}
-                                    defaultValue={data.phone}
                                     render={({ field }) => (
                                         <input
                                             {...field}
@@ -167,7 +185,6 @@ const AccountEdit = () => {
                                 />
                                 <Controller
                                     name="patronymic"
-                                    defaultValue={dataPatronymic}
                                     control={control}
                                     render={({ field }) => (
                                         <input
@@ -182,7 +199,6 @@ const AccountEdit = () => {
                                 <Controller
                                     name="email"
                                     control={control}
-                                    defaultValue={data.email}
                                     render={({ field }) => (
                                         <input
                                             {...field}
@@ -196,7 +212,6 @@ const AccountEdit = () => {
                                 <Controller
                                     name="address"
                                     control={control}
-                                    defaultValue={data.address}
                                     render={({ field }) => (
                                         <input
                                             {...field}
@@ -243,8 +258,8 @@ const AccountEdit = () => {
                                         Применить
                                     </button>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </>
             ) : (
