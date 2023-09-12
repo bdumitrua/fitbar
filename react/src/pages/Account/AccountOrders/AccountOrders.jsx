@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayout from "../AccountLayout";
@@ -23,8 +24,8 @@ const AccountOrders = () => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get("/orders");
-                setData(response.data.orders);
-                setLength(response.data.orders.length);
+                setData(response.data);
+                setLength(response.data.length);
             } catch (error) {
                 console.error("Ошибка", error);
             }
@@ -32,22 +33,27 @@ const AccountOrders = () => {
         fetchData();
     }, []);
 
-    console.log(data);
-
     return (
         <div className="account container">
             <AccountLayout />
-            <div className="account-orders">
-                {length ? (
-                    data.map((order) => {
-                        return (
-                            <OrderAccountCard order={order} key={order.id} />
-                        );
-                    })
-                ) : (
-                    <p className="no-orders">У вас еще нет заказов! :c</p>
-                )}
-            </div>
+            {data ? (
+                <div className="account-orders">
+                    {length ? (
+                        data.map((order) => {
+                            return (
+                                <OrderAccountCard
+                                    order={order}
+                                    key={order.id}
+                                />
+                            );
+                        })
+                    ) : (
+                        <p className="no-orders">У вас еще нет заказов! :c</p>
+                    )}
+                </div>
+            ) : (
+                <Loader />
+            )}
         </div>
     );
 };

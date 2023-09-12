@@ -156,7 +156,9 @@ const DefaultLayout = () => {
                     <HeaderButtonsMobile />
                 </div>
             </header>
-            <Outlet />
+            <div className="content">
+                <Outlet />
+            </div>
             <div className="footer-bar">fitbar</div>
 
             <footer className="footer container">

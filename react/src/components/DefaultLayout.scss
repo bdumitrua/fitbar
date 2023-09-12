@@ -17,6 +17,10 @@ a {
     color: white;
 }
 
+.content {
+    min-height: calc(100vh - 238px);
+}
+
 .text-grey {
     color: v.$grey;
 }
