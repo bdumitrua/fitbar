@@ -1,16 +1,24 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/variables" as v;
+
 .custom-select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: v.$black;
+
     position: relative;
-    width: 200px;
-    border: 1px solid white;
-    border-radius: 4px;
+    width: 100%;
+    height: 36px;
+    border: 1.5px solid white;
+
     cursor: pointer;
     user-select: none;
 
-    margin-bottom: 15px;
-}
-
-.selected-option {
-    padding: 10px;
+    padding: 0 10px 0;
+    margin-bottom: 35px;
+    margin-top: 5px;
 }
 
 .options {
@@ -18,11 +26,11 @@
     top: 100%;
     left: 0;
     right: 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    z-index: 5;
+
+    background-color: v.$black;
+    border: 1.5px solid white;
     border-top: none;
-    border-radius: 0 0 4px 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-height: 120px;
     overflow-y: auto;
     list-style: none;
@@ -42,5 +50,12 @@
 }
 
 .options li:hover {
-    background-color: #f0f0f0;
+    background-color: #343434;
+}
+
+.arrow-down {
+    width: 28px;
+    height: 28px;
+
+    margin-left: auto;
 }
