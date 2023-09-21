@@ -100,6 +100,7 @@
 }
 
 .button__green:hover {
+    border: v.$green 1px solid;
     background-color: transparent;
     color: white;
 }

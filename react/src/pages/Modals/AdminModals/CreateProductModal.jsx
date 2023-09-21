@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import plus from "../../../assets/images/+.svg";
 import AutoExpandingTextarea from "../../../components/AutoExpandingTextarea/AutoExpandingTextarea";
@@ -9,7 +9,6 @@ import "./AdminModals.scss";
 const CreateProductModal = ({ handleCloseModal }) => {
     const {
         handleSubmit,
-        control,
         register,
         formState: { errors },
     } = useForm();
@@ -27,10 +26,17 @@ const CreateProductModal = ({ handleCloseModal }) => {
     };
 
     const onSubmit = async (data) => {
+        console.log(data);
         try {
-            await axiosInstance.post("/products/create", data);
+            const response = await axiosInstance.post("/products/create", data);
+            if (response.status === 200) {
+                handleCloseModal();
+                console.log("Запрос успешно отправлен!");
+            } else {
+                console.error("Произошла ошибка при отправке запроса.");
+            }
         } catch (error) {
-            console.error(error);
+            console.error("Произошла ошибка:", error);
         }
     };
 
@@ -58,8 +64,8 @@ const CreateProductModal = ({ handleCloseModal }) => {
                         <input
                             type="file"
                             className="modal-admin__image-input"
-                            id="photo"
-                            {...register("photo")}
+                            id="image"
+                            {...register("image")}
                         />
                         <img src="" alt="" className="modal-admin__image" />
                         <img src={plus} alt="" />
@@ -70,7 +76,7 @@ const CreateProductModal = ({ handleCloseModal }) => {
                     <AutoExpandingTextarea
                         name="modal-admin__description"
                         placeholder="Полное описание товара"
-                        {...register("description")}
+                        {...register("long_description")}
                     />
                 </div>
                 <div className="modal-admin__right-side">
@@ -78,9 +84,9 @@ const CreateProductModal = ({ handleCloseModal }) => {
                         type="text"
                         className="modal-admin__product-name"
                         placeholder="Название товара"
-                        {...register("product-name", { required: true })}
+                        {...register("name", { required: true })}
                     />
-                    {errors["product-name"] && (
+                    {errors["name"] && (
                         <span className="error">Это поле обязательно</span>
                     )}
 
@@ -88,40 +94,54 @@ const CreateProductModal = ({ handleCloseModal }) => {
                         type="text"
                         className="modal-admin__input"
                         placeholder="Краткое описание"
-                        {...register("short-description")}
+                        {...register("short_description", { required: true })}
                     />
+                    {errors["short_description"] && (
+                        <span className="error">Это поле обязательно</span>
+                    )}
 
-                    <label htmlFor="" className="modal-admin__label">
+                    <label htmlFor="category" className="modal-admin__label">
                         Выберите категорию товара:
                     </label>
+
                     <CustomSelect
                         options={categories}
                         onChange={toggleSelect}
-                        {...register("category")}
+                        useIndex={true}
+                        id="category"
+                        {...register("category_id", { required: true })}
                     />
 
                     <input
                         type="text"
                         className="modal-admin__input"
                         placeholder="Цена товара (в рублях)"
-                        {...register("price")}
+                        {...register("price", { required: true })}
                     />
+                    {errors["price"] && (
+                        <span className="error">Это поле обязательно</span>
+                    )}
 
-                    <label htmlFor="" className="modal-admin__label">
+                    <label htmlFor="taste" className="modal-admin__label">
                         Выберите вкус:
                     </label>
                     <CustomSelect
                         options={tastes}
                         onChange={toggleSelect}
-                        {...register("flavor")}
+                        useIndex={false}
+                        id="taste"
+                        {...register("taste", { required: true })}
                     />
 
                     <input
                         type="text"
                         className="modal-admin__input"
                         placeholder="Объем (в граммах)"
-                        {...register("volume")}
+                        {...register("weight", { required: true })}
                     />
+                    {errors["weight"] && (
+                        <span className="error">Это поле обязательно</span>
+                    )}
 
                     <button
                         className="modal-admin__button button__green"

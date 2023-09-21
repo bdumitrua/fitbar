@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { forwardRef, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import "./AutoExpandingTextarea.scss";
 
-function AutoExpandingTextarea({ name, placeholder }) {
+const AutoExpandingTextarea = forwardRef(({ name, placeholder }, ref) => {
     const { control, watch } = useForm();
     const value = watch(name);
+
+    ref;
 
     useEffect(() => {
         const textarea = document.querySelector(`[name="${name}"]`);
@@ -28,6 +30,8 @@ function AutoExpandingTextarea({ name, placeholder }) {
             )}
         />
     );
-}
+});
+
+AutoExpandingTextarea.displayName = "AutoExpandingTextarea";
 
 export default AutoExpandingTextarea;
