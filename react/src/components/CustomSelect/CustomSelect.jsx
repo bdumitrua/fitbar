@@ -1,34 +1,45 @@
-import { useState } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import "./CustomSelect.scss";
 
-const CustomSelect = ({ options, onChange }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState("");
+import arrowDown from "../../assets/images/arrow-down.svg";
 
-    const handleOptionClick = (option) => {
+const CustomSelect = forwardRef(({ options, onChange, useIndex, id }, ref) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(options[0]);
+
+    const handleOptionClick = (option, index) => {
         setSelectedOption(option);
         setIsOpen(false);
-        onChange(option);
+        onChange(useIndex ? index : option);
     };
 
     const toggleSelect = () => {
         setIsOpen(!isOpen);
     };
 
+    useImperativeHandle(ref, () => ({
+        toggleSelect,
+    }));
+
     return (
-        <div className={`custom-select ${isOpen ? "open" : ""}`}>
-            <div className="selected-option" onClick={toggleSelect}>
-                {selectedOption || "Выберите категорию"}
-            </div>
-            <ul className="options">
-                {options.map((option) => (
-                    <li key={option} onClick={() => handleOptionClick(option)}>
+        <div id={id} onClick={toggleSelect} className={`custom-select`}>
+            <div className="selected-option">{selectedOption}</div>
+            <img src={arrowDown} alt="down" className="arrow-down" />
+            <ul className={`options ${isOpen ? "open" : ""}`}>
+                {options.map((option, index) => (
+                    <li
+                        key={index}
+                        value={index}
+                        onClick={() => handleOptionClick(option, index)}
+                    >
                         {option}
                     </li>
                 ))}
             </ul>
         </div>
     );
-};
+});
+
+CustomSelect.displayName = "CustomSelect";
 
 export default CustomSelect;
