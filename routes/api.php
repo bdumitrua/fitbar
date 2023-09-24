@@ -124,19 +124,28 @@ Route::prefix('orders')->controller(ApiOrderController::class)->group(function (
         Route::get('/id/{order}', 'show')->name('orders.show');
         // Создать заказ
         Route::post('create', 'store')->name('orders.create');
-        // Измененить статус заказа
-        Route::patch('/update/{order}', 'update');
+
+        $MANAGER = 3;
+        Route::middleware(['role:' . $MANAGER])->group(function () {
+            // Получение всех заказов для админки
+            Route::get('/all', 'all')->name('orders.all');
+            // Поиск заказов по имени пользователя
+            Route::get('/search', 'search')->name('orders.search');
+            // Измененить статус заказа
+            Route::patch('/update/{order}', 'update');
+        });
     });
 });
 
 Route::prefix('products')->controller(ApiProductController::class)->group(function () {
     // Получить все продукты
     Route::get('/', 'index')->name('products.index');
+    // Поиск по имени товара
+    Route::get('/search', 'search')->name('products.search');
     // Получить продукт (по id)
     Route::get('/show/{product}', 'show')->name('products.show');
     // Получить похожие продукты (продукты той-же категории с небольшим отличием по цене (+-30%))
     Route::get('/similar/{product}', 'similar')->name('products.similar');
-
 
     $MANAGER = 3;
     Route::middleware(['auth:api', 'role:' . $MANAGER])->group(function () {

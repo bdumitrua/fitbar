@@ -12,7 +12,10 @@ class UserService
 {
     public function me()
     {
-        return User::find(Auth::id())->load('roles', 'orders', 'reviews', 'addresses', 'cart');
+        $user = User::find(Auth::id());
+        $user->role = $user->getMaxRoleAttribute() ?? 1;
+
+        return $user;
     }
 
     public function update(UserRequest $request)
@@ -33,6 +36,7 @@ class UserService
             'email' => $request->email,
             'phone' => $request->phone,
             'photo' => $path,
+            'date_of_birth' => $request->birth
         ]);
     }
 }
