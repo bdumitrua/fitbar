@@ -1,34 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductCard from "../../../components/ProductCard/ProductCard";
-import axiosInstance from "../../../utils/axios/instance";
+import { fetchProducts } from "../../../redux/services/products.service";
 import { useCartContext } from "../../../utils/providers/cart.provider";
 import "./ProductsSection.scss";
 
 const ProductsSection = ({ category }) => {
-    const [data, setData] = useState(null);
     const { cartItems } = useCartContext();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get("/products");
-                setData(
-                    response.data.filter(
-                        (product) => product.category_id === category.id
-                    )
-                );
-            } catch (error) {
-                console.error("Произошла ошибка при выполнении запроса", error);
-            }
-        };
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.data);
+    const loading = useSelector((state) => state.products.loading);
+    const error = useSelector((state) => state.products.error);
 
-        fetchData();
-    }, [category.id]);
+    useEffect(() => {
+        // Загрузите продукты, если они еще не загружены
+        if (!products.length && !loading && !error) {
+            dispatch(fetchProducts());
+        }
+    }, [dispatch, products, loading, error]);
 
     return (
         <>
-            {data ? (
+            {products ? (
                 <section className="products-section" key={category.slug}>
                     <Link
                         to={category.slug}
@@ -37,7 +32,7 @@ const ProductsSection = ({ category }) => {
                         {category.name}
                     </Link>
                     <div className="products-container product-section">
-                        {data
+                        {[...products]
                             .filter(
                                 (product) => product.category_id === category.id
                             )

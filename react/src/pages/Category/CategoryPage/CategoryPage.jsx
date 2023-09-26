@@ -1,36 +1,35 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../../components/Loader/Loader";
 import ProductCard from "../../../components/ProductCard/ProductCard";
-import axiosInstance from "../../../utils/axios/instance";
+import { fetchProducts } from "../../../redux/services/products.service";
 import { useCartContext } from "../../../utils/providers/cart.provider";
 import "./CategoryPage.scss";
 
 const CategoryPage = ({ category }) => {
-    const [data, setData] = useState(null);
     const [itemCount, setItemCount] = useState(0);
     const [sortOption, setSortOption] = useState("popular"); // popular, new, old, priceLowToHigh, priceHighToLow
 
     const { cartItems } = useCartContext();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get("/products");
-                setData(
-                    response.data.slice().sort((a, b) => b.rating - a.rating)
-                );
-                setItemCount(
-                    response.data.filter(
-                        (product) => product.category_id === category.id
-                    ).length
-                );
-            } catch (error) {
-                console.error("Произошла ошибка при выполнении запроса", error);
-            }
-        };
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.data);
+    const loading = useSelector((state) => state.products.loading);
+    const error = useSelector((state) => state.products.error);
 
-        fetchData();
-    }, [category.id]);
+    useEffect(() => {
+        // Загрузите продукты, если они еще не загружены
+        if (!products.length && !loading && !error) {
+            dispatch(fetchProducts());
+        } else {
+            console.log(products);
+            setItemCount(
+                [...products].filter(
+                    (product) => product.category_id === category.id
+                ).length
+            );
+        }
+    }, [dispatch, products, loading, error, category.id]);
 
     const sortProducts = (products) => {
         switch (sortOption) {
@@ -48,8 +47,10 @@ const CategoryPage = ({ category }) => {
     };
 
     const sortedProducts = sortProducts(
-        data
-            ? data.filter((product) => product.category_id === category.id)
+        products
+            ? [...products].filter(
+                  (product) => product.category_id === category.id
+              )
             : ""
     );
 
