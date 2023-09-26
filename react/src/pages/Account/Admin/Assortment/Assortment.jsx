@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../../components/Loader/Loader";
-import axiosInstance from "../../../../utils/axios/instance";
+import { fetchProducts } from "../../../../redux/services/products.service";
 import CreateProductModal from "../../../Modals/AdminModals/CreateProductModal";
 import FindProductsModal from "../../../Modals/AdminModals/FindProductsModal";
 import UpdateProductModal from "../../../Modals/AdminModals/UpdateProductModal";
@@ -19,7 +20,6 @@ const Assortment = () => {
         }
     }, [access, navigate]);
 
-    const [data, setData] = useState(null);
     const [itemsLen, setItemsLen] = useState(3);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -53,18 +53,17 @@ const Assortment = () => {
         setItemsLen(() => itemsLen + 3);
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get("/products");
-                setData(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.data);
+    const loading = useSelector((state) => state.products.loading);
+    const error = useSelector((state) => state.products.error);
 
-        fetchData();
-    }, []);
+    useEffect(() => {
+        // Загрузите продукты, если они еще не загружены
+        if (!products.length && !loading && !error) {
+            dispatch(fetchProducts());
+        }
+    }, [dispatch, products, loading, error]);
 
     return (
         <div className="assortment container">
@@ -104,8 +103,8 @@ const Assortment = () => {
                         handleCloseModal={handleCloseFindModal}
                     />
                 )}
-                {data ? (
-                    data
+                {products ? (
+                    [...products]
                         .sort((a, b) => b.rating - a.rating)
                         .slice(0, itemsLen)
                         .map((product) => {
