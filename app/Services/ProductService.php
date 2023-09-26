@@ -16,7 +16,7 @@ class ProductService
      */
     public function index()
     {
-        return Product::paginate(10);
+        return Product::all();
     }
 
     public function search(Request $request)
