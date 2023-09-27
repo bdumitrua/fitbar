@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import plus from "../../../assets/images/+.svg";
-import AutoExpandingTextarea from "../../../components/AutoExpandingTextarea/AutoExpandingTextarea";
 import { createProduct } from "../../../redux/services/products.service";
 import "./AdminModals.scss";
 
 const CreateProductModal = ({ handleCloseModal }) => {
     const {
         handleSubmit,
-        register,
         control,
+        watch,
         formState: { errors },
     } = useForm();
     const dispatch = useDispatch();
@@ -49,6 +48,15 @@ const CreateProductModal = ({ handleCloseModal }) => {
 
     const tastes = ["Банан", "Шоколад", "Клубника", "Ваниль", "Малина"];
 
+    const value = watch(name);
+
+    useEffect(() => {
+        const textarea = document.querySelector("textarea");
+        textarea.style.height = "auto";
+        let scHeight = textarea.scrollHeight;
+        textarea.style.height = `${scHeight}px`;
+    }, [value]);
+
     return (
         <div className="modal-admin" onClick={handleBackgroundClick}>
             <form
@@ -58,9 +66,9 @@ const CreateProductModal = ({ handleCloseModal }) => {
                 <div className="modal-admin__left-side">
                     <div className="modal-admin__image-container">
                         <Controller
-                            name="photo"
+                            name="image"
                             control={control}
-                            render={({ field, onChange }) => (
+                            render={({ field }) => (
                                 <input
                                     {...field}
                                     type="file"
@@ -73,19 +81,18 @@ const CreateProductModal = ({ handleCloseModal }) => {
                         <img src="" alt="" className="modal-admin__image" />
                         <img src={plus} alt="" />
                     </div>
-
                     <p className="modal-admin__textarea-label">Описание</p>
-
                     <Controller
                         name="long_description"
                         control={control}
-                        required
+                        defaultValue=""
+                        rules={{ required: "Это поле обязательное" }}
                         render={({ field }) => (
-                            <AutoExpandingTextarea
+                            <textarea
                                 {...field}
-                                name="modal-admin__description"
-                                placeholder="Полное описание товара"
-                                id="name"
+                                className="modal-admin__description"
+                                rows={1}
+                                placeholder="Описание"
                             />
                         )}
                     />
@@ -94,7 +101,7 @@ const CreateProductModal = ({ handleCloseModal }) => {
                     <Controller
                         name="name"
                         control={control}
-                        required
+                        rules={{ required: "Это поле обязательное" }}
                         render={({ field }) => (
                             <input
                                 {...field}
@@ -112,7 +119,7 @@ const CreateProductModal = ({ handleCloseModal }) => {
                     <Controller
                         name="short_description"
                         control={control}
-                        required
+                        rules={{ required: "Это поле обязательное" }}
                         render={({ field }) => (
                             <input
                                 {...field}
@@ -131,18 +138,29 @@ const CreateProductModal = ({ handleCloseModal }) => {
                         Выберите категорию товара:
                     </label>
 
-                    {/* <CustomSelect
-                        options={categories}
-                        onChange={toggleSelect}
-                        useIndex={true}
-                        id="category"
-                        {...register("category_id", { required: true })}
-                    /> */}
+                    <Controller
+                        name="category_id"
+                        control={control}
+                        defaultValue={"1"}
+                        rules={{ required: "Это поле обязательное" }}
+                        render={({ field }) => (
+                            <div className="select-container">
+                                <select {...field} className="custom-select">
+                                    {categories.map((option, index) => (
+                                        <option key={index} value={index + 1}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+                    />
+                    {errors.category_id && <p>{errors.category_id.message}</p>}
 
                     <Controller
                         name="price"
                         control={control}
-                        required
+                        rules={{ required: "Это поле обязательное" }}
                         render={({ field }) => (
                             <input
                                 {...field}
@@ -160,18 +178,29 @@ const CreateProductModal = ({ handleCloseModal }) => {
                     <label htmlFor="taste" className="modal-admin__label">
                         Выберите вкус:
                     </label>
-                    {/* <CustomSelect
-                        options={tastes}
-                        onChange={toggleSelect}
-                        useIndex={false}
-                        id="taste"
-                        {...register("taste", { required: true })}
-                    /> */}
+                    <Controller
+                        name="taste"
+                        control={control}
+                        defaultValue={tastes[0]}
+                        rules={{ required: "Это поле обязательное" }}
+                        render={({ field }) => (
+                            <div className="select-container">
+                                <select {...field} className="custom-select">
+                                    {tastes.map((option, index) => (
+                                        <option key={index} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+                    />
+                    {errors.category_id && <p>{errors.category_id.message}</p>}
 
                     <Controller
                         name="weight"
                         control={control}
-                        required
+                        rules={{ required: "Это поле обязательное" }}
                         render={({ field }) => (
                             <input
                                 {...field}
@@ -182,7 +211,6 @@ const CreateProductModal = ({ handleCloseModal }) => {
                             />
                         )}
                     />
-
                     {errors["weight"] && (
                         <span className="error">Это поле обязательно</span>
                     )}

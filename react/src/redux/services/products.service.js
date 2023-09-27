@@ -9,8 +9,7 @@ export const fetchProducts = () => async (dispatch) => {
     try {
         dispatch(productsLoading());
         const response = await axiosInstance.get("/products");
-        dispatch(productsLoaded(response.data.data));
-        console.log(response.data.data);
+        dispatch(productsLoaded(response.data));
     } catch (error) {
         dispatch(productsError(error.message));
     }

@@ -22,7 +22,6 @@ const CategoryPage = ({ category }) => {
         if (!products.length && !loading && !error) {
             dispatch(fetchProducts());
         } else {
-            console.log(products);
             setItemCount(
                 [...products].filter(
                     (product) => product.category_id === category.id
