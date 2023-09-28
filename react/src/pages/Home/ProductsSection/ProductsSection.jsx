@@ -10,7 +10,7 @@ const ProductsSection = ({ category }) => {
     const { cartItems } = useCartContext();
 
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products.data);
+    const products = useSelector((state) => state.products.products);
     const loading = useSelector((state) => state.products.loading);
     const error = useSelector((state) => state.products.error);
 

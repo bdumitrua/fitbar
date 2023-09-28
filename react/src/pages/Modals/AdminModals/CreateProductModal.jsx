@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import plus from "../../../assets/images/+.svg";
@@ -18,12 +18,6 @@ const CreateProductModal = ({ handleCloseModal }) => {
         if (e.target.classList.contains("modal-admin")) {
             handleCloseModal();
         }
-    };
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleSelect = () => {
-        setIsOpen(!isOpen);
     };
 
     const onSubmit = async (data, e) => {
