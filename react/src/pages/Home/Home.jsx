@@ -12,12 +12,13 @@ import Bestsellers from "./ProductsSection/Bestsellers";
 import ProductsSection from "./ProductsSection/ProductsSection";
 
 const Home = () => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosInstance.get("/category");
+                const response = await axiosInstance.get("/home/categories");
+                console.log(response.data);
                 setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
@@ -142,16 +143,13 @@ const Home = () => {
                         </button>
                     </div>
 
-                    <Bestsellers categories={data} />
-                    {data
-                        .sort((a, b) => b.orders_count - a.orders_count)
-                        .slice(0, 2)
-                        .map((category) => (
-                            <ProductsSection
-                                key={category.id}
-                                category={category}
-                            />
-                        ))}
+                    <Bestsellers />
+                    {data.slice(0, 2).map((category) => (
+                        <ProductsSection
+                            key={category.id}
+                            category={category}
+                        />
+                    ))}
                 </div>
             ) : (
                 <Loader />

@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import plus from "../../../assets/images/+.svg";
 import Loader from "../../../components/Loader/Loader";
-import { createProduct } from "../../../redux/services/products.service";
+import { updateProduct } from "../../../redux/services/products.service";
 import "./AdminModals.scss";
 
 const CreateProductModal = ({ handleCloseModal, product }) => {
@@ -15,18 +15,18 @@ const CreateProductModal = ({ handleCloseModal, product }) => {
     } = useForm();
     const dispatch = useDispatch();
 
-    console.log(product);
-
     const handleBackgroundClick = (e) => {
         if (e.target.classList.contains("modal-admin")) {
             handleCloseModal();
         }
     };
 
+    console.log(product);
+
     const onSubmit = async (data, e) => {
         e.preventDefault();
         console.log(data);
-        const res = dispatch(createProduct(data));
+        const res = dispatch(updateProduct(data, product.id));
         if (res.status === 200) {
             handleCloseModal();
         }
