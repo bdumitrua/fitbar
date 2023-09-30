@@ -68,7 +68,7 @@ class ProductService
         }
 
         Product::create([
-            //'image' => $path,
+            'image' => $path,
             'name' => $request->name,
             'price' => $request->price,
             'taste' => $request->taste,
@@ -84,15 +84,15 @@ class ProductService
      */
     public function update(ProductRequest $request, Product $product)
     {
-        // $path = '';
-        // $folder = 'products';
-        // if ($request->hasFile('image')) {
-        //     $path = FileHelper::saveImage($request->file('image'), $folder);
-        // } elseif ($request->has('image')) {
-        //     $path = FileHelper::saveImageFromUrl($request->input('image'), $folder);
-        // } else {
-        //     $path = $product->image;
-        // }
+        $path = '';
+        $folder = 'products';
+        if ($request->hasFile('image')) {
+            $path = FileHelper::saveImage($request->file('image'), $folder);
+        } elseif ($request->has('image')) {
+            $path = FileHelper::saveImageFromUrl($request->input('image'), $folder);
+        } else {
+            $path = $product->image;
+        }
 
         $product->update([
             //'image' => $path,
