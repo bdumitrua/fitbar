@@ -26,7 +26,19 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
             'photo' => 'nullable|image|max:2048',
-            'date_of_birth' => 'nullable|date|before_or_equal:today',
+            'date_of_birth' => [
+                'nullable',
+                'before_or_equal:today',
+                function ($attribute, $value, $fail) {
+                    // Преобразование даты из JavaScript формата в формат 'Y-m-d'
+                    $date = \DateTime::createFromFormat('D M d Y H:i:s e+', $value);
+                    if (!$date) {
+                        $fail("Неверный формат даты");
+                    }
+
+                    $this->merge(['date_of_birth' => $date->format('Y-m-d')]);
+                },
+            ],
         ];
     }
 
