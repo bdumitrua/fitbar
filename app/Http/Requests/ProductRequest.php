@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
         // TODO
         // Добавить проверку вкуса, веса
         return [
-            'image' => 'required|image|max:2048|url',
+            'image' => 'required|image|max:2048',
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:1|max:1000',
             'short_description' => 'required|string|min:10|max:255',
@@ -38,7 +38,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'image.required' => 'Поле изображения является обязательным.',
-            'image.url'      => 'URL изображения должен быть валидным URL-адресом.',
+            'image.image'    => 'Изображение должно быть изображением.',
             'image.max'      => 'URL изображения не должен превышать 2048 символов.',
 
             'name.required' => 'Название продукта является обязательным полем.',
