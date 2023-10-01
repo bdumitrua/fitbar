@@ -55,20 +55,20 @@ class ProductService
      */
     public function store(ProductRequest $request)
     {
-        // $path = '';
-        // $folder = 'products';
-        // if ($request->hasFile('image')) {
-        //     $path = FileHelper::saveImage($request->file('image'), $folder);
-        // } else {
-        //     $path = FileHelper::saveImageFromUrl($request->input('image'), $folder);
-        // }
+        $path = '';
+        $folder = 'products';
+        if ($request->hasFile('image')) {
+            $path = FileHelper::saveImage($request->file('image'), $folder);
+        } else {
+            $path = FileHelper::saveImageFromUrl($request->input('image'), $folder);
+        }
 
-        // if (Product::where('name', $request->name)->exists()) {
-        //     throw new HttpException(Response::HTTP_CONFLICT, 'Product with this name already exists');
-        // }
+        if (Product::where('name', $request->name)->exists()) {
+            throw new HttpException(Response::HTTP_CONFLICT, 'Product with this name already exists');
+        }
 
         Product::create([
-            'image' => $request->image,
+            'image' => $path,
             'name' => $request->name,
             'price' => $request->price,
             'taste' => $request->taste,
