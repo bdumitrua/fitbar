@@ -5,11 +5,13 @@ import authSlice, {
 } from "./slices/auth.slice";
 import productsSlice from "./slices/products.slice";
 import registerSlice from "./slices/register.slice";
+import userSlice from "./slices/user.slice";
 
 const rootReducer = combineReducers({
     auth: authSlice,
     register: registerSlice,
     products: productsSlice,
+    user: userSlice,
 });
 
 const store = configureStore({

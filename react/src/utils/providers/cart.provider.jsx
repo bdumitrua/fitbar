@@ -19,8 +19,8 @@ export const CartProvider = ({ children }) => {
         const updatedCartItems = cartItems.filter(
             (item) => item.id !== productId
         );
-        axiosInstance.delete(`/cart/delete/${productId}`);
         setCartItems(updatedCartItems);
+        axiosInstance.delete(`/cart/delete/${productId}`);
         localStorage.removeItem(`product_count_${productId}`);
         localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     };

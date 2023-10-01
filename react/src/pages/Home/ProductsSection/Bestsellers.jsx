@@ -26,7 +26,7 @@ const Bestsellers = () => {
             }
         };
         fetchData();
-    }, [dispatch, products, loading, error]);
+    }, []);
 
     useEffect(() => {
         // Загрузите продукты, если они еще не загружены
