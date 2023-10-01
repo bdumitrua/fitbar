@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
             'photo' => 'nullable|image|max:2048',
-            'birth' => 'nullable|date|before_or_equal:today',
+            'date_of_birth' => 'nullable|date|before_or_equal:today',
         ];
     }
 
@@ -47,6 +47,10 @@ class UserRequest extends FormRequest
 
             'photo.image' => 'Фотография должна быть изображением.',
             'photo.max'   => 'Размер изображения не должен превышать 2048 килобайт.',
+
+            'date_of_birth.date' => 'Дата рождения должна быть типа данных "дата".',
+            'date_of_birth.before_or_equal' => 'Дата рождения не ранее сегодняшнего дня.',
+
         ];
     }
 }
