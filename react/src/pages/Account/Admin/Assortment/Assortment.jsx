@@ -5,7 +5,6 @@ import Loader from "../../../../components/Loader/Loader";
 import { fetchProducts } from "../../../../redux/services/products.service";
 import CreateProductModal from "../../../Modals/AdminModals/CreateProductModal";
 import FindProductsModal from "../../../Modals/AdminModals/FindProductsModal";
-import UpdateProductModal from "../../../Modals/AdminModals/UpdateProductModal";
 import AccountLayoutAdmin from "../AccountLayoutAdmin";
 import "./Assortment.scss";
 import AssortmentCard from "./AssortmentCard";
@@ -22,15 +21,10 @@ const Assortment = () => {
 
     const [itemsLen, setItemsLen] = useState(3);
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showFindModal, setShowFindModal] = useState(false);
 
     const handleOpenCreateModal = () => {
         setShowCreateModal(true);
-    };
-
-    const handleOpenUpdateModal = () => {
-        setShowUpdateModal(true);
     };
 
     const handleOpenFindModal = () => {
@@ -39,10 +33,6 @@ const Assortment = () => {
 
     const handleCloseCreateModal = () => {
         setShowCreateModal(false);
-    };
-
-    const handleCloseUpdateModal = () => {
-        setShowUpdateModal(false);
     };
 
     const handleCloseFindModal = () => {
@@ -54,7 +44,7 @@ const Assortment = () => {
     };
 
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products.data);
+    const products = useSelector((state) => state.products.products);
     const loading = useSelector((state) => state.products.loading);
     const error = useSelector((state) => state.products.error);
 
@@ -64,6 +54,24 @@ const Assortment = () => {
             dispatch(fetchProducts());
         }
     }, [dispatch, products, loading, error]);
+
+    const [data, setData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState(""); // Состояние для хранения поискового запроса
+
+    const onSearch = async () => {
+        // Выполните поиск только если поисковый запрос не пустой
+        if (searchTerm.trim() !== "") {
+            // Выполните поиск на основе searchTerm
+            const filteredProducts = products.filter((product) =>
+                product.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            console.log(filteredProducts);
+            // Обновите данные с отфильтрованными продуктами
+            setData(filteredProducts);
+        } else {
+            setData(products);
+        }
+    };
 
     return (
         <div className="assortment container">
@@ -75,6 +83,13 @@ const Assortment = () => {
                         type="text"
                         className="assortment__search"
                         placeholder="Поиск..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyUp={(e) => {
+                            if (e.key === "Enter") {
+                                onSearch();
+                            }
+                        }}
                     />
                     <div className="assortment__buttons">
                         <button
@@ -103,14 +118,25 @@ const Assortment = () => {
                         handleCloseModal={handleCloseFindModal}
                     />
                 )}
-                {products ? (
+                {data.length > 0 ? (
+                    [...data]
+                        .sort((a, b) => b.rating - a.rating)
+                        .slice(0, itemsLen)
+                        .map((product) => {
+                            return (
+                                <AssortmentCard
+                                    key={product.id}
+                                    product={product}
+                                />
+                            );
+                        })
+                ) : products ? (
                     [...products]
                         .sort((a, b) => b.rating - a.rating)
                         .slice(0, itemsLen)
                         .map((product) => {
                             return (
                                 <AssortmentCard
-                                    handleOpenModal={handleOpenUpdateModal}
                                     key={product.id}
                                     product={product}
                                 />
@@ -118,12 +144,6 @@ const Assortment = () => {
                         })
                 ) : (
                     <Loader />
-                )}
-                {showUpdateModal && (
-                    <UpdateProductModal
-                        handleOpenModal={handleOpenUpdateModal}
-                        handleCloseModal={handleCloseUpdateModal}
-                    />
                 )}
 
                 <div className="assortment__show">

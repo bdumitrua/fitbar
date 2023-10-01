@@ -1,9 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMainContext } from "../../../../utils/providers/main.provider";
+import UpdateProductModal from "../../../Modals/AdminModals/UpdateProductModal";
 import "./AssortmentCard.scss";
 
-const AssortmentCard = ({ product, handleOpenModal }) => {
+const AssortmentCard = ({ product }) => {
     const { formatDate } = useMainContext();
+
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+    const handleOpenUpdateModal = () => {
+        setShowUpdateModal(true);
+    };
+
+    const handleCloseUpdateModal = () => {
+        setShowUpdateModal(false);
+    };
 
     return (
         <div className="assortment-card">
@@ -38,10 +50,17 @@ const AssortmentCard = ({ product, handleOpenModal }) => {
             <div className="assortment-card__buttons">
                 <button
                     className="assortment-card__button"
-                    onClick={handleOpenModal}
+                    onClick={handleOpenUpdateModal}
                 >
                     Изменить
                 </button>
+                {showUpdateModal && (
+                    <UpdateProductModal
+                        product={product}
+                        handleOpenModal={handleOpenUpdateModal}
+                        handleCloseModal={handleCloseUpdateModal}
+                    />
+                )}
                 <button className="assortment-card__button">Удалить</button>
             </div>
         </div>

@@ -24,8 +24,8 @@ const AccountOrders = () => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get("/orders");
-                setData(response.data);
-                setLength(response.data.length);
+                setData(response.data.data);
+                setLength(response.data.data.length);
             } catch (error) {
                 console.error("Ошибка", error);
             }
@@ -42,7 +42,7 @@ const AccountOrders = () => {
                         data.map((order) => {
                             return (
                                 <OrderAccountCard
-                                    order={order}
+                                    orderId={order.id}
                                     key={order.id}
                                 />
                             );

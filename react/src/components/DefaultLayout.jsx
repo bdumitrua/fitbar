@@ -8,6 +8,7 @@ import exit from "../assets/images/exit.svg";
 import logo from "../assets/images/logo.svg";
 import search from "../assets/images/search.svg";
 import axiosInstance from "../utils/axios/instance";
+import useScrollToTop from "../utils/hooks/useScrollToTop";
 import HeaderButtons from "./HeaderButtons";
 import HeaderButtonsMobile from "./HeaderButtonsMobile";
 import Loader from "./Loader/Loader";
@@ -29,6 +30,8 @@ const DefaultLayout = () => {
 
         fetchData();
     }, []);
+
+    useScrollToTop();
 
     return (
         <>

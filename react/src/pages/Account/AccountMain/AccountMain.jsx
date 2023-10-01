@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
-import { setUser } from "../../../redux/slices/user.slice";
 import axiosInstance from "../../../utils/axios/instance";
 import "../Account.scss";
 import AccountLayoutAdmin from "../Admin/AccountLayoutAdmin";
@@ -30,7 +29,6 @@ const AccountMain = () => {
             try {
                 const response = await axiosInstance.get("/users/me");
                 setData(response.data);
-                dispatch(setUser(response.data));
                 const [surname, firstname, patronymic] =
                     response.data.name.split(" ");
                 setSurname(surname || "");

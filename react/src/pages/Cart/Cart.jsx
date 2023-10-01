@@ -17,15 +17,25 @@ const Cart = () => {
 
     const loadCartData = () => {
         const items = JSON.parse(localStorage.getItem("cart")) || [];
-        setCartItems(items);
 
-        const newTotalPrice = items.reduce((accumulator, currentItem) => {
-            return (
-                +accumulator +
-                +currentItem.price *
-                    localStorage.getItem(`product_count_${currentItem.id}`)
-            );
-        }, 0);
+        // Создайте массив для хранения цен продуктов
+        const productPrices = items.map((item) => {
+            const count =
+                +localStorage.getItem(`product_count_${item.id}`) || 0;
+            console.log(item.price, "&&", count);
+            return +item.price * count;
+        });
+
+        // Посчитайте сумму цен продуктов
+        const newTotalPrice = productPrices.reduce(
+            (accumulator, currentPrice) => {
+                console.log(accumulator, "&&", Math.floor(currentPrice));
+                return accumulator + Math.floor(currentPrice);
+            },
+            0
+        );
+
+        setCartItems(items);
         setTotalPrice(newTotalPrice);
     };
 

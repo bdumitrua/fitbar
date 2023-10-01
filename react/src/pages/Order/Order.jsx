@@ -1,12 +1,15 @@
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
+import { fetchUser } from "../../redux/services/user.service";
 import axiosInstance from "../../utils/axios/instance";
 import { useCartContext } from "../../utils/providers/cart.provider";
 import "./Order.scss";
 import OrderCard from "./OrderCard";
 
 const Order = () => {
-    const { handleSubmit, control } = useForm();
     const { cartItems } = useCartContext();
     const navigate = useNavigate();
 
@@ -24,6 +27,32 @@ const Order = () => {
             +localStorage.getItem(`product_count_${currentItem.id}`)
         );
     }, 0);
+
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.user);
+    const loading = useSelector((state) => state.user.loading);
+    const error = useSelector((state) => state.user.error);
+
+    useEffect(() => {
+        // Загрузка пользователя
+        if (!user.email && !loading && !error) {
+            dispatch(fetchUser());
+        }
+    }, [dispatch, user, loading, error]);
+
+    const { handleSubmit, control, setValue } = useForm({
+        defaultValues: {
+            name: user ? user.name : "",
+            tel: user ? user.phone : "",
+            email: user ? user.email : "",
+        },
+    });
+
+    useEffect(() => {
+        setValue("name", user ? user.name : "");
+        setValue("tel", user ? user.phone : "");
+        setValue("email", user ? user.email : "");
+    }, [user]);
 
     const onSubmit = async (data) => {
         const deliveryData = {
@@ -63,141 +92,177 @@ const Order = () => {
 
     return (
         <div className="order">
-            <div className="order__data">
-                <form
-                    action=""
-                    className="order__form"
-                    onSubmit={handleSubmit(onSubmit)}
-                >
-                    <div className="order__container">
-                        <h3 className="order__title">Данные для доставки</h3>
-                        <label htmlFor="name" className="order__label">
-                            Ф.И.О
-                        </label>
-                        <Controller
-                            name="name"
-                            control={control}
-                            rules={{ required: "Обязательное поле" }}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    id="name"
-                                    className="order__form-element"
-                                    placeholder=""
+            {user ? (
+                <>
+                    <div className="order__data">
+                        <form
+                            action=""
+                            className="order__form"
+                            onSubmit={handleSubmit(onSubmit)}
+                        >
+                            <div className="order__container">
+                                <h3 className="order__title">
+                                    Данные для доставки
+                                </h3>
+                                <label htmlFor="name" className="order__label">
+                                    Ф.И.О
+                                </label>
+                                <Controller
+                                    name="name"
+                                    control={control}
+                                    rules={{ required: "Обязательное поле" }}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            id="name"
+                                            className="order__form-element"
+                                            placeholder=""
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
-                        <label htmlFor="region" className="order__label">
-                            Область
-                        </label>
-                        <Controller
-                            name="region"
-                            control={control}
-                            rules={{ required: "Обязательное поле" }}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    id="region"
-                                    className="order__form-element"
-                                    placeholder=""
+                                <label
+                                    htmlFor="region"
+                                    className="order__label"
+                                >
+                                    Область
+                                </label>
+                                <Controller
+                                    name="region"
+                                    control={control}
+                                    rules={{ required: "Обязательное поле" }}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            id="region"
+                                            className="order__form-element"
+                                            placeholder=""
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
-                        <label htmlFor="city" className="order__label">
-                            Город
-                        </label>
-                        <Controller
-                            name="city"
-                            control={control}
-                            rules={{ required: "Обязательное поле" }}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    id="city"
-                                    className="order__form-element"
-                                    placeholder=""
+                                <label htmlFor="city" className="order__label">
+                                    Город
+                                </label>
+                                <Controller
+                                    name="city"
+                                    control={control}
+                                    rules={{ required: "Обязательное поле" }}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            id="city"
+                                            className="order__form-element"
+                                            placeholder=""
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
-                        <label htmlFor="adress" className="order__label">
-                            Адрес
-                        </label>
-                        <Controller
-                            name="adress"
-                            control={control}
-                            rules={{ required: "Обязательное поле" }}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    id="adress"
-                                    className="order__form-element"
-                                    placeholder=""
+                                <label
+                                    htmlFor="adress"
+                                    className="order__label"
+                                >
+                                    Адрес
+                                </label>
+                                <Controller
+                                    name="address"
+                                    control={control}
+                                    rules={{ required: "Обязательное поле" }}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="text"
+                                            id="address"
+                                            className="order__form-element"
+                                            placeholder=""
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
-                        <label htmlFor="tel" className="order__label">
-                            Номер телефона
-                        </label>
-                        <Controller
-                            name="tel"
-                            control={control}
-                            rules={{
-                                required: "Обязательное поле",
-                                maxLength: 11,
-                            }}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="tel"
-                                    id="tel"
-                                    className="order__form-element"
-                                    placeholder=""
+                                <label htmlFor="tel" className="order__label">
+                                    Номер телефона
+                                </label>
+                                <Controller
+                                    name="tel"
+                                    control={control}
+                                    rules={{
+                                        required: "Обязательное поле",
+                                        maxLength: 11,
+                                    }}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="tel"
+                                            id="tel"
+                                            className="order__form-element"
+                                            placeholder=""
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
-                        <label htmlFor="comment" className="order__label">
-                            Комментарии
-                        </label>
-                        <Controller
-                            name="comment"
-                            control={control}
-                            defaultValue=""
-                            rules={{ maxLength: 1500 }}
-                            render={({ field }) => (
-                                <textarea
-                                    {...field}
-                                    className="order__textarea"
+                                <label htmlFor="email" className="order__label">
+                                    Ваша почта
+                                </label>
+                                <Controller
+                                    name="email"
+                                    control={control}
+                                    rules={{
+                                        required: "Обязательное поле",
+                                    }}
+                                    render={({ field }) => (
+                                        <input
+                                            {...field}
+                                            type="email"
+                                            id="email"
+                                            className="order__form-element"
+                                            placeholder=""
+                                        />
+                                    )}
+                                />
+                                <label
+                                    htmlFor="comment"
+                                    className="order__label"
+                                >
+                                    Комментарии
+                                </label>
+                                <Controller
                                     name="comment"
-                                    id="comment"
-                                    rows="10"
-                                ></textarea>
-                            )}
-                        />
+                                    control={control}
+                                    defaultValue=""
+                                    rules={{ maxLength: 1500 }}
+                                    render={({ field }) => (
+                                        <textarea
+                                            {...field}
+                                            className="order__textarea"
+                                            name="comment"
+                                            id="comment"
+                                            rows="10"
+                                        ></textarea>
+                                    )}
+                                />
+                            </div>
+                            <button type="submit" className="order__send-order">
+                                Оформить мой заказ
+                            </button>
+                        </form>
                     </div>
-                    <button type="submit" className="order__send-order">
-                        Оформить мой заказ
-                    </button>
-                </form>
-            </div>
-            <div className="order__cart-data">
-                <div className="order__cart-header">
-                    <p className="order__cart-pos-sum">Итого</p>
-                    <p className="order__cart-pos-count">{`${cartItems.length} ${reviewsEnding}`}</p>
-                </div>
-                {cartItems.map((item) => (
-                    <OrderCard key={item.id} product={item} />
-                ))}
-                <div className="order__cart-footer">
-                    <p className="order__cart-price">Итого к оплате</p>
-                    <p className="order__cart-price-sum">{`${Math.round(
-                        totalPrice
-                    )} руб.`}</p>
-                </div>
-            </div>
+                    <div className="order__cart-data">
+                        <div className="order__cart-header">
+                            <p className="order__cart-pos-sum">Итого</p>
+                            <p className="order__cart-pos-count">{`${cartItems.length} ${reviewsEnding}`}</p>
+                        </div>
+                        {cartItems.map((item) => (
+                            <OrderCard key={item.id} product={item} />
+                        ))}
+                        <div className="order__cart-footer">
+                            <p className="order__cart-price">Итого к оплате</p>
+                            <p className="order__cart-price-sum">{`${Math.round(
+                                totalPrice
+                            )} руб.`}</p>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <Loader />
+            )}
         </div>
     );
 };

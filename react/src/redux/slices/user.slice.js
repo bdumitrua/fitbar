@@ -2,17 +2,28 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
     name: "user",
-    initialState: null,
+    initialState: {
+        user: {},
+        loading: false,
+        error: null,
+    },
     reducers: {
-        setUser: (state, action) => {
-            return action.payload; // Это действие устанавливает данные о пользователе в сторе
+        // Редукторы для обработки различных действий
+        userLoading: (state) => {
+            state.loading = true;
         },
-        clearUser: (state) => {
-            return null; // Это действие очищает данные о пользователе из стора при выходе из аккаунта
+        userLoaded: (state, action) => {
+            state.user = action.payload;
+            state.loading = false;
+            state.error = null;
+        },
+        userError: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
         },
     },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { userLoading, userLoaded, userError } = userSlice.actions;
 
 export default userSlice.reducer;
