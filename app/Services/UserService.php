@@ -36,7 +36,7 @@ class UserService
             'email' => $request->email,
             'phone' => $request->phone,
             'photo' => $path,
-            'date_of_birth' => $request->birth
+            'date_of_birth' => $request->date_of_birth
         ]);
     }
 }
