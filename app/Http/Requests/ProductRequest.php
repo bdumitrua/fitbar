@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
         // TODO
         // Добавить проверку вкуса, веса
         return [
-            'image' => 'required|image|max:2048|url',
+            'image' => 'required|image|max:2048',
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:1|max:1000',
             'short_description' => 'required|string|min:10|max:255',

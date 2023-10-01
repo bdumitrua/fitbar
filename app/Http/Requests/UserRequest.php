@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
             'email' => 'required|string|email|max:255',
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
-            'photo' => 'nullable|image|max:2048|url',
+            'photo' => 'nullable|image|max:2048',
             'birth' => 'nullable|date|before_or_equal:today',
         ];
     }
