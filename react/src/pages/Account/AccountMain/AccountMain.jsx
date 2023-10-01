@@ -68,6 +68,7 @@ const AccountMain = () => {
                                     className="account-info__private-info-element"
                                     placeholder="Дата рождения"
                                     disabled
+                                    value={data.date_of_birth || ""}
                                 />
                                 <input
                                     type="text"
