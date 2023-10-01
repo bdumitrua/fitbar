@@ -59,8 +59,6 @@ class ProductService
         $folder = 'products';
         if ($request->hasFile('image')) {
             $path = FileHelper::saveImage($request->file('image'), $folder);
-        } else {
-            $path = FileHelper::saveImageFromUrl($request->input('image'), $folder);
         }
 
         if (Product::where('name', $request->name)->exists()) {
@@ -88,8 +86,6 @@ class ProductService
         $folder = 'products';
         if ($request->hasFile('image')) {
             $path = FileHelper::saveImage($request->file('image'), $folder);
-        } elseif ($request->has('image')) {
-            $path = FileHelper::saveImageFromUrl($request->input('image'), $folder);
         } else {
             $path = $product->image;
         }
