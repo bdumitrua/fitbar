@@ -30,7 +30,7 @@ class OrderStatusRequest extends FormRequest
     {
         return [
             'status.required'   => 'Статус заказа является обязательным.',
-            'status.string'     => 'Статус заказа должен быть ввиде строки.',
+            'status.string'     => 'Статус заказа должен быть в виде строки.',
             'status.in'         => 'Некорректный статус заказа.',
         ];
     }

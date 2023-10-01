@@ -111,7 +111,9 @@ const ProductPage = () => {
                             <ProductRating rating={data.rating} />
                             <p className="product-page__reviews-count">{`${reviewsCount} ${reviewsEnding}`}</p>
                         </div>
-                        <p className="product-page__product-price">{`${data.price} руб.`}</p>
+                        <p className="product-page__product-price">{`${Math.floor(
+                            data.price
+                        )} руб.`}</p>
                         <p className="product-page__selector-title">Вкус:</p>
                         <button className="product-page__product-taste-selector">
                             Пока не ясно

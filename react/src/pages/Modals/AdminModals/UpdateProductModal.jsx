@@ -21,8 +21,6 @@ const CreateProductModal = ({ handleCloseModal, product }) => {
         }
     };
 
-    console.log(product);
-
     const onSubmit = async (data, e) => {
         e.preventDefault();
         console.log(data);
