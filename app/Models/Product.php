@@ -16,7 +16,9 @@ class Product extends Model
         'rating',
         'short_description',
         'long_description',
-        'category_id'
+        'category_id',
+        'taste',
+        'weight'
     ];
 
     public function category()
