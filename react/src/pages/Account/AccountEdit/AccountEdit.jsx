@@ -215,47 +215,7 @@ const AccountEdit = () => {
                                         />
                                     )}
                                 />
-                                <Controller
-                                    name="address"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <input
-                                            {...field}
-                                            type="text"
-                                            className="account-info__private-info-element private-info-element-long"
-                                            placeholder="Адрес"
-                                            id="address"
-                                        />
-                                    )}
-                                />
-                                <Controller
-                                    name="password"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <input
-                                            {...field}
-                                            type="password"
-                                            className="account-info__private-info-element"
-                                            placeholder="Пароль"
-                                            id="password"
-                                            required
-                                        />
-                                    )}
-                                />
-                                <Controller
-                                    name="confirmPassword"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <input
-                                            {...field}
-                                            type="password"
-                                            className="account-info__private-info-element"
-                                            placeholder="Подтверждение пароля"
-                                            id="confirmPassword"
-                                            required
-                                        />
-                                    )}
-                                />
+
                                 <div className="account-info__update-info">
                                     <button
                                         className="account-info__update-info-button"
