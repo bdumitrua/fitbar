@@ -95,7 +95,7 @@ class ProductService
         }
 
         $product->update([
-            //'image' => $path,
+            'image' => $path,
             'name' => $request->name,
             'price' => $request->price,
             'taste' => $request->taste,
