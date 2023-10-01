@@ -4,7 +4,7 @@ import AccountEdit from "./pages/Account/AccountEdit/AccountEdit";
 import AccountMain from "./pages/Account/AccountMain/AccountMain";
 import AccountOrders from "./pages/Account/AccountOrders/AccountOrders";
 import Assortment from "./pages/Account/Admin/Assortment/Assortment";
-import OrderRequests from "./pages/Account/Admin/OrderRequests";
+import OrderRequests from "./pages/Account/Admin/OrderRequests/OrderRequests";
 import Cart from "./pages/Cart/Cart";
 import Category from "./pages/Category/Category";
 import Home from "./pages/Home/Home";

@@ -6,7 +6,6 @@ export const fetchUser = () => async (dispatch) => {
         dispatch(userLoading());
         const response = await axiosInstance.get("/users/me");
         dispatch(userLoaded(response.data));
-        console.log(response.data);
     } catch (error) {
         dispatch(userError(error.message));
     }
