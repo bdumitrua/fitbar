@@ -24,6 +24,7 @@ const AccountEdit = () => {
     const [selectedDate, setSelectedDate] = useState(null);
 
     const [data, setData] = useState(null);
+    const [file, setFile] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -49,19 +50,27 @@ const AccountEdit = () => {
         fetchData();
     }, [dispatch]);
 
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+    };
+
     const onSubmit = (data) => {
         const { firstname, surname, patronymic, ...otherData } = data;
         const name = `${surname} ${firstname} ${patronymic}`;
 
-        const requestData = {
-            ...otherData,
-            name,
-        };
+        console.log(data);
 
-        // Запутался с адресами
-        // По идее надо axiosInstance.put(`/address/update/${address.id}`)
-        // Но как доставать нужный айди адресса если у пользователя их может быть нескольko хз ибо непонятно какой из них менять
-        axiosInstance.put("/users/update", requestData);
+        const formData = new FormData();
+        formData.append("photo", file); // Здесь добавляем изображение
+        formData.append("email", otherData.email);
+        formData.append("name", name);
+        formData.append("phone", otherData.phone);
+        formData.append("date_of_birth", selectedDate);
+
+        formData.append("_method", "put");
+
+        axiosInstance.post("/users/update", formData);
     };
 
     const { handleSubmit, control, setValue } = useForm({
@@ -69,7 +78,8 @@ const AccountEdit = () => {
             firstname: dataFirstname,
             surname: dataSurname,
             patronymic: dataPatronymic,
-            photo: data ? data.image : "",
+            //birth: data.date_of_birth,
+            photo: data ? data.photo : "",
             phone: data ? data.phone : "",
             email: data ? data.email : "",
             address: data ? data.address : "",
@@ -82,7 +92,6 @@ const AccountEdit = () => {
         setValue("patronymic", dataPatronymic);
         setValue("phone", data ? data.phone : "");
         setValue("email", data ? data.email : "");
-        setValue("photo", data ? data.photo : "");
         setValue("address", data ? data.address : "");
         // Установите начальные значения для других полей
     }, [data]);
@@ -99,24 +108,19 @@ const AccountEdit = () => {
                             className="account-info"
                         >
                             <div className="account-info__image-container">
-                                <Controller
-                                    name="photo"
-                                    control={control}
-                                    render={({ field, onChange }) => (
-                                        <input
-                                            {...field}
-                                            type="file"
-                                            className="account-info__image-input"
-                                            placeholder="Аватар"
-                                            id="photo"
-                                            onChange={(event) => {
-                                                onChange(event.target.files[0]);
-                                            }}
-                                        />
-                                    )}
+                                <input
+                                    id="photo"
+                                    className="account-info__image-input"
+                                    type="file"
+                                    onChange={handleFileChange}
+                                    accept="image/png, image/jpg, image/jpeg, image/svg"
                                 />
                                 <img
-                                    src=""
+                                    src={
+                                        file
+                                            ? URL.createObjectURL(file)
+                                            : data.photo
+                                    }
                                     alt=""
                                     className="account-info__image"
                                 />
@@ -135,11 +139,12 @@ const AccountEdit = () => {
                                         />
                                     )}
                                 />
-                                <div className="account-info__private-info-element">
-                                    <Controller
-                                        name="birthdate"
-                                        control={control}
-                                        render={({ field }) => (
+
+                                <Controller
+                                    name="date_of_birth"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <div className="account-info__private-info-element">
                                             <DatePicker
                                                 {...field}
                                                 dateFormat="dd.MM.yyyy"
@@ -152,10 +157,11 @@ const AccountEdit = () => {
                                                 scrollableYearDropdown
                                                 yearDropdownItemNumber={100}
                                             />
-                                        )}
-                                        valueName="selected"
-                                    />
-                                </div>
+                                        </div>
+                                    )}
+                                    valueName="selected"
+                                />
+
                                 <Controller
                                     name="surname"
                                     control={control}

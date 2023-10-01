@@ -22,15 +22,6 @@ const CreateProductModal = ({ handleCloseModal }) => {
         }
     };
 
-    // const onSubmit = async (data, e) => {
-    //     e.preventDefault();
-    //     console.log(data);
-    //     const res = dispatch(createProduct(data));
-    //     if (res.status === 200) {
-    //         handleCloseModal();
-    //     }
-    // };
-
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setFile(selectedFile);
@@ -92,20 +83,6 @@ const CreateProductModal = ({ handleCloseModal }) => {
             >
                 <div className="modal-admin__left-side">
                     <div className="modal-admin__image-container">
-                        {/* <Controller
-                            name="image"
-                            control={control}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="file"
-                                    className="account-info__image-input"
-                                    placeholder="Аватар"
-                                    id="photo"
-                                    accept="image/png, image/jpg, image/jpeg, image/svg"
-                                />
-                            )}
-                        /> */}
                         <input
                             id="photo"
                             className="account-info__image-input"
