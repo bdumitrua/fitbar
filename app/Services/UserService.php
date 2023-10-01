@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\FileHelper;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -25,18 +26,18 @@ class UserService
             throw new HttpException(Response::HTTP_CONFLICT, 'This email is taken');
         }
 
-        $path = '';
-        // загрузка фото, если оно предоставлено
+        $path = null;
+        $folder = 'profiles';
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('profiles', 'public');
+            $path = FileHelper::saveImage($request->file('photo'), $folder);
         }
 
         $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'photo' => $path,
-            'date_of_birth' => $request->date_of_birth
+            'name' => $request->name ?? $user->name,
+            'email' => $user->email,
+            'phone' => $request->phone ?? $user->phone,
+            'photo' => $path ?? $user->photo,
+            'date_of_birth' => $request->date_of_birth ?? $user->date_of_birth
         ]);
     }
 }
