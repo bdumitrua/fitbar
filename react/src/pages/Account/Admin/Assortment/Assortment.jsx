@@ -65,7 +65,6 @@ const Assortment = () => {
             const filteredProducts = products.filter((product) =>
                 product.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
-            console.log(filteredProducts);
             // Обновите данные с отфильтрованными продуктами
             setData(filteredProducts);
         } else {

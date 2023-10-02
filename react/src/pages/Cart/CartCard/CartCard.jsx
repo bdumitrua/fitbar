@@ -69,7 +69,7 @@ const CartCard = ({ product, handleRemoveFromCart, updateTotalPrice }) => {
                         +
                     </button>
                 </div>
-                <p className="cart-card__price">{`${Math.round(
+                <p className="cart-card__price">{`${Math.floor(
                     product.price * productCount
                 )} руб.`}</p>
                 <button

@@ -1,32 +1,13 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../../../components/Loader/Loader";
-import axiosInstance from "../../../../utils/axios/instance";
 
-const OrderCardProduct = ({ productId }) => {
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get(
-                    `/products/show/${productId}`
-                );
-                setData(response.data);
-            } catch (error) {
-                console.error("Error", error);
-            }
-        };
-
-        fetchData();
-    }, [productId]);
-
+const OrderCardProduct = ({ product }) => {
     return (
         <>
-            {data ? (
-                <Link to={`/products/${productId}`}>
+            {product ? (
+                <Link to={`/products/${product}`}>
                     <img
-                        src={data.image}
+                        src={product.image}
                         alt=""
                         className="order-card__product-image"
                     />
