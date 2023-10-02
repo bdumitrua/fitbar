@@ -78,7 +78,6 @@ const AccountEdit = () => {
             firstname: dataFirstname,
             surname: dataSurname,
             patronymic: dataPatronymic,
-            //birth: data.date_of_birth,
             photo: data ? data.photo : "",
             phone: data ? data.phone : "",
             email: data ? data.email : "",
@@ -143,6 +142,7 @@ const AccountEdit = () => {
                                 <Controller
                                     name="date_of_birth"
                                     control={control}
+                                    dateFormat="dd.MM.yyyy"
                                     render={({ field }) => (
                                         <div className="account-info__private-info-element">
                                             <DatePicker
@@ -215,7 +215,6 @@ const AccountEdit = () => {
                                         />
                                     )}
                                 />
-
                                 <div className="account-info__update-info">
                                     <button
                                         className="account-info__update-info-button"

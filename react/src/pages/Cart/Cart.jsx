@@ -40,7 +40,7 @@ const Cart = () => {
     };
 
     useEffect(() => {
-        loadCartData(); // Загрузите данные из локального хранилища
+        loadCartData();
     }, []);
 
     return (

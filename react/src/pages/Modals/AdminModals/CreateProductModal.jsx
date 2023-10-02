@@ -40,10 +40,7 @@ const CreateProductModal = ({ handleCloseModal }) => {
         formData.append("taste", data.taste);
         formData.append("weight", data.weight);
 
-        const res = dispatch(createProduct(formData));
-        if (res.status === 200) {
-            handleCloseModal();
-        }
+        dispatch(createProduct(formData, handleCloseModal));
     };
 
     const categories = [
@@ -95,7 +92,6 @@ const CreateProductModal = ({ handleCloseModal }) => {
                             alt=""
                             className="modal-admin__image"
                         />
-                        {/* <img src={plus} alt="" /> */}
                     </div>
                     <p className="modal-admin__textarea-label">Описание</p>
                     <Controller

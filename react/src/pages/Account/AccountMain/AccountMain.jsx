@@ -23,6 +23,7 @@ const AccountMain = () => {
     const [firstname, setFirstname] = useState("");
     const [surname, setSurname] = useState("");
     const [patronymic, setPatronymic] = useState("");
+    const [birthdate, setBirthdate] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,6 +32,8 @@ const AccountMain = () => {
                 setData(response.data);
                 const [surname, firstname, patronymic] =
                     response.data.name.split(" ");
+                const birthdate = response.data.date_of_birth.split(" ");
+                setBirthdate(birthdate || "");
                 setSurname(surname || "");
                 setFirstname(firstname || "");
                 setPatronymic(patronymic || "");
@@ -68,7 +71,7 @@ const AccountMain = () => {
                                     className="account-info__private-info-element"
                                     placeholder="Дата рождения"
                                     disabled
-                                    value={data.date_of_birth || ""}
+                                    value={birthdate[0] || ""}
                                 />
                                 <input
                                     type="text"
