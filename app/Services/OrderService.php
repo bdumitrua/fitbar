@@ -21,7 +21,7 @@ class OrderService
         $orders = User::find(35)->orders()
             ->with([
                 'products' => function ($query) {
-                    $query->orderBy('price', 'desc')->first();
+                    $query->orderBy('price', 'desc')->take(4);
                 }
             ])
             ->get();
@@ -59,13 +59,17 @@ class OrderService
     {
         $usersId = User::where('name', 'LIKE', '%' . $request->name . '%')->pluck('id');
 
-        return Order::whereIn('user_id', $usersId)
-            ->with([
-                'user', 'products' => function ($query) {
-                    $query->orderBy('price', 'desc')->first();
-                }
-            ])
+        $orders = Order::whereIn('user_id', $usersId)
+            ->with('user')
             ->get();
+
+        // Берём только самый дорогой продукт
+        $orders->each(function ($order) {
+            $order->product = $order->products->sortByDesc('price')->first();
+            unset($order->products);
+        });
+
+        return $orders;
     }
 
     // Получение информации о конкретном заказе
