@@ -18,7 +18,7 @@ class OrderService
     // Получение всех заказов текущего пользователя
     public function index()
     {
-        $orders = User::find(35)->orders()
+        $orders = User::find(Auth::id())->orders()
             ->with([
                 'products' => function ($query) {
                     $query->orderBy('price', 'desc')->take(4);
