@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
             'long_description' => 'required|string|min:150',
             'category_id' => 'required|integer|min:1|exists:categories,id',
             'taste' => 'nullable|string',
-            'weight' => 'required|numberic|min:1|max:1000',
+            'weight' => 'required|numeric|min:1|max:1000',
         ];
     }
 
