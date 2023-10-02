@@ -18,7 +18,7 @@ class OrderService
     // Получение всех заказов текущего пользователя
     public function index()
     {
-        return User::find(35)->orders()->with('products')->get();
+        return User::find(Auth::id())->orders()->with('products')->get();
     }
 
     // Получение всех заказов для админки
