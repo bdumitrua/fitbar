@@ -18,7 +18,6 @@ const Home = () => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get("/home/categories");
-                console.log(response.data);
                 setData(response.data);
             } catch (error) {
                 console.error("Произошла ошибка при выполнении запроса", error);
@@ -144,11 +143,8 @@ const Home = () => {
                     </div>
 
                     <Bestsellers />
-                    {data.slice(0, 2).map((category) => (
-                        <ProductsSection
-                            key={category.id}
-                            category={category}
-                        />
+                    {data.slice(0, 2).map((category, index) => (
+                        <ProductsSection key={index} category={category} />
                     ))}
                 </div>
             ) : (

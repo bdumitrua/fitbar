@@ -34,6 +34,9 @@ const Order = () => {
     const error = useSelector((state) => state.user.error);
 
     useEffect(() => {
+        if (cartItems.length === 0) {
+            navigate("/cart");
+        }
         // Загрузка пользователя
         if (!user.email && !loading && !error) {
             dispatch(fetchUser());
@@ -71,8 +74,10 @@ const Order = () => {
             localStorage.removeItem("cart");
             cartItems.length = 0;
             navigate("/home");
+            alert("Заказ успешно оформлен");
         } catch (error) {
             console.error("Ошибка при оформлении заказа", error);
+            navigate("/cart");
         }
     };
 

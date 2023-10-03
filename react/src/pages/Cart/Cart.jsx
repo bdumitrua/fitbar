@@ -54,9 +54,13 @@ const Cart = () => {
                 <p>Вы еще не добавили товары в свою корзину!</p>
             )}
             <CartTotalPrice totalPrice={totalPrice} />
-            <Link to="/order" className="cart__order-button">
-                Заказать
-            </Link>
+            {cartItems.length === 0 ? (
+                <Link className="cart__order-button">Заполните корзину</Link>
+            ) : (
+                <Link to="/order" className="cart__order-button">
+                    Заказать
+                </Link>
+            )}
         </div>
     );
 };
