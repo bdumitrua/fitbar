@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../../../components/Loader/Loader";
 import { fetchProducts } from "../../../../redux/services/products.service";
 import CreateProductModal from "../../../Modals/AdminModals/CreateProductModal";
-import FindProductsModal from "../../../Modals/AdminModals/FindProductsModal";
 import AccountLayoutAdmin from "../AccountLayoutAdmin";
 import "./Assortment.scss";
 import AssortmentCard from "./AssortmentCard";
@@ -21,22 +20,13 @@ const Assortment = () => {
 
     const [itemsLen, setItemsLen] = useState(3);
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [showFindModal, setShowFindModal] = useState(false);
 
     const handleOpenCreateModal = () => {
         setShowCreateModal(true);
     };
 
-    const handleOpenFindModal = () => {
-        setShowFindModal(true);
-    };
-
     const handleCloseCreateModal = () => {
         setShowCreateModal(false);
-    };
-
-    const handleCloseFindModal = () => {
-        setShowFindModal(false);
     };
 
     const increaseItemsLen = () => {
@@ -65,7 +55,8 @@ const Assortment = () => {
             const filteredProducts = products.filter((product) =>
                 product.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
-            // Обновите данные с отфильтрованными продуктами
+
+            console.log(filteredProducts);
             setData(filteredProducts);
         } else {
             setData(products);
@@ -97,10 +88,7 @@ const Assortment = () => {
                         >
                             Добавление товара
                         </button>
-                        <button
-                            className="assortment__button"
-                            onClick={handleOpenFindModal}
-                        >
+                        <button className="assortment__button">
                             Вывод данных
                         </button>
                     </div>
@@ -109,12 +97,6 @@ const Assortment = () => {
                     <CreateProductModal
                         handleOpenModal={handleOpenCreateModal}
                         handleCloseModal={handleCloseCreateModal}
-                    />
-                )}
-                {showFindModal && (
-                    <FindProductsModal
-                        handleOpenModal={handleOpenFindModal}
-                        handleCloseModal={handleCloseFindModal}
                     />
                 )}
                 {data.length > 0 ? (

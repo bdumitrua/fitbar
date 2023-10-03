@@ -41,7 +41,14 @@ const OrderRequests = () => {
                 `/orders/search?name=${searchTerm}`
             );
             setData(searchResponse.data);
-        } else {
+
+            if (searchResponse.data.length === 0) {
+                const searchResponse = await axiosInstance.get(
+                    `/orders/all?page=${currentPage}`
+                );
+                setData(searchResponse.data);
+            }
+        } else if (searchTerm.trim() === "") {
             const searchResponse = await axiosInstance.get(
                 `/orders/all?page=${currentPage}`
             );

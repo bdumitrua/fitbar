@@ -86,9 +86,6 @@
     @include m.text-regular(6px);
 }
 
-.cart-card__product-delete {
-}
-
 .cart-card__more-info {
     @include m.flex-between();
 }

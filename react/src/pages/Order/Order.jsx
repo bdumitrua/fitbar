@@ -67,10 +67,7 @@ const Order = () => {
         };
 
         try {
-            const response = await axiosInstance.post(
-                "/orders/create",
-                orderData
-            );
+            await axiosInstance.post("/orders/create", orderData);
             localStorage.removeItem("cart");
             cartItems.length = 0;
             navigate("/home");

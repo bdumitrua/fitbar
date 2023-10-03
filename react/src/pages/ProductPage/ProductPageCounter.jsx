@@ -27,7 +27,7 @@ const ProductPageCounter = ({ productId, isProductInCart }) => {
 
             if (isProductInCart) {
                 try {
-                    await axiosInstance.patch(`/cart/decrease\/${productId}`);
+                    await axiosInstance.patch(`/cart/decrease/${productId}`);
                 } catch (error) {
                     console.error("Ошибка при запросе на сервер", error);
                 }
