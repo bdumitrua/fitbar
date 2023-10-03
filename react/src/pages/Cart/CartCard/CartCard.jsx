@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./CartCard.scss";
 
 import { Link } from "react-router-dom";
@@ -12,27 +12,26 @@ const CartCard = ({ product, handleRemoveFromCart, updateTotalPrice }) => {
     );
 
     const incrementProductCount = () => {
-        setProductCount((prevCount) => {
-            const newCount = prevCount + 1;
-            axiosInstance.patch(`/cart/increase/${product.id}`);
-            localStorage.setItem(`product_count_${product.id}`, newCount);
-            return newCount;
-        });
-        updateTotalPrice();
+        const newCount = productCount + 1;
+        axiosInstance.patch(`/cart/increase/${product.id}`);
+        // Устанавливаем новое состояние
+        setProductCount(newCount);
     };
 
     const decrementProductCount = () => {
-        setProductCount((prevCount) => {
-            if (prevCount > 1) {
-                const newCount = prevCount - 1;
-                axiosInstance.patch(`/cart/decrease/${product.id}`);
-                localStorage.setItem(`product_count_${product.id}`, newCount);
-                return newCount;
-            }
-            return prevCount;
-        });
-        updateTotalPrice();
+        if (productCount > 1) {
+            const newCount = productCount - 1;
+            axiosInstance.patch(`/cart/decrease/${product.id}`);
+            // Устанавливаем новое состояние
+            setProductCount(newCount);
+        }
     };
+
+    // Используем useEffect для обновления localStorage и отправки запроса на сервер
+    useEffect(() => {
+        localStorage.setItem(`product_count_${product.id}`, productCount);
+        updateTotalPrice();
+    }, [productCount]);
 
     return (
         <div className="cart-card">

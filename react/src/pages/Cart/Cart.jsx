@@ -21,7 +21,6 @@ const Cart = () => {
         // Создайте массив для хранения цен продуктов
         const productPrices = items.map((item) => {
             const count = localStorage.getItem(`product_count_${item.id}`) || 0;
-            console.log(item.price, "&&", count);
             return +item.price * count;
         });
 
