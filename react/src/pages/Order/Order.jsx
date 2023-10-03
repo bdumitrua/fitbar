@@ -71,8 +71,8 @@ const Order = () => {
                 "/orders/create",
                 orderData
             );
-            console.log(response);
             localStorage.removeItem("cart");
+            cartItems.length = 0;
             navigate("/home");
         } catch (error) {
             console.error("Ошибка при оформлении заказа", error);
