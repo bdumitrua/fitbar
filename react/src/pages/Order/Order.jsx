@@ -57,7 +57,7 @@ const Order = () => {
     const onSubmit = async (data) => {
         const deliveryData = {
             ...data,
-            total_price: parseInt(Math.round(totalPrice)),
+            total_price: parseInt(Math.floor(totalPrice)),
             total_quantity: totalQuantity,
         };
 
@@ -254,7 +254,7 @@ const Order = () => {
                         ))}
                         <div className="order__cart-footer">
                             <p className="order__cart-price">Итого к оплате</p>
-                            <p className="order__cart-price-sum">{`${Math.round(
+                            <p className="order__cart-price-sum">{`${Math.floor(
                                 totalPrice
                             )} руб.`}</p>
                         </div>

@@ -37,7 +37,7 @@ const Cart = () => {
 
     useEffect(() => {
         loadCartData();
-    }, []);
+    }, [cartItems]);
 
     return (
         <div className="cart container">

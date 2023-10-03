@@ -4,7 +4,7 @@ import starFilled from "../../assets/images/star-filled.svg";
 import "../ProductCard/ProductCard.scss";
 
 const ProductRating = ({ rating }) => {
-    const roundedRating = Math.round(rating);
+    const roundedRating = Math.floor(rating);
 
     const totalStars = 5;
 

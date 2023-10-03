@@ -1,6 +1,6 @@
 const CartTotalPrice = ({ totalPrice }) => {
     return (
-        <p className="cart__sum">{`Итого: ${Math.round(totalPrice)} руб.`}</p>
+        <p className="cart__sum">{`Итого: ${Math.floor(totalPrice)} руб.`}</p>
     );
 };
 
