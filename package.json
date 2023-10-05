@@ -1,35 +1,51 @@
 {
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "cd ./react/ & npm run dev",
-    "init": "cd ./react/ & npm i & npm run dev",
-    "build": "vite build"
-  },
-  "devDependencies": {
-    "axios": "^1.1.2",
-    "laravel-vite-plugin": "^0.7.5",
-    "vite": "^4.0.0"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "sass": "^1.63.6"
-  },
-  "name": "fitbar",
-  "description": "<p align=\"center\"><a href=\"https://github.com/bdumitrua/fitbar\" target=\"_blank\"><img src=\"https://github.com/bdumitrua/fitbar/blob/main/public/logo.svg\" width=\"200\" alt=\"Fitbar Logo\"></a></p>",
-  "version": "1.0.0",
-  "main": "vite.config.js",
-  "directories": {
-    "test": "tests"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bdumitrua/fitbar.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bdumitrua/fitbar/issues"
-  },
-  "homepage": "https://github.com/bdumitrua/fitbar#readme"
+    "name": "fitbar",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite --port=3000",
+        "build": "vite build",
+        "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^1.9.5",
+        "axios": "^1.4.0",
+        "react": "^18.2.0",
+        "react-datepicker": "^4.16.0",
+        "react-dom": "^18.2.0",
+        "react-hook-form": "^7.45.4",
+        "react-redux": "^8.1.2",
+        "react-router-dom": "^6.14.2",
+        "react-star-ratings": "^2.3.0",
+        "react-svg": "^16.1.19",
+        "sass": "^1.64.2"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.14",
+        "@types/react-dom": "^18.2.6",
+        "@vitejs/plugin-react": "^4.0.1",
+        "eslint": "^8.44.0",
+        "eslint-plugin-react": "^7.32.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.1",
+        "vite": "^4.4.0",
+        "laravel-vite-plugin": "^0.7.5"
+    },
+    "description": "<p align=\"center\"><a href=\"https://github.com/bdumitrua/fitbar\" target=\"_blank\"><img src=\"https://github.com/bdumitrua/fitbar/blob/main/public/logo.svg\" width=\"200\" alt=\"Fitbar Logo\"></a></p>",
+    "main": "vite.config.js",
+    "directories": {
+        "test": "tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bdumitrua/fitbar.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/bdumitrua/fitbar/issues"
+    },
+    "homepage": "https://github.com/bdumitrua/fitbar#readme"
 }
