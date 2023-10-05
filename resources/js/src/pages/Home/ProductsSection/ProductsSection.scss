@@ -1,0 +1,51 @@
+@use "../../../styles/mixins" as m;
+@use "../../../styles/variables" as v;
+
+.products-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.products-container {
+    width: 100%;
+    @include m.flex-between;
+    flex-wrap: wrap;
+}
+
+.products-section__title {
+    margin-bottom: 40px;
+
+    @include m.text-bold(9px);
+    text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+    .products-section {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 800px) {
+    .products-container {
+        @include m.flex-center;
+        gap: 25px;
+    }
+
+    .products-section__title {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 500px) {
+    .products-container {
+        @include m.flex-center;
+        gap: 15px;
+    }
+
+    .products-section__title {
+        font-size: 28px;
+
+        margin-bottom: 20px;
+    }
+}

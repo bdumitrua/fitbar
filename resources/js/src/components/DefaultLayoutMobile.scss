@@ -1,0 +1,172 @@
+@use "../styles/mixins" as m;
+@use "../styles/variables.scss" as v;
+@use "sass:math";
+@import url(../styles/reset.css);
+
+.header-mobile {
+    display: none;
+
+    position: relative;
+}
+
+.header-mobile__navbar {
+    @include m.flex-between();
+    gap: 40px;
+}
+
+.header-mobile__navbar-container {
+    display: none;
+
+    background-color: v.$black;
+
+    opacity: 0.8;
+
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.header-mobile__navbar-container.active {
+    display: flex;
+}
+
+.header-mobile__navbar-elements {
+    display: none;
+
+    background-color: v.$black;
+
+    width: 280px;
+    height: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 11;
+}
+
+.header-mobile__navbar-elements.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-mobile__navbar-buttons {
+    @include m.flex-between();
+}
+
+.header-mobile__navbar-home {
+    padding: 15px;
+    margin-left: 5px;
+}
+
+.header-mobile__navbar-exit {
+    width: 58px;
+    height: 58px;
+
+    padding: 15px;
+    margin-right: 5px;
+}
+
+.header-mobile__navbar-element {
+    width: 100%;
+    padding: 15px;
+    margin-left: 5px;
+
+    color: white;
+    @include m.text-bold(5px);
+}
+
+.header-mobile__mid {
+    height: 100%;
+}
+
+.header-mobile__site-name {
+    display: flex;
+    align-items: center;
+
+    height: 100%;
+    padding: 0 20px;
+
+    @include m.text-bold(6px);
+    text-transform: uppercase;
+    color: v.$green;
+}
+
+.header-mobile__right-side {
+    @include m.flex-between();
+    gap: 40px;
+}
+
+.header-mobile__button {
+    position: relative;
+}
+
+.header-mobile__button-image {
+    padding: 10px;
+}
+
+.header-mobile__button-counter {
+    position: absolute;
+    top: -2px;
+    right: 4px;
+
+    color: v.$green;
+}
+
+@media (max-width: 800px) {
+    .header-mobile {
+        @include m.flex-between();
+    }
+}
+
+@media (max-width: 600px) {
+    .header-mobile__navbar-elements {
+        width: 200px;
+    }
+
+    .header-mobile__navbar-element {
+        font-size: 16px;
+    }
+
+    .header-mobile__right-side {
+        gap: 0;
+    }
+
+    .header-mobile__navbar {
+        gap: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .header-mobile__site-name {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 420px) {
+    .header-mobile__navbar-elements {
+        width: 160px;
+    }
+
+    .header-mobile__navbar-element {
+        font-size: 13px;
+        margin-left: 0;
+    }
+
+    .header-mobile__navbar-exit {
+        width: 42px;
+        height: 42px;
+
+        padding: 10px;
+        margin-right: 5px;
+    }
+
+    .header-mobile__navbar-home {
+        width: 55px;
+
+        margin-left: 0;
+    }
+}
