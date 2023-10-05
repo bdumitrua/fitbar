@@ -18,7 +18,7 @@ class OrderService
     // Получение всех заказов текущего пользователя
     public function index()
     {
-        return User::find(Auth::id())->orders()->paginate(10);
+        return User::find(Auth::id())->orders()->with('products')->get();
     }
 
     // Получение всех заказов для админки
@@ -33,7 +33,17 @@ class OrderService
         ];
 
         // Сортировка заказов по статусу в заданном порядке
-        return Order::orderByRaw('FIELD(status, "' . implode('","', $statusOrder) . '")')->paginate(10);
+        $orders = Order::orderByRaw('FIELD(status, "' . implode('","', $statusOrder) . '")')
+            ->with('user')
+            ->get();
+
+        // Берём только самый дорогой продукт
+        $orders->each(function ($order) {
+            $order->product = $order->products->sortByDesc('price')->first();
+            unset($order->products);
+        });
+
+        return $orders;
     }
 
     // Поиск заказов по имени пользователя
@@ -41,14 +51,24 @@ class OrderService
     {
         $usersId = User::where('name', 'LIKE', '%' . $request->name . '%')->pluck('id');
 
-        return Order::whereIn('user_id', $usersId)->get();
+        $orders = Order::whereIn('user_id', $usersId)
+            ->with('user')
+            ->get();
+
+        // Берём только самый дорогой продукт
+        $orders->each(function ($order) {
+            $order->product = $order->products->sortByDesc('price')->first();
+            unset($order->products);
+        });
+
+        return $orders;
     }
 
     // Получение информации о конкретном заказе
     public function show(Order $order)
     {
         $user = Auth::user();
-        $order->products = $order->products()->pluck('product_id')->all();
+        $order->products = $order->products()->get();
 
         // Проверяем, принадлежит ли заказ текущему пользователю
         if ($user->maxRole >= 3) {

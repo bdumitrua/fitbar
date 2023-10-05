@@ -25,12 +25,14 @@ class ProductRequest extends FormRequest
         // TODO
         // Добавить проверку вкуса, веса
         return [
-            'image' => 'required|image|max:2048|url',
+            'image' => 'required|image|max:2048',
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:1|max:1000',
             'short_description' => 'required|string|min:10|max:255',
             'long_description' => 'required|string|min:150',
-            'category_id' => 'required|integer|min:1|exists:categories,id'
+            'category_id' => 'required|integer|min:1|exists:categories,id',
+            'taste' => 'nullable|string',
+            'weight' => 'required|numeric|min:1|max:1000',
         ];
     }
 
@@ -38,7 +40,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'image.required' => 'Поле изображения является обязательным.',
-            'image.url'      => 'URL изображения должен быть валидным URL-адресом.',
+            'image.image'    => 'Изображение должно быть изображением.',
             'image.max'      => 'URL изображения не должен превышать 2048 символов.',
 
             'name.required' => 'Название продукта является обязательным полем.',
@@ -60,10 +62,17 @@ class ProductRequest extends FormRequest
             'long_description.string'   => 'Подробное описание должно быть строкой.',
             'long_description.min'      => 'Подробное описание должно содержать не менее 150 символов.',
 
-            'category_id.required' => 'Идентификатор категории является обязательным.',
+            'category_id.required' => 'Идентификатор категории является обязательным полем.',
             'category_id.integer'  => 'Идентификатор категории должен быть целым числом.',
             'category_id.min'      => 'Идентификатор категории должен быть не меньше 1.',
             'category_id.exists'   => 'Категория с таким идентификатором не существует.',
+
+            'taste.string' => 'Вкус должен быть строкой',
+
+            'weight.required' => 'Вес товара является обязательным полем.',
+            'weight.numberic' => 'Вес должен быть числом',
+            'weight.min' => 'Вес должен быть не меньше 1г.',
+            'weight.max' => 'Вес должен быть не больше 1000г.',
         ];
     }
 }

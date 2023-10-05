@@ -25,8 +25,20 @@ class UserRequest extends FormRequest
             'email' => 'required|string|email|max:255',
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
-            'photo' => 'nullable|image|max:2048|url',
-            'birth' => 'nullable|date|before_or_equal:today',
+            'photo' => 'nullable|image|max:2048',
+            'date_of_birth' => [
+                'nullable',
+                'before_or_equal:today',
+                function ($attribute, $value, $fail) {
+                    // Преобразование даты из JavaScript формата в формат 'Y-m-d'
+                    $date = \DateTime::createFromFormat('D M d Y H:i:s e+', $value);
+                    if (!$date) {
+                        $fail("Неверный формат даты");
+                    }
+
+                    $this->merge(['date_of_birth' => $date->format('Y-m-d')]);
+                },
+            ],
         ];
     }
 
@@ -47,6 +59,10 @@ class UserRequest extends FormRequest
 
             'photo.image' => 'Фотография должна быть изображением.',
             'photo.max'   => 'Размер изображения не должен превышать 2048 килобайт.',
+
+            'date_of_birth.date' => 'Дата рождения должна быть типа данных "дата".',
+            'date_of_birth.before_or_equal' => 'Дата рождения не ранее сегодняшнего дня.',
+
         ];
     }
 }

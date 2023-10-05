@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import plus from "../../../assets/images/+.svg";
@@ -14,16 +14,33 @@ const CreateProductModal = ({ handleCloseModal }) => {
     } = useForm();
     const dispatch = useDispatch();
 
+    const [file, setFile] = useState(null);
+
     const handleBackgroundClick = (e) => {
         if (e.target.classList.contains("modal-admin")) {
             handleCloseModal();
         }
     };
 
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+    };
+
     const onSubmit = async (data, e) => {
         e.preventDefault();
-        console.log(data);
-        const res = dispatch(createProduct(data));
+
+        const formData = new FormData();
+        formData.append("image", file); // Здесь добавляем изображение
+        formData.append("long_description", data.long_description);
+        formData.append("name", data.name);
+        formData.append("short_description", data.short_description);
+        formData.append("category_id", data.category_id);
+        formData.append("price", data.price);
+        formData.append("taste", data.taste);
+        formData.append("weight", data.weight);
+
+        const res = dispatch(createProduct(formData));
         if (res.status === 200) {
             handleCloseModal();
         }
@@ -40,7 +57,14 @@ const CreateProductModal = ({ handleCloseModal }) => {
         "Предтрен",
     ];
 
-    const tastes = ["Банан", "Шоколад", "Клубника", "Ваниль", "Малина"];
+    const tastes = [
+        "Обычный",
+        "Банан",
+        "Шоколад",
+        "Клубника",
+        "Ваниль",
+        "Малина",
+    ];
 
     const value = watch(name);
 
@@ -59,21 +83,19 @@ const CreateProductModal = ({ handleCloseModal }) => {
             >
                 <div className="modal-admin__left-side">
                     <div className="modal-admin__image-container">
-                        <Controller
-                            name="image"
-                            control={control}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="file"
-                                    className="account-info__image-input"
-                                    placeholder="Аватар"
-                                    id="photo"
-                                />
-                            )}
+                        <input
+                            id="photo"
+                            className="account-info__image-input"
+                            type="file"
+                            onChange={handleFileChange}
+                            accept="image/png, image/jpg, image/jpeg, image/svg"
                         />
-                        <img src="" alt="" className="modal-admin__image" />
-                        <img src={plus} alt="" />
+                        <img
+                            src={file ? URL.createObjectURL(file) : plus}
+                            alt=""
+                            className="modal-admin__image"
+                        />
+                        {/* <img src={plus} alt="" /> */}
                     </div>
                     <p className="modal-admin__textarea-label">Описание</p>
                     <Controller

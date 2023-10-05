@@ -15,7 +15,7 @@ export const fetchProducts = () => async (dispatch) => {
     }
 };
 
-export const createProduct = () => async (data) => {
+export const createProduct = async (data) => {
     try {
         const response = await axiosInstance.post("/products/create", data);
         if (response.status === 200) {
