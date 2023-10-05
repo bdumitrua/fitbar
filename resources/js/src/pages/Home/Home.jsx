@@ -144,11 +144,8 @@ const Home = () => {
                     </div>
 
                     <Bestsellers />
-                    {data.slice(0, 2).map((category) => (
-                        <ProductsSection
-                            key={category.id}
-                            category={category}
-                        />
+                    {data.slice(0, 2).map((category, index) => (
+                        <ProductsSection key={index} category={category} />
                     ))}
                 </div>
             ) : (

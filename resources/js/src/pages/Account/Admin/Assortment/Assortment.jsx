@@ -1,6 +1,5 @@
 import Loader from "@/components/Loader/Loader";
 import CreateProductModal from "@/pages/Modals/AdminModals/CreateProductModal";
-import FindProductsModal from "@/pages/Modals/AdminModals/FindProductsModal";
 import { fetchProducts } from "@/redux/services/products.service";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,22 +20,13 @@ const Assortment = () => {
 
     const [itemsLen, setItemsLen] = useState(3);
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [showFindModal, setShowFindModal] = useState(false);
 
     const handleOpenCreateModal = () => {
         setShowCreateModal(true);
     };
 
-    const handleOpenFindModal = () => {
-        setShowFindModal(true);
-    };
-
     const handleCloseCreateModal = () => {
         setShowCreateModal(false);
-    };
-
-    const handleCloseFindModal = () => {
-        setShowFindModal(false);
     };
 
     const increaseItemsLen = () => {
@@ -65,7 +55,6 @@ const Assortment = () => {
             const filteredProducts = products.filter((product) =>
                 product.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
-            console.log(filteredProducts);
             // Обновите данные с отфильтрованными продуктами
             setData(filteredProducts);
         } else {
@@ -98,10 +87,7 @@ const Assortment = () => {
                         >
                             Добавление товара
                         </button>
-                        <button
-                            className="assortment__button"
-                            onClick={handleOpenFindModal}
-                        >
+                        <button className="assortment__button">
                             Вывод данных
                         </button>
                     </div>
@@ -112,12 +98,7 @@ const Assortment = () => {
                         handleCloseModal={handleCloseCreateModal}
                     />
                 )}
-                {showFindModal && (
-                    <FindProductsModal
-                        handleOpenModal={handleOpenFindModal}
-                        handleCloseModal={handleCloseFindModal}
-                    />
-                )}
+
                 {data.length > 0 ? (
                     [...data]
                         .sort((a, b) => b.rating - a.rating)

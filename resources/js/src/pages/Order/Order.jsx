@@ -34,6 +34,9 @@ const Order = () => {
     const error = useSelector((state) => state.user.error);
 
     useEffect(() => {
+        if (cartItems.length === 0) {
+            navigate("/cart");
+        }
         // Загрузка пользователя
         if (!user.email && !loading && !error) {
             dispatch(fetchUser());
@@ -57,7 +60,7 @@ const Order = () => {
     const onSubmit = async (data) => {
         const deliveryData = {
             ...data,
-            total_price: parseInt(Math.round(totalPrice)),
+            total_price: parseInt(Math.floor(totalPrice)),
             total_quantity: totalQuantity,
         };
 
@@ -67,15 +70,14 @@ const Order = () => {
         };
 
         try {
-            const response = await axiosInstance.post(
-                "/orders/create",
-                orderData
-            );
-            console.log(response);
+            await axiosInstance.post("/orders/create", orderData);
             localStorage.removeItem("cart");
+            cartItems.length = 0;
             navigate("/home");
+            alert("Заказ успешно оформлен");
         } catch (error) {
             console.error("Ошибка при оформлении заказа", error);
+            navigate("/cart");
         }
     };
 
@@ -254,7 +256,7 @@ const Order = () => {
                         ))}
                         <div className="order__cart-footer">
                             <p className="order__cart-price">Итого к оплате</p>
-                            <p className="order__cart-price-sum">{`${Math.round(
+                            <p className="order__cart-price-sum">{`${Math.floor(
                                 totalPrice
                             )} руб.`}</p>
                         </div>
