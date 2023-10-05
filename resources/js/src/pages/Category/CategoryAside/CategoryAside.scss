@@ -1,0 +1,56 @@
+@use "../../../styles/mixins" as m;
+@use "../../../styles/variables" as v;
+
+.category-aside {
+    white-space: nowrap;
+    margin-right: 110px;
+
+    margin-bottom: 80px;
+}
+
+.category-aside__title {
+    @include m.text-regular(6px);
+
+    margin-bottom: 50px;
+}
+
+.category-aside__filter {
+}
+
+.category-aside__filter-title {
+    @include m.text-bold(4px);
+
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.category-aside__filter-element {
+    margin-bottom: 10px;
+}
+
+.category-aside__filter-checkbox {
+    display: none;
+}
+
+.category-aside__filter-label {
+    color: v.$grey;
+    position: relative;
+    padding-left: 24px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 1px;
+        width: 16px;
+        height: 16px;
+        border: v.$grey 1px solid;
+        background-color: transparent;
+    }
+}
+
+.category-aside__filter-checkbox:checked
+    + .category-aside__filter-label::before {
+    background-color: v.$green;
+    border: none;
+}
