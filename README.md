@@ -62,10 +62,16 @@ php artisan jwt:secret    # создать jwt secret ключ в .env для р
 php artisan serve    # запустить приложение на http://127.0.0.1:8000
 ```
 
-Для запуска React:
+Установите зависимости:
 
 ```bash
-npm run init
+npm i
+```
+
+Запустите сборку:
+
+```bash
+npm run dev
 ```
 
 Для создания админа введите
