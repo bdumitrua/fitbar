@@ -51,7 +51,7 @@ const AccountMain = () => {
                         <p className="account__page-title">Личный кабинет</p>
                         <div className="account-info">
                             <img
-                                src={data.image}
+                                src={data.photo}
                                 alt=""
                                 className="account-info__image"
                             />
@@ -68,6 +68,7 @@ const AccountMain = () => {
                                     className="account-info__private-info-element"
                                     placeholder="Дата рождения"
                                     disabled
+                                    value={data.date_of_birth || ""}
                                 />
                                 <input
                                     type="text"
