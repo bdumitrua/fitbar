@@ -1,3 +1,69 @@
-@use "sass:math";
 @use "../../../../styles/mixins" as m;
 @use "../../../../styles/variables" as v;
+
+.order-requests {
+    display: flex;
+}
+
+.order-requests__container {
+    width: 100%;
+}
+
+.order-requests__content {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.order-requests__header {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 40px;
+}
+
+.order-requests__title {
+    @include m.text-bold(9px);
+    align-items: start;
+}
+
+.order-requests__search {
+    width: 400px;
+    padding: 5px 8px;
+
+    margin-top: 10px;
+
+    align-self: self-start;
+
+    border: v.$grey 1px solid;
+}
+
+.order-requests__buttons {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 10px;
+
+    gap: 15px;
+}
+
+.order-requests__button {
+    @include m.flex-center();
+
+    padding: 5px 30px;
+
+    border: v.$green 1px solid;
+}
+
+.order-requests__show {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.order-requests__show-more {
+    margin-bottom: 80px;
+}

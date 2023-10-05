@@ -1,19 +1,17 @@
 import plus from "@/assets/images/+.svg";
 import Loader from "@/components/Loader/Loader";
-import { updateProduct } from "@/redux/services/products.service";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import "./AdminModals.scss";
 
-const CreateProductModal = ({ handleCloseModal, product }) => {
+const UpdateProductModal = ({ handleCloseModal, product }) => {
     const {
         handleSubmit,
         control,
         watch,
         formState: { errors },
     } = useForm();
-    const dispatch = useDispatch();
+    const [file, setFile] = useState(null);
 
     const handleBackgroundClick = (e) => {
         if (e.target.classList.contains("modal-admin")) {
@@ -21,12 +19,39 @@ const CreateProductModal = ({ handleCloseModal, product }) => {
         }
     };
 
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+    };
+
     const onSubmit = async (data, e) => {
         e.preventDefault();
-        console.log(data);
-        const res = dispatch(updateProduct(data, product.id));
-        if (res.status === 200) {
-            handleCloseModal();
+        const formData = new FormData();
+        formData.append("image", file); // Здесь добавляем изображение
+        formData.append("long_description", data.long_description);
+        formData.append("name", data.name);
+        formData.append("short_description", data.short_description);
+        formData.append("category_id", data.category_id);
+        formData.append("price", data.price);
+        formData.append("taste", data.taste);
+        formData.append("weight", data.weight);
+
+        formData.append("_method", "patch");
+
+        try {
+            const response = await axiosInstance.post(
+                `/products/update/${product.id}`,
+                formData
+            );
+            if (response.status === 200) {
+                console.log("Запрос успешно отправлен!");
+                handleCloseModal();
+            } else {
+                console.error("Произошла ошибка при отправке запроса.");
+            }
+            return response;
+        } catch (error) {
+            console.error("Произошла ошибка:", error);
         }
     };
 
@@ -61,21 +86,18 @@ const CreateProductModal = ({ handleCloseModal, product }) => {
                 >
                     <div className="modal-admin__left-side">
                         <div className="modal-admin__image-container">
-                            <Controller
-                                name="image"
-                                control={control}
-                                render={({ field }) => (
-                                    <input
-                                        {...field}
-                                        type="file"
-                                        className="account-info__image-input"
-                                        placeholder="Аватар"
-                                        id="photo"
-                                    />
-                                )}
+                            <input
+                                id="photo"
+                                className="account-info__image-input"
+                                type="file"
+                                onChange={handleFileChange}
+                                accept="image/png, image/jpg, image/jpeg, image/svg"
                             />
-                            <img src="" alt="" className="modal-admin__image" />
-                            <img src={plus} alt="" />
+                            <img
+                                src={file ? URL.createObjectURL(file) : plus}
+                                alt=""
+                                className="modal-admin__image"
+                            />
                         </div>
                         <p className="modal-admin__textarea-label">Описание</p>
                         <Controller
@@ -215,7 +237,7 @@ const CreateProductModal = ({ handleCloseModal, product }) => {
                         <Controller
                             name="weight"
                             control={control}
-                            defaultValue={product.weight}
+                            defaultValue={product.weight.split(" ")[0]}
                             rules={{ required: "Это поле обязательное" }}
                             render={({ field }) => (
                                 <input
@@ -253,4 +275,4 @@ const CreateProductModal = ({ handleCloseModal, product }) => {
     );
 };
 
-export default CreateProductModal;
+export default UpdateProductModal;
