@@ -3,7 +3,7 @@ import axiosInstance from "@/utils/axios/instance";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountLayoutAdmin from "../AccountLayoutAdmin";
-import OrderRequestCard from "./OrderRequestCard";
+import OrderRequestCard from "./OrderRequestsCard";
 
 import "./OrderRequests.scss";
 

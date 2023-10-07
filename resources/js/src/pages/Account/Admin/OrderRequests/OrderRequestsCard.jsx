@@ -1,5 +1,5 @@
 import { useMainContext } from "@/utils/providers/main.provider";
-import "./OrderRequestCard.scss";
+import "./OrderRequestsCard.scss";
 
 const OrderRequestCard = ({ order }) => {
     const { formatDate } = useMainContext();
