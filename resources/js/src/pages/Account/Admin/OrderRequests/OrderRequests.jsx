@@ -1,4 +1,3 @@
-import Loader from "@/components/Loader/Loader";
 import axiosInstance from "@/utils/axios/instance";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -87,7 +86,7 @@ const OrderRequests = () => {
                             );
                         })
                 ) : (
-                    <Loader />
+                    <p>Заказы украли</p>
                 )}
                 <div className="navigation">
                     <button

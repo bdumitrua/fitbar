@@ -31,12 +31,16 @@ const AccountEdit = () => {
     const [dataFirstname, setDataFirstname] = useState("");
     const [dataSurname, setDataSurname] = useState("");
     const [dataPatronymic, setDataPatronymic] = useState("");
+    const [isFileChanged, setFileChanged] = useState(false);
+
+    const [initialData, setInitialData] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get("/users/me");
                 setData(response.data);
+                setInitialData(response.data);
                 const [surname, firstname, patronymic] =
                     response.data.name.split(" ");
                 setDataSurname(surname || "");
@@ -53,27 +57,39 @@ const AccountEdit = () => {
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setFile(selectedFile);
+        setFileChanged(true);
     };
 
     const onSubmit = (data) => {
         const { firstname, surname, patronymic, ...otherData } = data;
         const name = `${surname} ${firstname} ${patronymic}`;
 
-        console.log(data);
-
         const formData = new FormData();
-        formData.append("photo", file); // Здесь добавляем изображение
+
         formData.append("email", otherData.email);
         formData.append("name", name);
-        formData.append("phone", otherData.phone);
-        formData.append("date_of_birth", selectedDate);
+
+        if (otherData.phone !== initialData.phone) {
+            formData.append("phone", data.phone);
+        }
+        if (selectedDate !== initialData.date_of_birth) {
+            formData.append("date_of_birth", selectedDate);
+        }
+        if (isFileChanged) {
+            formData.append("photo", file);
+        }
 
         formData.append("_method", "put");
 
         axiosInstance.post("/users/update", formData);
     };
 
-    const { handleSubmit, control, setValue } = useForm({
+    const {
+        handleSubmit,
+        control,
+        setValue,
+        formState: { errors },
+    } = useForm({
         defaultValues: {
             firstname: dataFirstname,
             surname: dataSurname,
@@ -139,9 +155,14 @@ const AccountEdit = () => {
                                         />
                                     )}
                                 />
+                                {errors.firstname && (
+                                    <p className="modal__error">
+                                        Это поле обязательно
+                                    </p>
+                                )}
 
                                 <Controller
-                                    name="date_of_birth"
+                                    name="birth"
                                     control={control}
                                     render={({ field }) => (
                                         <div className="account-info__private-info-element">
@@ -175,6 +196,12 @@ const AccountEdit = () => {
                                         />
                                     )}
                                 />
+                                {errors.surname && (
+                                    <p className="modal__error">
+                                        Это поле обязательно
+                                    </p>
+                                )}
+
                                 <Controller
                                     name="phone"
                                     control={control}
@@ -189,6 +216,7 @@ const AccountEdit = () => {
                                         />
                                     )}
                                 />
+
                                 <Controller
                                     name="patronymic"
                                     control={control}
@@ -202,6 +230,12 @@ const AccountEdit = () => {
                                         />
                                     )}
                                 />
+                                {errors.patronymic && (
+                                    <p className="modal__error">
+                                        Это поле обязательно
+                                    </p>
+                                )}
+
                                 <Controller
                                     name="email"
                                     control={control}
@@ -215,6 +249,11 @@ const AccountEdit = () => {
                                         />
                                     )}
                                 />
+                                {errors.email && (
+                                    <p className="modal__error">
+                                        Это поле обязательно
+                                    </p>
+                                )}
 
                                 <div className="account-info__update-info">
                                     <button
